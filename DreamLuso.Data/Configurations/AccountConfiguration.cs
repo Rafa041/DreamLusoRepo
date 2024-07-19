@@ -10,18 +10,10 @@ internal class AccountConfiguration : IEntityTypeConfiguration<Account>
     {
         builder.ToTable("Accounts");
 
-        builder.Property(x => x.Password)
+        builder.Property(x => x.PasswordHash)
             .HasColumnName("PasswordHash");
-    }
-}
-internal class UserConfiguration : IEntityTypeConfiguration<User>
-{
-    public void Configure(EntityTypeBuilder<User> builder)
-    {
-        builder.OwnsOne<Name>(x => x.Name, n =>
-        {
-            n.Property(x => x.FirstName).HasColumnName("FirstName");
-            n.Property(x => x.LastName).HasColumnName("LastName");
-        });
+
+        builder.Property(x => x.PasswordSalt)
+            .HasColumnName("PasswordSalt");
     }
 }

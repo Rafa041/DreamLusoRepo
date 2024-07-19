@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using DreamLuso.Data;
+using DreamLuso.Security;
 using DreamLuso.Application;
 using Microsoft.Extensions.Configuration;
 
@@ -11,6 +12,8 @@ public static class DependencyInjection
         services.AddDataServices(configuration);
         services.AddApplicationServices(configuration);
 
+        //DreamLuso.Security 
+        services.AddJwtAuthentication(configuration);
         return services;
     }
 }

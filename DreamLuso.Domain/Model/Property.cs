@@ -30,7 +30,7 @@ public class Property : AuditableEntity, IEntity<Guid>
     public string HeatingSystem { get; set; }
     // - Detalhes sobre o sistema de refrigeração da propriedade
     public string CoolingSystem { get; set; }
-
+    public Property() { }
     public Property(
     Guid id,
     string title,

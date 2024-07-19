@@ -2,8 +2,6 @@
 using DreamLuso.Domain.Common;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
-using System.Security.Principal;
-using System.Net;
 
 namespace DreamLuso.Domain.Model;
 
@@ -19,15 +17,15 @@ public class User : AuditableEntity, IEntity<Guid>
     public string PhoneNumber { get; set; }
     public DateTime DateOfBirth { get; set; }
     public List<Property> FavoriteProperty { get; set; }
-    private User()
+    public User()
     {
         Id = Guid.NewGuid();
         FavoriteProperty = [];
     }
-    public User(string firstName, string lastName, string email, string password, Access access, string imageUrl, string phoneNumber, DateTime dateOfBirth)
+    public User(string firstName, string lastName, string email, byte[] passwordHash, byte[] passwordSalt, Access access, string imageUrl, string phoneNumber, DateTime dateOfBirth)
     {
         Name = new(firstName, lastName);
-        Account = new(email, password);
+        Account = new(email, passwordHash,passwordSalt);
         Access = access;
         ImageUrl = imageUrl;
         PhoneNumber = phoneNumber;

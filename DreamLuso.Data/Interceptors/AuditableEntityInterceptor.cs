@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 namespace DreamLuso.Data.Interceptors;
 
 internal class AuditableEntityInterceptor : SaveChangesInterceptor
+
 {
+  
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
         UpdateEntities(eventData.Context);
@@ -19,6 +21,7 @@ internal class AuditableEntityInterceptor : SaveChangesInterceptor
     private void UpdateEntities(DbContext context)
     {
         if (context == null) return;
+
         foreach (var entry in context.ChangeTracker.Entries<AuditableEntity>())
         {
             if (entry.State == EntityState.Added)

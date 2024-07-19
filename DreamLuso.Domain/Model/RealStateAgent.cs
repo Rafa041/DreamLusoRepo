@@ -4,8 +4,9 @@ using DreamLuso.Domain.Interface;
 namespace DreamLuso.Domain.Model;
 
 
-public class RealStateAgent
+public class RealStateAgent : AuditableEntity, IEntity<Guid>
 {
+    public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public User User { get; set; }
     public List<Property> Properties { get; set; }
@@ -23,7 +24,7 @@ public class RealStateAgent
 
     public RealStateAgent(User user, string officeEmail, int totalSales, int totalListings, string certifications, List<Languages> languagesSpoken)
     {
-        User = user ?? throw new ArgumentNullException(nameof(user));
+        User = user;
         UserId = user.Id;
         OfficeEmail = officeEmail;
         TotalSales = totalSales;

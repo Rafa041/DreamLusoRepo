@@ -1,0 +1,32 @@
+/** Para mais informações sobre este arquivo, veja: https://angular.io/config/tsconfig. **/
+{
+  "compileOnSave": false,  // Não recompilar ao salvar
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",  // Diretório de saída dos arquivos compilados
+    "strict": true,  // Ativa todas as verificações estritas
+    "noImplicitOverride": true,  // Erro se um método não explicitamente sobrescrever um método da superclasse
+    "noPropertyAccessFromIndexSignature": true,  // Proibir o acesso a propriedades que não existem explicitamente em uma interface ou tipo
+    "noImplicitReturns": true,  // Erro se uma função não retornar um valor em todos os caminhos de código
+    "noFallthroughCasesInSwitch": true,  // Erro se houver um caso no switch que passe para o próximo caso sem um break
+    "skipLibCheck": true,  // Ignora a verificação de tipos dos arquivos de declaração
+    "esModuleInterop": true,  // Habilita a interoperabilidade do ES Modules
+    "sourceMap": true,  // Gera arquivos de mapa de origem (.map)
+    "declaration": false,  // Não gerar arquivos de declaração (.d.ts)
+    "experimentalDecorators": true,  // Habilita decoradores experimentais
+    "moduleResolution": "node",  // Resolução de módulos estilo Node
+    "importHelpers": true,  // Usa helpers de importação do tslib
+    "target": "ES2022",  // Define a versão alvo do JavaScript
+    "module": "ES2022",  // Define o sistema de módulos a ser utilizado
+    "useDefineForClassFields": false,  // Não usar define para campos de classe
+    "lib": [
+      "ES2022",  // Inclui bibliotecas ES2022
+      "dom"  // Inclui bibliotecas do DOM
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,  // Desabilita o formato legado de ID de mensagens i18n
+    "strictInjectionParameters": true,  // Verificações estritas para parâmetros de injeção
+    "strictInputAccessModifiers": true,  // Verificações estritas para modificadores de acesso de inputs
+    "strictTemplates": true  // Habilita verificações estritas para templates
+  }
+}

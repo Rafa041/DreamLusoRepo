@@ -1,6 +1,4 @@
-﻿
-using DreamLuso.Domain.Interface;
-
+﻿using DreamLuso.Domain.Interface;
 
 namespace DreamLuso.Domain.Core.Interfaces;
 
@@ -12,4 +10,3 @@ public interface IRepository<T, TId> where T : class, IEntity<TId>
     Task<T> UpdateAsync(T entity, CancellationToken cancellationToken = default);
     Task<T> DeleteByIdAsync(T entity, CancellationToken cancellationToken = default);
 }
-

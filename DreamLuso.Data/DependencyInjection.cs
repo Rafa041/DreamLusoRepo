@@ -1,5 +1,8 @@
 ﻿using DreamLuso.Data.Context;
 using DreamLuso.Data.Interceptors;
+using DreamLuso.Data.Repository;
+using DreamLuso.Data.Uow;
+using DreamLuso.Domain.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -16,9 +19,15 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.UseSqlServer("DreamLusoCS");
+            options.UseSqlServer(configuration.GetConnectionString("DreamLusoCS"));
         });
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAccountRepository, AccountRepository>();
+
         return services;
 
     }
+   
 }
