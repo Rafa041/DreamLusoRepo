@@ -26,4 +26,19 @@ public class DataProtectionService : IDataProtectionService
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         return computedHash;
     }
+    public bool VerifyPassword(string password, byte[] storedHash, byte[] storedSalt)
+    {
+        var computedHash = GetComputedHash(password, storedSalt);
+
+        // Compare the computed hash with the stored hash
+        for (int i = 0; i < computedHash.Length; i++)
+        {
+            if (computedHash[i] != storedHash[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

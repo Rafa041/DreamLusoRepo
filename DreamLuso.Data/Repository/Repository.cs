@@ -19,7 +19,7 @@ public abstract class Repository<T, TId> : IRepository<T, TId> where T : class, 
         DbSet = context.Set<T>();
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<T>> RetrieveAllAsync(CancellationToken cancellationToken = default)
     {
         return await DbSet.ToListAsync(cancellationToken);
     }

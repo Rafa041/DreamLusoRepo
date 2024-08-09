@@ -2,8 +2,7 @@
 using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using System.Data.Entity;
+
 
 namespace DreamLuso.Data.Repository;
 
@@ -18,5 +17,12 @@ public class UserRepository : PaginatedRepository<User, Guid>, IUserRepository
     public async Task<User> GetByEmailAsync(string email)
     {
         return await _context.Users.FirstOrDefaultAsync(u => u.Account.Email == email);
+    }
+
+    public async Task<IEnumerable<User>> RetrieveAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await DbSet
+            .Include(u => u.Account)
+            .ToListAsync(cancellationToken);
     }
 }

@@ -4,6 +4,7 @@ using DreamLuso.Application.Common.Responses;
 using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.Domain.Model;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DreamLuso.Application.CQ.Users.Commands.CreateUser;
 public class CreateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateUserCommand, Result<CreateUserResponse, Success, Error>>
@@ -11,11 +12,11 @@ public class CreateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<
 
     public async Task<Result<CreateUserResponse, Success, Error>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        //var existingUser = await unitOfWork.UserRepository.GetByEmailAsync(request.Email);
-        //var existingUser = await unitOfWork.AccountRepository.GetByEmailAsync(request.Email);
         
-        //if (existingUser != null)
-        //    return Error.ExistingUser; 
+        var existingUser = await unitOfWork.AccountRepository.GetByEmailAsync(request.Email);
+
+        if (existingUser != null)
+            return Error.ExistingUser;
 
         var protectionKeys = unitOfWork.DataProtectionService.Protect(request.Password);
 
@@ -35,7 +36,7 @@ public class CreateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<
             Email = request.Email,
             PasswordHash = protectionKeys.PasswordHash,
             PasswordSalt = protectionKeys.PasswordSalt,
-           UserId = newUser.Id,
+            UserId = newUser.Id,
         };
         await unitOfWork.UserRepository.AddAsync(newUser, cancellationToken);
 

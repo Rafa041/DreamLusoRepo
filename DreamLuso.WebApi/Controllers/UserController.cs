@@ -1,4 +1,5 @@
-﻿using DreamLuso.Application.CQ.Users.Commands.CreateUser;
+﻿using DreamLuso.Application.Common.Responses;
+using DreamLuso.Application.CQ.Users.Commands.CreateUser;
 using DreamLuso.Application.CQ.Users.Queries.GetAllUsers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,21 +15,21 @@ public class UserController : Controller
         _sender = sender;
     }
     [HttpPost("Register")]
-    public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command, CancellationToken cancellationToken = default)
-        => Ok(await _sender.Send(command, cancellationToken));
-
-
-    [HttpGet("GetAll")]
-    public async Task<IActionResult> GetAllUsers()
+    [ProducesResponseType(typeof(CreateUserResponse), 200)]
+    [ProducesResponseType(typeof(Error), 400)]
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
     {
-        var query = new GetAllUsersQuery();
-        var result = await _sender.Send(query);
+        var result = await _sender.Send(command, cancellationToken);
 
-        if (result is not null)
+        if (result.IsSuccess)
         {
-            return Ok(result.Value);
+            return Ok(result.IsSuccess);
         }
 
-        return NotFound(result.Error);
+        return BadRequest(result.Error);
     }
+
+    [HttpGet("RetrieveAll")]
+    public async Task<IActionResult> RetrieveAll(CancellationToken cancellationToken)
+            => Ok(await _sender.Send(new RetrieveAllUsersQuery(), cancellationToken));
 }

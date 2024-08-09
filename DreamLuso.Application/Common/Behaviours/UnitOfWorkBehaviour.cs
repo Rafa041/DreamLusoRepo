@@ -5,14 +5,22 @@ using MediatR;
 
 namespace DreamLuso.Application.Common.Behaviours;
 
-internal class UnitOfWorkBehaviour<TRequest, TReponse>(IUnitOfWork unitOfWork) : IPipelineBehavior<TRequest, TReponse> where TRequest : notnull
+internal class UnitOfWorkBehaviour<TRequest, TResponse>(IUnitOfWork unitOfWork) : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
-    public async Task<TReponse> Handle(TRequest request, RequestHandlerDelegate<TReponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        if (IsNotCommand())
+        if (IsCommand())
         {
-            return await next();
+            return await HandleCommand(next, cancellationToken);
         }
+        else
+        {
+            return await HandleQuery(next);
+        }
+    }
+
+    private async Task<TResponse> HandleCommand(RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    {
         await unitOfWork.BeginTransactionAsync(cancellationToken);
 
         try
@@ -29,8 +37,14 @@ internal class UnitOfWorkBehaviour<TRequest, TReponse>(IUnitOfWork unitOfWork) :
             throw;
         }
     }
-    private static bool IsNotCommand()
+
+    private async Task<TResponse> HandleQuery(RequestHandlerDelegate<TResponse> next)
     {
-        return !typeof(TRequest).Name.EndsWith("Command");
+        return await next();
+    }
+
+    private static bool IsCommand()
+    {
+        return typeof(TRequest).Name.EndsWith("Command");
     }
 }

@@ -2,9 +2,11 @@
 using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.Domain.Interface;
 using DreamLuso.Security.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data.Common;
-using System.Data.Entity;
+using System.Text;
+
 
 namespace DreamLuso.Data.Uow;
 
@@ -25,12 +27,46 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     }
     public async Task<bool> CommitAsync(CancellationToken cancellationToken = default)
     {
+
         return await context.SaveChangesAsync() > 0;
     }
 
     public IEnumerable<string> DebugChanges()
     {
-        throw new NotImplementedException();
+        var changes = new StringBuilder();
+
+        foreach (var entry in context.ChangeTracker.Entries())
+        {
+            if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.State == EntityState.Deleted)
+            {
+                changes.AppendLine($"Entity: {entry.Entity.GetType().Name}");
+                changes.AppendLine($"State: {entry.State}");
+
+                foreach (var property in entry.OriginalValues.Properties)
+                {
+                    var originalValue = entry.OriginalValues[property]?.ToString();
+                    var currentValue = entry.CurrentValues[property]?.ToString();
+
+                    if (entry.State == EntityState.Added)
+                    {
+                        changes.AppendLine($"Property: {property.Name} | New Value: {currentValue}");
+                    }
+                    else if (entry.State == EntityState.Deleted)
+                    {
+                        changes.AppendLine($"Property: {property.Name} | Original Value: {originalValue}");
+                    }
+                    else if (entry.State == EntityState.Modified)
+                    {
+                        if (originalValue != currentValue)
+                        {
+                            changes.AppendLine($"Property: {property.Name} | Original Value: {originalValue} | Current Value: {currentValue}");
+                        }
+                    }
+                }
+            }
+        }
+
+        return changes.ToString().Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
     }
 
     public bool HasChanges()
@@ -51,7 +87,7 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     {
         try
         {
-            if(_transaction != null)
+            if (_transaction != null)
             {
                 await context.SaveChangesAsync(cancellationToken);
                 await _transaction.CommitAsync(cancellationToken);
@@ -87,7 +123,7 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     }
     private async Task DisposeTransactionAsync()
     {
-        if(_transaction != null)
+        if (_transaction != null)
         {
             await _transaction.DisposeAsync();
             _transaction = null;

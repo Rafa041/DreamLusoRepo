@@ -3,6 +3,6 @@ using MediatR;
 
 namespace DreamLuso.Application.CQ.Users.Queries.GetAllUsers;
 
-public class GetAllUsersQuery : IRequest<Result<GetAllUsersResponse, Success, Error>>
+public class RetrieveAllUsersQuery : IRequest<Result<RetrieveAllUsersResponse, Success, Error>>
 {
 }

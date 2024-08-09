@@ -1,12 +1,20 @@
+using Cqrs.Domain;
+using Cqrs.Hosts;
+using DreamLuso.Application.CQ.Users.Queries.GetAllUsers;
+using DreamLuso.Data.Repository;
+using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.IoC;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+//Em Teste
 
 builder.Services.AddIoCServices(builder.Configuration);
 
