@@ -25,4 +25,11 @@ public class UserRepository : PaginatedRepository<User, Guid>, IUserRepository
             .Include(u => u.Account)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<User> RetrieveAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await DbSet
+            .Include(u => u.Account)
+            .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+    }
 }

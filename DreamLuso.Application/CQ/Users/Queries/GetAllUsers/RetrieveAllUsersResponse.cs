@@ -1,28 +1,9 @@
-﻿using DreamLuso.Domain.Model;
+﻿using DreamLuso.Application.CQ.Users.Queries.Retrieve;
+using DreamLuso.Domain.Model;
 
 namespace DreamLuso.Application.CQ.Users.Queries.GetAllUsers;
 
 public class RetrieveAllUsersResponse
 {
-    public Guid Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public Access Access { get; set; }
-    public string ImageUrl { get; set; }
-    public string PhoneNumber { get; set; }
-    public DateTime DateOfBirth { get; set; }
-    public List<RetrieveUserResponse> Users { get; set; }
-}
-
-public class RetrieveUserResponse
-{
-    public Guid Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public Access Access { get; set; }
-    public string ImageUrl { get; set; }
-    public string PhoneNumber { get; set; }
-    public DateTime DateOfBirth { get; set; }
+    public IEnumerable<RetrieveUserResponse> Users { get; set; }
 }

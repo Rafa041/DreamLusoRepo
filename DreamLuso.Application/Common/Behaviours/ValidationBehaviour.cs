@@ -9,8 +9,6 @@ internal class ValidationBehaviour<TRequest, TResponse>(IEnumerable<IValidator<T
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-
-
         if (!validators.Any())
         {
             return await next();

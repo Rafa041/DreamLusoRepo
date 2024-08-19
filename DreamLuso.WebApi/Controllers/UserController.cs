@@ -31,5 +31,14 @@ public class UserController : Controller
 
     [HttpGet("RetrieveAll")]
     public async Task<IActionResult> RetrieveAll(CancellationToken cancellationToken)
-            => Ok(await _sender.Send(new RetrieveAllUsersQuery(), cancellationToken));
+    {
+        var result = await _sender.Send(new RetrieveAllUsersQuery(), cancellationToken);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+
+        return NotFound(result.Error);
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using DreamLuso.Application.Common.Responses;
+using DreamLuso.Application.CQ.Users.Queries.Retrieve;
 using DreamLuso.Domain.Core.Interfaces;
 using MediatR;
 

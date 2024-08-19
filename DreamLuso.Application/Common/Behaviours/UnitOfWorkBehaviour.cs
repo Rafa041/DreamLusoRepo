@@ -5,28 +5,20 @@ using MediatR;
 
 namespace DreamLuso.Application.Common.Behaviours;
 
-internal class UnitOfWorkBehaviour<TRequest, TResponse>(IUnitOfWork unitOfWork) : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+internal class UnitOfWorkBehaviour<TRequest, TReponse>(IUnitOfWork unitOfWork) : IPipelineBehavior<TRequest, TReponse> where TRequest : notnull
 {
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TReponse> Handle(TRequest request, RequestHandlerDelegate<TReponse> next, CancellationToken cancellationToken)
     {
-        if (IsCommand())
+        if (IsNotCommand())
         {
-            return await HandleCommand(next, cancellationToken);
+            return await next();
         }
-        else
-        {
-            return await HandleQuery(next);
-        }
-    }
-
-    private async Task<TResponse> HandleCommand(RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
-    {
         await unitOfWork.BeginTransactionAsync(cancellationToken);
 
         try
         {
             var result = await next();
-            unitOfWork.DebugChanges();
+            //unitOfWork.DebugChanges();
 
             await unitOfWork.CommitTransactioAsync(cancellationToken);
             return result;
@@ -37,14 +29,8 @@ internal class UnitOfWorkBehaviour<TRequest, TResponse>(IUnitOfWork unitOfWork) 
             throw;
         }
     }
-
-    private async Task<TResponse> HandleQuery(RequestHandlerDelegate<TResponse> next)
+    private static bool IsNotCommand()
     {
-        return await next();
-    }
-
-    private static bool IsCommand()
-    {
-        return typeof(TRequest).Name.EndsWith("Command");
+        return !typeof(TRequest).Name.EndsWith("Command");
     }
 }

@@ -32,7 +32,7 @@ public class LoginUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<L
             return Error.InvalidCredentials; // Retorna erro se a senha não for válida
 
         // Gera o token JWT para o usuário autenticado
-        var user = await unitOfWork.UserRepository.GetByIdAsync(existingUser.UserId);
+        var user = await unitOfWork.UserRepository.RetrieveAsync(existingUser.UserId);
         var token = unitOfWork.TokenService.GenerateToken(user);
 
         var response = new LoginUserResponse

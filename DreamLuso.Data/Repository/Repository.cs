@@ -24,7 +24,7 @@ public abstract class Repository<T, TId> : IRepository<T, TId> where T : class, 
         return await DbSet.ToListAsync(cancellationToken);
     }
 
-    public async Task<T> GetByIdAsync(TId id, CancellationToken cancellationToken = default)
+    public async Task<T> RetrieveAsync(TId id, CancellationToken cancellationToken = default)
     {
         return await DbSet.FindAsync(id, cancellationToken);
     }

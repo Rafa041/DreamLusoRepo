@@ -27,8 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamLuso.Security", "Dream
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{B14518C7-26F5-45F6-B4B5-30BACFC356AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamLuso.MVC", "DreamLuso.MVC\DreamLuso.MVC.csproj", "{5C36030C-F45B-497B-898D-6F5314671FFC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,10 +61,6 @@ Global
 		{FB039304-D70F-498A-BC20-E92C5552FA6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB039304-D70F-498A-BC20-E92C5552FA6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB039304-D70F-498A-BC20-E92C5552FA6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C36030C-F45B-497B-898D-6F5314671FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C36030C-F45B-497B-898D-6F5314671FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C36030C-F45B-497B-898D-6F5314671FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C36030C-F45B-497B-898D-6F5314671FFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,7 +73,6 @@ Global
 		{23C7370B-C5D5-47E7-B7D1-475F39B4638B} = {B3346DEA-946D-4946-9B49-A9AF3E4450D2}
 		{361076E5-6D62-4E40-B104-678C3FF291C9} = {DD6A34B3-8700-47D7-88E8-2667F336694A}
 		{FB039304-D70F-498A-BC20-E92C5552FA6C} = {B3346DEA-946D-4946-9B49-A9AF3E4450D2}
-		{5C36030C-F45B-497B-898D-6F5314671FFC} = {B14518C7-26F5-45F6-B4B5-30BACFC356AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA471749-C0F7-47BA-A059-4CA41FE5AF7D}

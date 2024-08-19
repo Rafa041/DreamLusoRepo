@@ -1,11 +1,5 @@
-using Cqrs.Domain;
-using Cqrs.Hosts;
-using DreamLuso.Application.CQ.Users.Queries.GetAllUsers;
-using DreamLuso.Data.Repository;
-using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.IoC;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -17,7 +11,14 @@ builder.Services.AddSwaggerGen();
 //Em Teste
 
 builder.Services.AddIoCServices(builder.Configuration);
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        builder => builder.WithOrigins("http://localhost:4200")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,5 +33,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAngularApp");
+
+
 
 app.Run();
