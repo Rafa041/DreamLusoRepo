@@ -1,11 +1,14 @@
 ﻿using FluentValidation;
 
-namespace DreamLuso.Application.CQ.Users.Commands.CreateUser;
+namespace DreamLuso.Application.CQ.Users.Commands.UpdateUser;
 
-public class CreateUserCommandValidation : AbstractValidator<CreateUserCommand>
+public class UpdateUserCommandValidation : AbstractValidator<UpdateUserCommand>
 {
-    public CreateUserCommandValidation()
+    public UpdateUserCommandValidation()
     {
+        RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("User ID is required.");
+
         RuleFor(x => x.FirstName)
             .NotEmpty().WithMessage("First name is required.")
             .MaximumLength(50).WithMessage("First name must be less than 50 characters.");
@@ -22,6 +25,9 @@ public class CreateUserCommandValidation : AbstractValidator<CreateUserCommand>
             .NotEmpty().WithMessage("Password is required.")
             .MinimumLength(6).WithMessage("Password must be at least 6 characters long.");
 
+        RuleFor(x => x.Access)
+            .IsInEnum().WithMessage("Invalid access level provided.");
+
         RuleFor(x => x.PhoneNumber)
             .NotEmpty().WithMessage("Phone number is required.")
             .Matches(@"^\+?[1-9]\d{1,14}$").WithMessage("A valid phone number is required.");
@@ -32,3 +38,4 @@ public class CreateUserCommandValidation : AbstractValidator<CreateUserCommand>
             .GreaterThan(DateTime.Now.AddYears(-120)).WithMessage("Date of birth is not valid.");
     }
 }
+

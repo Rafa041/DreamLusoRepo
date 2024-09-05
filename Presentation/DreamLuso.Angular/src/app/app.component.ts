@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
   template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
-  title = 'plot-pilot-spa';
+  title = 'Dream-Luso-spa';
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
-import { UserModel } from '../../../../models/UserModel';
+import { UsersModel } from '../../../../models/UsersModel';
 
 @Component({
   selector: 'app-header',
@@ -10,16 +10,16 @@ import { UserModel } from '../../../../models/UserModel';
 })
 export class HeaderComponent implements OnInit {
 
-  users: UserModel[] = [];
+  users: UsersModel[] = [];
 
   constructor(private http: HttpClient, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.getAll();
+    this.RetrieveAll();
   }
 
-  getAll() {
-    this.userService.getAll().subscribe((x) => (this.users = x));
+  RetrieveAll(): void {
+    this.userService.RetrieveAll().subscribe((x) => (this.users = x));
 
     console.log(this.users);
   }

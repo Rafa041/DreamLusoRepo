@@ -1,5 +1,6 @@
 ﻿
 using DreamLuso.Application.CQ.Users.Commands.CreateUser;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DreamLuso.Application.Common.Responses;
 public sealed class Result<TResult, TOk, TError>
@@ -31,6 +32,11 @@ public sealed class Result<TResult, TOk, TError>
         Value = default;
         Ok = default;
         Error = error;
+    }
+
+    public T Match<T>(Func<object, OkObjectResult> value1, Func<object, ObjectResult> value2)
+    {
+        throw new NotImplementedException();
     }
 
     public static implicit operator Result<TResult, TOk, TError>(TResult value)

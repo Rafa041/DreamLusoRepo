@@ -3,6 +3,8 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Cors;
+using Newtonsoft.Json;
 
 namespace DreamLuso.Application;
 
@@ -21,8 +23,29 @@ public static class DepedencyInjection
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         });
 
-        
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAngularApp",
+                builder => builder.WithOrigins("http://localhost:4200")
+                                  .AllowAnyMethod()
+                                  .AllowAnyHeader());
+        });
 
+        //Em Teste 
+        //services.AddControllers().AddJsonOptions(options =>
+        //{
+        //    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        //});
+        //services.AddControllers().AddNewtonsoftJson(options =>
+        //{
+        //    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+        //});
+        //JsonSerializerSettings settings = new JsonSerializerSettings
+        //{
+        //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        //};
+
+        //string json = JsonConvert.SerializeObject(settings);
 
         return services;
     }
