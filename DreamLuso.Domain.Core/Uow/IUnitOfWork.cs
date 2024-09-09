@@ -5,11 +5,16 @@ namespace DreamLuso.Domain.Core.Interfaces;
 
 public interface IUnitOfWork
 {
+    //Reposiotory
     public IUserRepository UserRepository { get; }
-
     public IAccountRepository AccountRepository { get; }
+    public IPropertyRepository PropertyRepository{get;}
+    public IAddressRepository AddressRepository { get; }
+    //JWT
     public ITokenService TokenService { get; }
     public IDataProtectionService DataProtectionService { get; }
+
+    //Unit_Of_Work
     bool Commit();
 
     Task<bool> CommitAsync(CancellationToken cancellationToken = default);

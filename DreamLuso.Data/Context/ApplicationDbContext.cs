@@ -7,7 +7,7 @@ namespace DreamLuso.Data.Context;
 public class ApplicationDbContext : DbContext
 {
     public DbSet<Account> Accounts { get; set; }
-    public DbSet<Address> Address { get; set; }
+    public DbSet<Address> Addresses { get; set; }
     public DbSet<Category> Category { get; set; }
     public DbSet<Comments> Comments { get; set; }
     public DbSet<Favorites> Favorites{ get; set; }

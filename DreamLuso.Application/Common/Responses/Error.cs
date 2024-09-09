@@ -23,4 +23,7 @@ public sealed record Error(string Code, string Description)
     public static readonly Error ExternalServiceError = new("ExternalServiceError", "An error occurred in an external service");
     public static readonly Error BadRequest = new("BadRequest", "The request was invalid or cannot be served");
     public static readonly Error Conflict = new("Conflict", "The request could not be completed due to a conflict");
+
+
+    public static readonly Error ExistingProperty = new("ExistingProperty", "There is already a property with this title and address");
 }

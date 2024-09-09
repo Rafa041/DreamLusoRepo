@@ -4,13 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DreamLuso.WebApi.Controllers;
 
+[Route("api/[controller]")]
+[ApiController]
 public class AuthController : Controller
 {
-    private readonly IMediator _mediator;
+    private readonly ISender _sender;
 
-    public AuthController(IMediator mediator)
+    public AuthController(ISender sender)
     {
-        _mediator = mediator;
+        _sender = sender;
     }
 
     [HttpPost("login")]
@@ -21,7 +23,7 @@ public class AuthController : Controller
             return BadRequest(ModelState);
         }
 
-        var result = await _mediator.Send(command);
+        var result = await _sender.Send(command);
 
         if (result.IsSuccess)
         {

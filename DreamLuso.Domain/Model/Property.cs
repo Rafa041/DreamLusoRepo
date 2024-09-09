@@ -75,7 +75,6 @@ public class Property : AuditableEntity, IEntity<Guid>
     }
 }
 
-
 public enum PropertyType
 {
     House,

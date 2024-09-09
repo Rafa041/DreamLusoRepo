@@ -11,13 +11,18 @@ using System.Text;
 namespace DreamLuso.Data.Uow;
 
 internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepository,
-    ITokenService tokenService, IDataProtectionService dataProtectionService, IAccountRepository accountRepository) : IUnitOfWork
+    ITokenService tokenService, IDataProtectionService dataProtectionService, IAccountRepository accountRepository,
+    IAddressRepository addressRepository, IPropertyRepository propertyRepository) : IUnitOfWork
 {
     private IDbContextTransaction? _transaction;
     private bool _disposed;
-
+    //Repository
     public IUserRepository UserRepository => userRepository;
     public IAccountRepository AccountRepository => accountRepository;
+    public IPropertyRepository PropertyRepository => propertyRepository;
+    public IAddressRepository AddressRepository => addressRepository;
+
+    //JWT
     public ITokenService TokenService => tokenService;
     public IDataProtectionService DataProtectionService => dataProtectionService;
 

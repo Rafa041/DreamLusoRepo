@@ -14,7 +14,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDataServices(this IServiceCollection services, IConfiguration configuration)
     {
-
+        //Interceptors and Context
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
@@ -22,9 +22,12 @@ public static class DependencyInjection
             options.UseSqlServer(configuration.GetConnectionString("DreamLusoCS"));
         });
 
+        //Repository
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<IPropertyRepository, PropertyRepository>();
+        services.AddScoped<IAddressRepository, AddressRepository>();
 
         return services;
 
