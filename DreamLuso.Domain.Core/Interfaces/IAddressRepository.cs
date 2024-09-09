@@ -4,5 +4,5 @@ namespace DreamLuso.Domain.Core.Interfaces;
 
 public interface IAddressRepository : IRepository<Address, Guid>
 {
-    Task<Address> GetByFullAddressAsync(string street, string city, string state, string postalCode, string country);
+    Task<Address> GetByFullAddressAsync(Address address, CancellationToken cancellationToken = default);
 }

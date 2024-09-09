@@ -13,16 +13,16 @@ public class AddressRepository : PaginatedRepository<Address, Guid>, IAddressRep
     {
         _context = context;
     }
-    public async Task<Address> GetByFullAddressAsync(string street, string city, string state, string postalCode, string country)
+    public async Task<Address> GetByFullAddressAsync(Address address, CancellationToken cancellationToken)
     {
 
         return await _context.Addresses
-            .Where(a => a.Street == street &&
-                        a.City == city &&
-                        a.State == state &&
-                        a.PostalCode == postalCode &&
-                        a.Country == country)
-            .FirstOrDefaultAsync();
+            .Where(a => a.Street == address.Street &&
+                        a.City == address.City &&
+                        a.State == address.State &&
+                        a.PostalCode == address.PostalCode &&
+                        a.Country == address.Country)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
 }

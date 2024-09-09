@@ -38,9 +38,9 @@ public class UpdateUserCommandHadler(IUnitOfWork unitOfWork) : IRequestHandler<U
             account.PasswordSalt = protectionKeys.PasswordSalt;
         }
 
-        unitOfWork.UserRepository.UpdateAsync(existingUser);
+        await unitOfWork.UserRepository.UpdateAsync(existingUser);
 
-        unitOfWork.AccountRepository.UpdateAsync(account);
+        await unitOfWork.AccountRepository.UpdateAsync(account);
 
         await unitOfWork.CommitAsync();
 

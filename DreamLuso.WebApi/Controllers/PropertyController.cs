@@ -1,5 +1,5 @@
 ﻿using DreamLuso.Application.Common.Responses;
-using DreamLuso.Application.CQ.Properties.CreateProperty;
+using DreamLuso.Application.CQ.Properties.Commands.CreateProperty;
 using DreamLuso.Application.CQ.Users.Commands.CreateUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

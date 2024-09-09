@@ -12,7 +12,7 @@ public class CreateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<
 
     public async Task<Result<CreateUserResponse, Success, Error>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        
+
         var existingUser = await unitOfWork.AccountRepository.GetByEmailAsync(request.Email);
 
         if (existingUser != null)

@@ -3,7 +3,7 @@ using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.Domain.Model;
 using MediatR;
 
-namespace DreamLuso.Application.CQ.Properties.CreateProperty;
+namespace DreamLuso.Application.CQ.Properties.Commands.CreateProperty;
 
 public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreatePropertyCommand, Result<CreatePropertyResponse, Success, Error>>
 {
@@ -11,24 +11,20 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
     {
         var newAddress = new Address(
             Guid.NewGuid(),
-            request.Street,
-            request.City,
-            request.State,
-            request.PostalCode,
-            request.Country,
-            request.AdditionalInfo
+            request.Address.Street,
+            request.Address.City,
+            request.Address.State,
+            request.Address.PostalCode,
+            request.Address.Country,
+            request.Address.AdditionalInfo
         );
 
         // Verifica se a propriedade já existe
-        var existingProperty = await unitOfWork.AddressRepository.GetByFullAddressAsync(request.Title,
-            request.City,
-            request.State,
-            request.PostalCode,
-            request.Country);
+        var existingProperty = await unitOfWork.AddressRepository.GetByFullAddressAsync(newAddress, cancellationToken);
         if (existingProperty != null)
             return Error.ExistingProperty;
 
-        // Cria uma nova instância de Property
+
         var newProperty = new Property
         {
             Id = Guid.NewGuid(),
@@ -52,22 +48,34 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             CoolingSystem = request.CoolingSystem
         };
 
-        // Adiciona o endereço ao repositório de endereços
+
         await unitOfWork.AddressRepository.AddAsync(newAddress, cancellationToken);
 
-        // Adiciona a propriedade ao repositório
+
         await unitOfWork.PropertyRepository.AddAsync(newProperty, cancellationToken);
 
-        // Commit
+
         await unitOfWork.CommitAsync();
 
-        // Retorna sucesso com a resposta
+
         var response = new CreatePropertyResponse
         {
             Id = newProperty.Id,
             Title = newProperty.Title,
+            Description = newProperty.Description,
             DateListed = newProperty.DateListed,
-            LastModifiedDate = newProperty.LastModifiedDate
+            LastModifiedDate = newProperty.LastModifiedDate,
+            Status = newProperty.Status,
+            Price = newProperty.Price,
+            Amenities = newProperty.Amenities,
+
+            Street = newAddress.Street,
+            City = newAddress.City,
+            State = newAddress.State,
+            PostalCode = newAddress.PostalCode,
+            Country = newAddress.Country,
+            AdditionalInfo = newAddress.AdditionalInfo
+
         };
 
         return response;
