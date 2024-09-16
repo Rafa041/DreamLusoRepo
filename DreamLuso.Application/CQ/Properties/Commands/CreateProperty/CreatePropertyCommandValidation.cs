@@ -6,58 +6,58 @@ public class CreatePropertyCommandValidation : AbstractValidator<CreatePropertyC
 {
     public CreatePropertyCommandValidation()
     {
-        // Property Title validation
-        //RuleFor(x => x.Title)
-        //    .NotEmpty().WithMessage("The property title is required.")
-        //    .MaximumLength(100).WithMessage("The property title must not exceed 100 characters.");
+        //Property Title validation
+        RuleFor(x => x.Title)
+            .NotEmpty().WithMessage("The property title is required.")
+            .MaximumLength(100).WithMessage("The property title must not exceed 100 characters.");
 
-        //// Property Description validation
-        //RuleFor(x => x.Description)
-        //    .NotEmpty().WithMessage("The property description is required.")
-        //    .MaximumLength(500).WithMessage("The property description must not exceed 500 characters.");
+        // Property Description validation
+        RuleFor(x => x.Description)
+            .NotEmpty().WithMessage("The property description is required.")
+            .MaximumLength(500).WithMessage("The property description must not exceed 500 characters.");
 
-        //// Property Type validation
-        //RuleFor(x => x.Type)
-        //    .IsInEnum().WithMessage("Invalid property type.");
+        // Property Type validation
+        RuleFor(x => x.Type)
+            .IsInEnum().WithMessage("Invalid property type.");
 
-        //// Property Size validation
-        //RuleFor(x => x.Size)
-        //    .GreaterThan(0).WithMessage("The property size must be greater than 0.");
+        // Property Size validation
+        RuleFor(x => x.Size)
+            .GreaterThan(0).WithMessage("The property size must be greater than 0.");
 
-        //// Bedrooms validation
-        //RuleFor(x => x.Bedrooms)
-        //    .GreaterThanOrEqualTo(0).WithMessage("The number of bedrooms must be 0 or greater.");
+        // Bedrooms validation
+        RuleFor(x => x.Bedrooms)
+            .GreaterThanOrEqualTo(0).WithMessage("The number of bedrooms must be 0 or greater.");
 
-        //// Bathrooms validation
-        //RuleFor(x => x.Bathrooms)
-        //    .GreaterThanOrEqualTo(0).WithMessage("The number of bathrooms must be 0 or greater.");
+        // Bathrooms validation
+        RuleFor(x => x.Bathrooms)
+            .GreaterThanOrEqualTo(0).WithMessage("The number of bathrooms must be 0 or greater.");
 
-        //// Price validation
-        //RuleFor(x => x.Price)
-        //    .GreaterThan(0).WithMessage("The property price must be greater than 0.");
+        // Price validation
+        RuleFor(x => x.Price)
+            .GreaterThan(0).WithMessage("The property price must be greater than 0.");
 
-        //// Property Status validation
-        //RuleFor(x => x.Status)
-        //    .IsInEnum().WithMessage("Invalid property status.");
+        // Property Status validation
+        RuleFor(x => x.Status)
+            .IsInEnum().WithMessage("Invalid property status.");
 
-        //// Year Built validation
-        //RuleFor(x => x.YearBuilt)
-        //    .LessThanOrEqualTo(DateTime.Now).WithMessage("The year built cannot be in the future.");
+        // Year Built validation
+        RuleFor(x => x.YearBuilt)
+            .LessThanOrEqualTo(DateTime.Now).WithMessage("The year built cannot be in the future.");
 
-        //// Owner Information validation
-        //RuleFor(x => x.OwnerInformation)
-        //    .NotEmpty().WithMessage("Owner information is required.")
-        //    .MaximumLength(200).WithMessage("Owner information must not exceed 200 characters.");
+        // Owner Information validation
+        RuleFor(x => x.OwnerInformation)
+            .NotEmpty().WithMessage("Owner information is required.")
+            .MaximumLength(200).WithMessage("Owner information must not exceed 200 characters.");
 
-        //// Heating System validation
-        //RuleFor(x => x.HeatingSystem)
-        //    .NotEmpty().WithMessage("The heating system is required.")
-        //    .MaximumLength(100).WithMessage("The heating system must not exceed 100 characters.");
+        // Heating System validation
+        RuleFor(x => x.HeatingSystem)
+            .NotEmpty().WithMessage("The heating system is required.")
+            .MaximumLength(100).WithMessage("The heating system must not exceed 100 characters.");
 
-        //// Cooling System validation
-        //RuleFor(x => x.CoolingSystem)
-        //    .NotEmpty().WithMessage("The cooling system is required.")
-        //    .MaximumLength(100).WithMessage("The cooling system must not exceed 100 characters.");
+        // Cooling System validation
+        RuleFor(x => x.CoolingSystem)
+            .NotEmpty().WithMessage("The cooling system is required.")
+            .MaximumLength(100).WithMessage("The cooling system must not exceed 100 characters.");
 
         //// Address validations
         //RuleFor(x => x.Street)

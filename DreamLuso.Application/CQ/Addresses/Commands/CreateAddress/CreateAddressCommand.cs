@@ -36,8 +36,6 @@ public class CreateAddressCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
         if (existingAddress != null)
             return Error.ExistingProperty;
 
-
-
         await unitOfWork.AddressRepository.AddAsync(newAddress, cancellationToken);
         await unitOfWork.CommitAsync();
 

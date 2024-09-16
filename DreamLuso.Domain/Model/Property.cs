@@ -1,6 +1,5 @@
 ﻿using DreamLuso.Domain.Interface;
 using DreamLuso.Domain.Common;
-using System.Security.Principal;
 namespace DreamLuso.Domain.Model;
 
 public class Property : AuditableEntity, IEntity<Guid>
@@ -10,6 +9,8 @@ public class Property : AuditableEntity, IEntity<Guid>
     public string Description { get; set; }
     public Guid AddressId { get; set; }
     public Address Address { get; set; }
+    public Guid RealStateAgentId { get; set; }
+    public RealStateAgent RealStateAgent { get; set; }
     public PropertyType Type { get; set; }
     public double Size { get; set; }
     public int Bedrooms { get; set; }
@@ -17,42 +18,43 @@ public class Property : AuditableEntity, IEntity<Guid>
     public decimal Price { get; set; }
     public string Amenities { get; set; }
     public PropertyStatus Status { get; set; }
-    public List<PropertyImages> Images { get; set; }
+    public List<PropertyImages> Images { get; set; } = new List<PropertyImages>();  // Inicializado para evitar nulls
+
     public DateTime DateListed { get; set; }
     public DateTime LastModifiedDate { get; set; }
 
-    // Propriedades sugeridas
-    // - Ano de construção da propriedade
+    // Propriedades adicionais
     public DateTime YearBuilt { get; set; }
-    // - Informações sobre o proprietário da propriedade
     public string OwnerInformation { get; set; }
-    // - Detalhes sobre o sistema de aquecimento da propriedade
     public string HeatingSystem { get; set; }
-    // - Detalhes sobre o sistema de refrigeração da propriedade
     public string CoolingSystem { get; set; }
+    public bool IsActive { get; set; } = true;  // Soft delete flag
     public Property() { }
+
+    // Construtor completo
     public Property(
-    Guid id,
-    string title,
-    string description,
-    Address address,
-    Guid addressId,
-    PropertyType type,
-    double size,
-    int bedrooms,
-    int bathrooms,
-    decimal price,
-    string amenities,
-    PropertyStatus status,
-    List<PropertyImages> images,
-    DateTime dateListed,
-    DateTime lastModifiedDate,
-    DateTime yearBuilt,
-    string ownerInformation,
-    string heatingSystem,
-    string coolingSystem)
+        Guid id,
+        string title,
+        string description,
+        Address address,
+        Guid addressId,
+        PropertyType type,
+        double size,
+        int bedrooms,
+        int bathrooms,
+        decimal price,
+        string amenities,
+        PropertyStatus status,
+        List<PropertyImages> images,
+        DateTime dateListed,
+        DateTime lastModifiedDate,
+        DateTime yearBuilt,
+        string ownerInformation,
+        string heatingSystem,
+        string coolingSystem,
+        bool isActive)
     {
-        Id = id;
+        Id = id == Guid.Empty ? Guid.NewGuid() : id;  // Verificação para criar novo Guid se necessário
         Title = title;
         Description = description;
         Address = address;
@@ -64,14 +66,14 @@ public class Property : AuditableEntity, IEntity<Guid>
         Price = price;
         Amenities = amenities;
         Status = status;
-        Images = images;
+        Images = images ?? new List<PropertyImages>();  // Garantia de que não seja null
         DateListed = dateListed;
         LastModifiedDate = lastModifiedDate;
         YearBuilt = yearBuilt;
         OwnerInformation = ownerInformation;
         HeatingSystem = heatingSystem;
         CoolingSystem = coolingSystem;
-
+        IsActive = isActive;
     }
 }
 
@@ -95,3 +97,4 @@ public enum PropertyStatus
     Unavailable,
     Other
 }
+

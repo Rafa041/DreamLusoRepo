@@ -9,10 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DreamLuso.Application.CQ.Users.Commands.CreateUser;
 public class CreateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateUserCommand, Result<CreateUserResponse, Success, Error>>
 {
-
     public async Task<Result<CreateUserResponse, Success, Error>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-
         var existingUser = await unitOfWork.AccountRepository.GetByEmailAsync(request.Email);
 
         if (existingUser != null)

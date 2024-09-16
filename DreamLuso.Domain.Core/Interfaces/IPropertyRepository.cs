@@ -4,5 +4,6 @@ namespace DreamLuso.Domain.Core.Interfaces;
 
 public interface IPropertyRepository : IRepository<Property, Guid>
 {
-
+    Task<IEnumerable<Property>> GetAllActivePropertiesAsync(CancellationToken cancellationToken);
+    Task<IEnumerable<Property>> GetAllInactivePropertiesAsync(CancellationToken cancellationToken);
 }

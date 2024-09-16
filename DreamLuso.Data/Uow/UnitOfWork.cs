@@ -12,7 +12,7 @@ namespace DreamLuso.Data.Uow;
 
 internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepository,
     ITokenService tokenService, IDataProtectionService dataProtectionService, IAccountRepository accountRepository,
-    IAddressRepository addressRepository, IPropertyRepository propertyRepository) : IUnitOfWork
+    IAddressRepository addressRepository, IPropertyRepository propertyRepository, IRealStateAgentRepository realStateAgentRepository) : IUnitOfWork
 {
     private IDbContextTransaction? _transaction;
     private bool _disposed;
@@ -21,6 +21,7 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     public IAccountRepository AccountRepository => accountRepository;
     public IPropertyRepository PropertyRepository => propertyRepository;
     public IAddressRepository AddressRepository => addressRepository;
+    public IRealStateAgentRepository RealStateAgentRepository => realStateAgentRepository;
 
     //JWT
     public ITokenService TokenService => tokenService;

@@ -22,25 +22,8 @@ public class UpdateUserCommandHadler(IUnitOfWork unitOfWork) : IRequestHandler<U
         existingUser.PhoneNumber = request.PhoneNumber;
         existingUser.DateOfBirth = request.DateOfBirth;
 
-        var account = await unitOfWork.AccountRepository.RetrieveAsync(existingUser.Account.Id);
-        if (account == null)
-            return Error.NotFound;
-
-        if (!string.IsNullOrEmpty(request.Email) && request.Email != account.Email)
-        {
-            account.Email = request.Email;
-        }
-
-        if (!string.IsNullOrEmpty(request.Password))
-        {
-            var protectionKeys = unitOfWork.DataProtectionService.Protect(request.Password);
-            account.PasswordHash = protectionKeys.PasswordHash;
-            account.PasswordSalt = protectionKeys.PasswordSalt;
-        }
 
         await unitOfWork.UserRepository.UpdateAsync(existingUser);
-
-        await unitOfWork.AccountRepository.UpdateAsync(account);
 
         await unitOfWork.CommitAsync();
 

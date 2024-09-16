@@ -6,9 +6,7 @@ namespace DreamLuso.Security.Services;
 
 public class DataProtectionService : IDataProtectionService
 {
-
     public record DataProtectionKeys(byte[] PasswordHash, byte[] PasswordSalt);
-
     public DataProtectionKeys Protect(string password)
     {
         using var hmac = new HMACSHA512();

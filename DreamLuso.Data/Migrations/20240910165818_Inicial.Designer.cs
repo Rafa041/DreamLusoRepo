@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DreamLuso.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240607103224_Inicial")]
+    [Migration("20240910165818_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -21,7 +21,7 @@ namespace DreamLuso.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("DreamLuso")
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -364,7 +364,7 @@ namespace DreamLuso.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid?>("RealStateAgentId")
+                    b.Property<Guid>("RealStateAgentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Size")
@@ -390,6 +390,9 @@ namespace DreamLuso.Data.Migrations
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("UserId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("YearBuilt")
                         .HasColumnType("datetime2");
 
@@ -401,6 +404,8 @@ namespace DreamLuso.Data.Migrations
                     b.HasIndex("RealStateAgentId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Property", "DreamLuso");
                 });
@@ -448,7 +453,8 @@ namespace DreamLuso.Data.Migrations
 
                     b.Property<string>("OfficeEmail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("TotalListings")
                         .HasColumnType("int");
@@ -623,15 +629,23 @@ namespace DreamLuso.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DreamLuso.Domain.Model.RealStateAgent", null)
+                    b.HasOne("DreamLuso.Domain.Model.RealStateAgent", "RealStateAgent")
                         .WithMany("Properties")
-                        .HasForeignKey("RealStateAgentId");
+                        .HasForeignKey("RealStateAgentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("DreamLuso.Domain.Model.User", null)
                         .WithMany("FavoriteProperty")
                         .HasForeignKey("UserId");
 
+                    b.HasOne("DreamLuso.Domain.Model.User", null)
+                        .WithMany("Properties")
+                        .HasForeignKey("UserId1");
+
                     b.Navigation("Address");
+
+                    b.Navigation("RealStateAgent");
                 });
 
             modelBuilder.Entity("DreamLuso.Domain.Model.PropertyImages", b =>
@@ -701,6 +715,8 @@ namespace DreamLuso.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("FavoriteProperty");
+
+                    b.Navigation("Properties");
                 });
 #pragma warning restore 612, 618
         }

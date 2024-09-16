@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Favorites> Favorites{ get; set; }
     public DbSet<FinancialTransactions> FinancialTransactions { get; set; }
     public DbSet<Notifications> Notifications { get; set; }
-    public DbSet<Property> Property { get; set; }
+    public DbSet<Property> Properties { get; set; }
     public DbSet<PropertyImages> PropertyImages { get; set; }
     public DbSet<RealStateAgent> RealStateAgent { get; set; }
     public DbSet<User> Users { get; set; }

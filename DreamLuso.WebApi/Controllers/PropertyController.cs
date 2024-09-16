@@ -18,8 +18,6 @@ public class PropertyController : Controller
     }
 
     [HttpPost("Register")]
-    [ProducesResponseType(typeof(CreatePropertyResponse), 200)]
-    [ProducesResponseType(typeof(Error), 400)]
     public async Task<IActionResult> CreateUser([FromBody] CreatePropertyCommand command, CancellationToken cancellationToken)
     {
         var result = await _sender.Send(command, cancellationToken);

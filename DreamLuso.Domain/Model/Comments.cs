@@ -13,7 +13,6 @@ public class Comments : AuditableEntity, IEntity<Guid>
     public int Rating { get; set; }
     public DateTime DateTimePosted { get; set; }
 
-    // Propriedades sugeridas
     // - Indica se o comentário foi sinalizado como inapropriado
     public bool Flagged { get; set; }
 

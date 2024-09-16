@@ -17,6 +17,7 @@ public class User : AuditableEntity, IEntity<Guid>
     public string PhoneNumber { get; set; }
     public DateTime DateOfBirth { get; set; }
     public List<Property> FavoriteProperty { get; set; }
+    public List<Property> Properties { get; set; }
     public User()
     {
         Id = Guid.NewGuid();

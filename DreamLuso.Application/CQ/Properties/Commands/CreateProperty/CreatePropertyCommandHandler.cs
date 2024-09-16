@@ -9,29 +9,37 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
 {
     public async Task<Result<CreatePropertyResponse, Success, Error>> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
     {
-        var newAddress = new Address(
-            Guid.NewGuid(),
-            request.Address.Street,
-            request.Address.City,
-            request.Address.State,
-            request.Address.PostalCode,
-            request.Address.Country,
-            request.Address.AdditionalInfo
-        );
+        // 1. Verificação do Agente Imobiliário (RealStateAgent)
+        var realStateAgent = await unitOfWork.RealStateAgentRepository.RetrieveAsync(request.RealStateAgentId, cancellationToken);
+        if (realStateAgent == null)
+        {
+            return Error.NotFound; // Caso o agente não exista
+        }
 
-        // Verifica se a propriedade já existe
-        var existingProperty = await unitOfWork.AddressRepository.GetByFullAddressAsync(newAddress, cancellationToken);
-        if (existingProperty != null)
-            return Error.ExistingProperty;
+        // 2. Verificação do Endereço (Address)
+        var address = await unitOfWork.AddressRepository.RetrieveAsync(request.AddressId, cancellationToken);
+        if (address == null)
+        {
+            // Caso o endereço não exista, cria um novo
+            address = new Address
+            {
+                Street = request.Street,
+                City = request.City,
+                State = request.State,
+                PostalCode = request.PostalCode,
+                Country = request.Country,
+                AdditionalInfo = request.AdditionalInfo
+            };
+            await unitOfWork.AddressRepository.AddAsync(address, cancellationToken);
+        }
 
-
+        // 3. Criação da Propriedade (Property)
         var newProperty = new Property
         {
-            Id = Guid.NewGuid(),
             Title = request.Title,
             Description = request.Description,
-            Address = newAddress, // Associa o novo endereço à propriedade
-            AddressId = newAddress.Id,
+            AddressId = address.Id,  // ID do endereço (existente ou recém-criado)
+            RealStateAgentId = realStateAgent.Id,  // ID do agente imobiliário existente
             Type = request.Type,
             Size = request.Size,
             Bedrooms = request.Bedrooms,
@@ -39,45 +47,38 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             Price = request.Price,
             Amenities = request.Amenities,
             Status = request.Status,
-            Images = request.Images,
-            DateListed = DateTime.UtcNow,
-            LastModifiedDate = DateTime.UtcNow,
             YearBuilt = request.YearBuilt,
             OwnerInformation = request.OwnerInformation,
             HeatingSystem = request.HeatingSystem,
-            CoolingSystem = request.CoolingSystem
+            CoolingSystem = request.CoolingSystem,
+            DateListed = DateTime.UtcNow,  // Data de listagem
+            LastModifiedDate = DateTime.UtcNow  // Última modificação
         };
 
+        // Adicionar as imagens se houver
+        if (request.Images != null && request.Images.Any())
+        {
+            newProperty.Images = request.Images;
+        }
 
-        await unitOfWork.AddressRepository.AddAsync(newAddress, cancellationToken);
-
-
+        // 4. Adiciona a propriedade ao repositório
         await unitOfWork.PropertyRepository.AddAsync(newProperty, cancellationToken);
 
-
+        // 5. Commit no UnitOfWork
         await unitOfWork.CommitAsync();
 
-
+        // 6. Preparar a resposta
         var response = new CreatePropertyResponse
         {
             Id = newProperty.Id,
             Title = newProperty.Title,
             Description = newProperty.Description,
-            DateListed = newProperty.DateListed,
-            LastModifiedDate = newProperty.LastModifiedDate,
-            Status = newProperty.Status,
             Price = newProperty.Price,
-            Amenities = newProperty.Amenities,
-
-            Street = newAddress.Street,
-            City = newAddress.City,
-            State = newAddress.State,
-            PostalCode = newAddress.PostalCode,
-            Country = newAddress.Country,
-            AdditionalInfo = newAddress.AdditionalInfo
-
+            Status = newProperty.Status,
+            RealStateAgentId = realStateAgent.Id
         };
 
+        // 7. Retornar sucesso com a resposta
         return response;
     }
 }

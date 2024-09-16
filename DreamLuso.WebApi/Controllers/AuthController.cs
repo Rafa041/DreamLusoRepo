@@ -1,4 +1,4 @@
-﻿using DreamLuso.Application.CQ.Accounts;
+﻿using DreamLuso.Application.CQ.Accounts.Queries.Login;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

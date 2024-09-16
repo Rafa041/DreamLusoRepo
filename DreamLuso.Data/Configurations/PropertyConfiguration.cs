@@ -17,13 +17,19 @@ internal class PropertyConfiguration : IEntityTypeConfiguration<Property>
         .IsRequired()
         .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(c => c.Images)
-        .WithOne(c => c.Property)
-        .HasForeignKey(c => c.PropertyId)
+        builder.HasMany(p => p.Images)
+        .WithOne(p => p.Property)
+        .HasForeignKey(p => p.PropertyId)
         .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(p => p.Price)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
+
+        builder.HasOne(p => p.RealStateAgent)
+            .WithMany(r => r.Properties)
+            .HasForeignKey(p => p.RealStateAgentId)
+             .OnDelete(DeleteBehavior.NoAction);
+           
     }
 }

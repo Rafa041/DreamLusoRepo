@@ -9,20 +9,19 @@ public class RealStateAgent : AuditableEntity, IEntity<Guid>
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public User User { get; set; }
-    public List<Property> Properties { get; set; }
     public string OfficeEmail { get; set; }
     public int TotalSales { get; set; }
     public int TotalListings { get; set; }
     public string Certifications { get; set; }
     public List<Languages> LanguagesSpoken { get; set; }
+    public List<Property> Properties { get; set; }
 
     public RealStateAgent()
     {
-        Properties = new List<Property>();
         LanguagesSpoken = new List<Languages>();
     }
 
-    public RealStateAgent(User user, string officeEmail, int totalSales, int totalListings, string certifications, List<Languages> languagesSpoken)
+    public RealStateAgent(User user, string officeEmail, int totalSales, int totalListings, string certifications, List<Languages> languagesSpoken, List<Property> properties)
     {
         User = user;
         UserId = user.Id;
@@ -31,7 +30,7 @@ public class RealStateAgent : AuditableEntity, IEntity<Guid>
         TotalListings = totalListings;
         Certifications = certifications;
         LanguagesSpoken = languagesSpoken ?? new List<Languages>();
-        Properties = new List<Property>();
+        Properties = properties;
     }
 }
 

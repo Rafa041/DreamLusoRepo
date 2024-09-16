@@ -53,6 +53,7 @@ public class UserController : Controller
 
         return updatedMember != null ? Ok(updatedMember.IsSuccess) : NotFound("Member not found.");
     }
+    
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Retrieve(Guid id, CancellationToken cancellationToken)

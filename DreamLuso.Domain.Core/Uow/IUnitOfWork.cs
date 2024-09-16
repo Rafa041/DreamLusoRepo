@@ -10,6 +10,7 @@ public interface IUnitOfWork
     public IAccountRepository AccountRepository { get; }
     public IPropertyRepository PropertyRepository{get;}
     public IAddressRepository AddressRepository { get; }
+    public IRealStateAgentRepository RealStateAgentRepository { get; }
     //JWT
     public ITokenService TokenService { get; }
     public IDataProtectionService DataProtectionService { get; }
