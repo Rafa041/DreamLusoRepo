@@ -5,8 +5,8 @@ namespace DreamLuso.Domain.Model;
 public class FinancialTransactions : AuditableEntity, IEntity<Guid>
 {
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public User User { get; set; }
+    public Guid ClientId { get; set; }
+    public Client Client { get; set; }
     public Guid PropertyId { get; set; }
     public Property Property { get; set; }
     public Guid RealStateAgentId { get; set; }
@@ -21,11 +21,8 @@ public class FinancialTransactions : AuditableEntity, IEntity<Guid>
     // Propriedades sugeridas
     // - Histórico de todas as transações associadas ao usuário
     public string TransactionHistory { get; set; }
+    public FinancialTransactions() { }
 
-    private FinancialTransactions()
-    {
-        Id = Guid.NewGuid();
-    }
     public FinancialTransactions(
         Guid id,
         Guid userId,
@@ -38,7 +35,7 @@ public class FinancialTransactions : AuditableEntity, IEntity<Guid>
         string transactionHistory)
     {
         Id = id;
-        UserId = userId;
+        ClientId = userId;
         Value = value;
         Date = date;
         Description = description;

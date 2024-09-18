@@ -16,6 +16,8 @@ public class Property : AuditableEntity, IEntity<Guid>
     public int Bedrooms { get; set; }
     public int Bathrooms { get; set; }
     public decimal Price { get; set; }
+    public bool IsForRent { get; set; }
+    public bool IsForSale { get; set; }
     public string Amenities { get; set; }
     public PropertyStatus Status { get; set; }
     public List<PropertyImages> Images { get; set; } = new List<PropertyImages>();  // Inicializado para evitar nulls
@@ -43,6 +45,8 @@ public class Property : AuditableEntity, IEntity<Guid>
         int bedrooms,
         int bathrooms,
         decimal price,
+        bool isForRent,
+        bool isForSale,
         string amenities,
         PropertyStatus status,
         List<PropertyImages> images,
@@ -64,6 +68,8 @@ public class Property : AuditableEntity, IEntity<Guid>
         Bedrooms = bedrooms;
         Bathrooms = bathrooms;
         Price = price;
+        IsForRent = isForRent;
+        IsForSale = isForSale;
         Amenities = amenities;
         Status = status;
         Images = images ?? new List<PropertyImages>();  // Garantia de que não seja null

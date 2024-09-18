@@ -7,8 +7,8 @@ public class Contract : AuditableEntity, IEntity<Guid>
     public Guid Id { get; set; }
     public Guid PropertyId { get; set; }
     public Property Property { get; set; }
-    public Guid UserId { get; set; } // Valid is not RealStateAgent
-    public User User { get; set; }
+    public Guid ClientId { get; set; } // Valid is not RealStateAgent
+    public Client Client { get; set; }
     public Guid RealStateAgentId { get; set; }
     public RealStateAgent RealStateAgent { get; set; }
     public DateTime StartDate { get; set; }
@@ -46,7 +46,7 @@ public class Contract : AuditableEntity, IEntity<Guid>
     {
         Id = id;
         PropertyId = propertyId;
-        UserId = userId;
+        ClientId = userId;
         StartDate = startDate;
         EndDate = endDate;
         Value = value;

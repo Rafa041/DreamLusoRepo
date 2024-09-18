@@ -8,6 +8,7 @@ public class PropertyImages : IEntity<Guid>
     public Guid Id { get; set; }
     public Guid PropertyId { get; set; }
     public Property Property { get; set; }
+    public bool IsMainImage { get; set; }
     public string FileName { get; set; }
     [NotMapped]
     public IFormFile Upload { get; set; }
@@ -15,9 +16,10 @@ public class PropertyImages : IEntity<Guid>
     {
         Id = Guid.NewGuid();
     }
-    public PropertyImages(Guid propertyId, string fileName)
+    public PropertyImages(Guid propertyId, string fileName, bool isMainImage)
     {
         PropertyId = propertyId;
         FileName = fileName;
+        IsMainImage = isMainImage;
     }
 }
