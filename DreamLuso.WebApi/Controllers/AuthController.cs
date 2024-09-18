@@ -1,4 +1,6 @@
-﻿using DreamLuso.Application.CQ.Accounts.Queries.Login;
+﻿using DreamLuso.Application.CQ.Accounts.Commands.UpdateAccount;
+using DreamLuso.Application.CQ.Accounts.Queries.Login;
+using DreamLuso.Application.CQ.Users.Commands.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,5 +32,12 @@ public class AuthController : Controller
             return Ok(result.IsSuccess);
         }
         return BadRequest(result.Error);
+    }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateMember([FromBody] UpdateAccountPasswordCommand command)
+    {
+        var updatedAccountPassword = await _sender.Send(command);
+
+        return updatedAccountPassword != null ? Ok(updatedAccountPassword.IsSuccess) : NotFound("Member not found.");
     }
 }

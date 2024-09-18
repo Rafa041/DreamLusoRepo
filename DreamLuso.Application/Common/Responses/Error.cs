@@ -26,4 +26,6 @@ public sealed record Error(string Code, string Description)
 
 
     public static readonly Error ExistingProperty = new("ExistingProperty", "There is already a property with this title and address");
+    public static readonly Error AccountNotFound = new("AccountNotFound", "Account Not Found");
+    public static readonly Error InvalidPassword = new("InvalidPassword", "Invalid Password");
 }

@@ -1,12 +1,14 @@
 <section id="header" class="relative flex h-screen flex-col p-5 font-inter">
-  <div id="header-child" class="relative flex grow flex-col overflow-hidden rounded-3xl bg-neutral-200">
-    <div id="video" class="absolute z-0 h-full w-full object-cover">
-      <video autoplay loop muted playsinline class="h-full w-full object-cover">
-        <source src="https://www.dropbox.com/scl/fi/be17l6fjb0ro1g8qi1agg/pexels-kindel-media-7578550-1440p.mp4?dl=1" type="video/mp4" />
-        Seu navegador não suporta a reprodução de vídeos.
-      </video>
-    </div>
+  <!-- Vídeo de fundo -->
+  <div id="video-background" class="absolute z-0 left-0 top-0 h-full w-full overflow-hidden">
+    <video autoplay loop muted playsinline class="h-full w-full object-cover">
+      <source src="assets/video/intro_dreamLuso.mp4" type="video/mp4" />
+      Seu navegador não suporta a reprodução de vídeos.
+    </video>
+  </div>
 
+  <!-- Conteúdo sobre o vídeo -->
+  <div id="header-child" class="relative flex grow flex-col overflow-hidden rounded-3xl bg-neutral-200 bg-opacity-75 z-10">
     <div id="hero" class="relative z-10 flex grow flex-col p-10">
       <nav class="flex h-14 items-center justify-between">
         <div id="logo" class="text-2xl font-semibold text-white">
@@ -25,8 +27,8 @@
             <a class="text-sm font-medium text-white" href="Register">Sign Up</a>
           </li>
           <li class="flex h-14 w-14 items-center justify-center rounded-full bg-white">
-            <a href="/" title="Menu"
-              ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 fill-neutral-800">
+            <a href="/" title="Menu">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 fill-neutral-800">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
               </svg>
             </a>
@@ -49,9 +51,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
               </svg>
             </button>
-            <div id="video" class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-3xl object-cover">
-              <video autoplay loop muted playsinline>
-                <source src="https://www.dropbox.com/scl/fi/be17l6fjb0ro1g8qi1agg/pexels-kindel-media-7578550-1440p.mp4?dl=1" type="video/mp4" />
+            <div id="video" class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-3xl">
+              <video autoplay loop muted playsinline class="h-full w-full object-cover">
+                <source src="assets/video/intro_dreamLuso.mp4" type="video/mp4" />
                 Seu navegador não suporta a reprodução de vídeos.
               </video>
             </div>
@@ -61,6 +63,8 @@
     </div>
   </div>
 </section>
+
+
 
 <section id="" class="relative w-full font-inter">
   <marquee loop="infinite" behavior="scroll" direction="left" scrollamount="25" class="text-[182px] font-bold text-blue-600">Discover homes that fit your lifestyle.</marquee>

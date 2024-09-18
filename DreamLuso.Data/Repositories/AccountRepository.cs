@@ -20,8 +20,11 @@ public class AccountRepository : PaginatedRepository<Account, Guid> , IAccountRe
     public async Task<Account> GetByEmailAsync(string email)
     {
         var accounts = await _dbSet.ToListAsync();
-        // Compara cada registro com o email fornecido
         var account = accounts.FirstOrDefault(a => a.Email == email);
         return account;
+    }
+    public async Task<Account> GetByUserIdAsync(Guid userId)
+    {
+        return await _context.Accounts.FirstOrDefaultAsync(u => u.UserId == userId);
     }
 }

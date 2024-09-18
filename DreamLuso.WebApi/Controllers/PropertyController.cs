@@ -30,3 +30,5 @@ public class PropertyController : Controller
         return BadRequest(result.Error);
     }
 }
+
+

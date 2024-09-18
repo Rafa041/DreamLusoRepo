@@ -15,12 +15,12 @@ export class HeaderComponent implements OnInit {
   constructor(private http: HttpClient, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.RetrieveAll();
+    //this.RetrieveAll();
   }
 
-  RetrieveAll(): void {
+  /*RetrieveAll(): void {
     this.userService.RetrieveAll().subscribe((x) => (this.users = x));
 
     console.log(this.users);
-  }
+  }*/
 }
