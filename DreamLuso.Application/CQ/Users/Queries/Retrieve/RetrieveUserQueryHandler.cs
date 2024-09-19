@@ -4,18 +4,12 @@ using MediatR;
 
 namespace DreamLuso.Application.CQ.Users.Queries.Retrieve;
 
-public class RetrieveUserQueryHandler : IRequestHandler<RetrieveUserQuery, Result<RetrieveUserResponse, Success, Error>>
+public class RetrieveUserQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<RetrieveUserQuery, Result<RetrieveUserResponse, Success, Error>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public RetrieveUserQueryHandler(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
 
     public async Task<Result<RetrieveUserResponse, Success, Error>> Handle(RetrieveUserQuery request, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.UserRepository.RetrieveAsync(request.Id);
+        var user = await unitOfWork.UserRepository.RetrieveAsync(request.Id);
 
         if (user == null)
             return Error.NotFound;

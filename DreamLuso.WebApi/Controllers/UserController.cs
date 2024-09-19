@@ -1,8 +1,8 @@
 ﻿using DreamLuso.Application.Common.Responses;
 using DreamLuso.Application.CQ.Users.Commands.CreateUser;
 using DreamLuso.Application.CQ.Users.Commands.UpdateUser;
-using DreamLuso.Application.CQ.Users.Queries.GetAllUsers;
 using DreamLuso.Application.CQ.Users.Queries.Retrieve;
+using DreamLuso.Application.CQ.Users.Queries.RetrieveAllUsers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

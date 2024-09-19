@@ -1,5 +1,6 @@
 ﻿using DreamLuso.Application.CQ.Accounts.Commands.UpdateAccount;
 using DreamLuso.Application.CQ.Accounts.Queries.Login;
+using DreamLuso.Application.CQ.Users.Commands.CreateUser;
 using DreamLuso.Application.CQ.Users.Commands.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

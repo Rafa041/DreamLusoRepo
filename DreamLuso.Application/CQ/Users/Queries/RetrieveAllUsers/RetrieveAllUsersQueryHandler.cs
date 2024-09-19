@@ -3,20 +3,13 @@ using DreamLuso.Application.CQ.Users.Queries.Retrieve;
 using DreamLuso.Domain.Core.Interfaces;
 using MediatR;
 
-namespace DreamLuso.Application.CQ.Users.Queries.GetAllUsers;
+namespace DreamLuso.Application.CQ.Users.Queries.RetrieveAllUsers;
 
-public class RetrieveAllUsersQueryHandler : IRequestHandler<RetrieveAllUsersQuery, Result<RetrieveAllUsersResponse, Success, Error>>
+public class RetrieveAllUsersQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<RetrieveAllUsersQuery, Result<RetrieveAllUsersResponse, Success, Error>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public RetrieveAllUsersQueryHandler(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<Result<RetrieveAllUsersResponse, Success, Error>> Handle(RetrieveAllUsersQuery request, CancellationToken cancellationToken)
     {
-        var users = await _unitOfWork.UserRepository.RetrieveAllAsync();
+        var users = await unitOfWork.UserRepository.RetrieveAllAsync();
 
         if (users == null || !users.Any())
             return Error.NotFound;

@@ -31,22 +31,6 @@ public static class DepedencyInjection
                                   .AllowAnyHeader());
         });
 
-        //Em Teste 
-        //services.AddControllers().AddJsonOptions(options =>
-        //{
-        //    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-        //});
-        //services.AddControllers().AddNewtonsoftJson(options =>
-        //{
-        //    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-        //});
-        //JsonSerializerSettings settings = new JsonSerializerSettings
-        //{
-        //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        //};
-
-        //string json = JsonConvert.SerializeObject(settings);
-
         return services;
     }
 
