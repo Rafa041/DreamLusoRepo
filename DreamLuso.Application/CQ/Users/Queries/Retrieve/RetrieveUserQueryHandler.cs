@@ -27,5 +27,6 @@ public class RetrieveUserQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<
         };
 
         return response;
+
     }
 }

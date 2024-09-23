@@ -10,12 +10,13 @@ public class Client : AuditableEntity, IEntity<Guid>
     public User User { get; set; }
     public bool IsBuyer { get; set; }
     public bool IsTenant { get; set; }
-    public DateTime? DateOfFirstTransaction { get; set; }
+    public bool IsActive { get; set; }
     public Client() { }
-    public Client(Guid userId, User user, bool isBuyer, bool isTenant)
+    public Client(Guid userId, User user, bool isBuyer, bool isTenant, bool isActive)
     {
         UserId = userId;
         IsBuyer = isBuyer;
         IsTenant = isTenant;
+        IsActive = isActive;
     }
 }

@@ -6,9 +6,6 @@ using MediatR;
 
 namespace DreamLuso.Application.CQ.Addresses.Queries.RetrieveAllAddress;
 
-public class RetrieveAllAddressQuery : IRequest<Result<RetrieveAllAddressResponse, Success, Error>>
-{
-}
 public class RetrieveAllAddressQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<RetrieveAllAddressQuery, Result<RetrieveAllAddressResponse, Success, Error>>
 {
 

@@ -22,4 +22,8 @@
     <ProjectReference Include="..\DreamLuso.Domain\DreamLuso.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CQ\Clients\Queries\" />
+  </ItemGroup>
+
 </Project>

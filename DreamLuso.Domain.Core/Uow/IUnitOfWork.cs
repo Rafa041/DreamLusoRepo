@@ -11,6 +11,9 @@ public interface IUnitOfWork
     public IPropertyRepository PropertyRepository{get;}
     public IAddressRepository AddressRepository { get; }
     public IRealStateAgentRepository RealStateAgentRepository { get; }
+    public ICategoryRepository CategoryRepository { get; }
+    public IClientRepository ClientRepository { get; }
+
     //JWT
     public ITokenService TokenService { get; }
     public IDataProtectionService DataProtectionService { get; }

@@ -27,26 +27,32 @@ public class Contract : AuditableEntity, IEntity<Guid>
     // - Cláusulas de rescisão do contrato
     public string TerminationClauses { get; set; }
 
-    private Contract()
-    {
-        Id = Guid.NewGuid();
-    }
+    public Contract() { }
     public Contract(
-        Guid id,
-        Guid propertyId,
-        Guid userId,
-        DateTime startDate,
-        DateTime endDate,
-        double value,
-        string termsAndConditions,
-        double additionalFees,
-        string paymentFrequency,
-        bool renewalOption,
-        string terminationClauses)
+           Guid id,
+           Guid propertyId,
+           Property property,
+           Guid clientId,
+           Client client,
+           Guid realStateAgentId,
+           RealStateAgent realStateAgent,
+           DateTime startDate,
+           DateTime endDate,
+           double value,
+           string termsAndConditions,
+           double additionalFees,
+           string paymentFrequency,
+           bool renewalOption,
+           string terminationClauses
+       )
     {
         Id = id;
         PropertyId = propertyId;
-        ClientId = userId;
+        Property = property;
+        ClientId = clientId;
+        Client = client;
+        RealStateAgentId = realStateAgentId;
+        RealStateAgent = realStateAgent;
         StartDate = startDate;
         EndDate = endDate;
         Value = value;
@@ -55,7 +61,6 @@ public class Contract : AuditableEntity, IEntity<Guid>
         PaymentFrequency = paymentFrequency;
         RenewalOption = renewalOption;
         TerminationClauses = terminationClauses;
-
     }
 }
 

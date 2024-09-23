@@ -26,3 +26,13 @@ public class AddressRepository : PaginatedRepository<Address, Guid>, IAddressRep
     }
 
 }
+public class ClientRepository : PaginatedRepository<Client, Guid>, IClientRepository
+{
+    protected readonly ApplicationDbContext _context;
+
+    public ClientRepository(ApplicationDbContext context) : base(context)
+    {
+        _context = context;
+    }
+
+}

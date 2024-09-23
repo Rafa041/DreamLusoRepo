@@ -29,9 +29,10 @@ public static class DependencyInjection
         services.AddScoped<IPropertyRepository, PropertyRepository>();
         services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddScoped<IRealStateAgentRepository, RealStateAgentRepository>();
+        services.AddScoped<IClientRepository, ClientRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
 
         return services;
-
     }
    
 }

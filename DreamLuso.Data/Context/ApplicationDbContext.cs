@@ -1,16 +1,17 @@
 ﻿using DreamLuso.Data.Configurations;
 using DreamLuso.Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
+
 namespace DreamLuso.Data.Context;
 
 public class ApplicationDbContext : DbContext
 {
     public DbSet<Account> Accounts { get; set; }
-    public DbSet<Client> Clients { get; set; }
     public DbSet<Address> Addresses { get; set; }
-    public DbSet<Category> Category { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Client> Clients { get; set; }
     public DbSet<Comments> Comments { get; set; }
+    public DbSet<Contract> Contracts { get; set; }
     public DbSet<Favorites> Favorites{ get; set; }
     public DbSet<FinancialTransactions> FinancialTransactions { get; set; }
     public DbSet<Notifications> Notifications { get; set; }
@@ -27,7 +28,6 @@ public class ApplicationDbContext : DbContext
     {
         
         base.OnConfiguring(optionsBuilder);
-        
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -37,7 +37,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new AccountConfiguration());
         modelBuilder.ApplyConfiguration(new AddressConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new ClientConfiguration());
         modelBuilder.ApplyConfiguration(new CommentsConfiguration());
+        modelBuilder.ApplyConfiguration(new ContractConfiguration());
         modelBuilder.ApplyConfiguration(new FavoritesConfiguration());
         modelBuilder.ApplyConfiguration(new FinancialTransactionsConfiguration());
         modelBuilder.ApplyConfiguration(new NotificationsConfiguration());

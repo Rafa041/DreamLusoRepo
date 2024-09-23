@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DreamLuso.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240910165818_Inicial")]
+    [Migration("20240923193944_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -82,6 +82,9 @@ namespace DreamLuso.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("PorpertyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -119,6 +122,45 @@ namespace DreamLuso.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category", "DreamLuso");
+                });
+
+            modelBuilder.Entity("DreamLuso.Domain.Model.Client", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsBuyer")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTenant")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Clients", "DreamLuso");
                 });
 
             modelBuilder.Entity("DreamLuso.Domain.Model.Comments", b =>
@@ -169,6 +211,73 @@ namespace DreamLuso.Data.Migrations
                     b.ToTable("Comments", "DreamLuso");
                 });
 
+            modelBuilder.Entity("DreamLuso.Domain.Model.Contract", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("AdditionalFees")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentFrequency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PropertyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RealStateAgentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("RenewalOption")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TerminationClauses")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TermsAndConditions")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("PropertyId");
+
+                    b.HasIndex("RealStateAgentId");
+
+                    b.ToTable("Contracts", "DreamLuso");
+                });
+
             modelBuilder.Entity("DreamLuso.Domain.Model.Favorites", b =>
                 {
                     b.Property<Guid>("Id")
@@ -206,6 +315,9 @@ namespace DreamLuso.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -250,19 +362,16 @@ namespace DreamLuso.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<double>("Value")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClientId");
+
                     b.HasIndex("PropertyId");
 
                     b.HasIndex("RealStateAgentId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("FinancialTransactions", "DreamLuso");
                 });
@@ -322,6 +431,9 @@ namespace DreamLuso.Data.Migrations
                     b.Property<Guid>("AddressId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("AddressId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Amenities")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -353,6 +465,15 @@ namespace DreamLuso.Data.Migrations
                     b.Property<string>("HeatingSystem")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsForRent")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsForSale")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -401,6 +522,10 @@ namespace DreamLuso.Data.Migrations
                     b.HasIndex("AddressId")
                         .IsUnique();
 
+                    b.HasIndex("AddressId1")
+                        .IsUnique()
+                        .HasFilter("[AddressId1] IS NOT NULL");
+
                     b.HasIndex("RealStateAgentId");
 
                     b.HasIndex("UserId");
@@ -419,6 +544,9 @@ namespace DreamLuso.Data.Migrations
                     b.Property<string>("FileName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsMainImage")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("PropertyId")
                         .HasColumnType("uniqueidentifier");
@@ -529,6 +657,17 @@ namespace DreamLuso.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DreamLuso.Domain.Model.Client", b =>
+                {
+                    b.HasOne("DreamLuso.Domain.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DreamLuso.Domain.Model.Comments", b =>
                 {
                     b.HasOne("DreamLuso.Domain.Model.Property", "Property")
@@ -546,6 +685,33 @@ namespace DreamLuso.Data.Migrations
                     b.Navigation("Property");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DreamLuso.Domain.Model.Contract", b =>
+                {
+                    b.HasOne("DreamLuso.Domain.Model.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DreamLuso.Domain.Model.Property", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DreamLuso.Domain.Model.RealStateAgent", "RealStateAgent")
+                        .WithMany()
+                        .HasForeignKey("RealStateAgentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Property");
+
+                    b.Navigation("RealStateAgent");
                 });
 
             modelBuilder.Entity("DreamLuso.Domain.Model.Favorites", b =>
@@ -577,6 +743,12 @@ namespace DreamLuso.Data.Migrations
 
             modelBuilder.Entity("DreamLuso.Domain.Model.FinancialTransactions", b =>
                 {
+                    b.HasOne("DreamLuso.Domain.Model.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DreamLuso.Domain.Model.Property", "Property")
                         .WithMany()
                         .HasForeignKey("PropertyId")
@@ -589,28 +761,22 @@ namespace DreamLuso.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DreamLuso.Domain.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Client");
 
                     b.Navigation("Property");
 
                     b.Navigation("RealStateAgent");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DreamLuso.Domain.Model.Notifications", b =>
                 {
-                    b.HasOne("DreamLuso.Domain.Model.User", "RecipentUser")
+                    b.HasOne("DreamLuso.Domain.Model.Client", "RecipentUser")
                         .WithMany()
                         .HasForeignKey("RecipentUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DreamLuso.Domain.Model.User", "SenderUser")
+                    b.HasOne("DreamLuso.Domain.Model.RealStateAgent", "SenderUser")
                         .WithMany()
                         .HasForeignKey("SenderUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -628,6 +794,10 @@ namespace DreamLuso.Data.Migrations
                         .HasForeignKey("DreamLuso.Domain.Model.Property", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("DreamLuso.Domain.Model.Address", null)
+                        .WithOne("Property")
+                        .HasForeignKey("DreamLuso.Domain.Model.Property", "AddressId1");
 
                     b.HasOne("DreamLuso.Domain.Model.RealStateAgent", "RealStateAgent")
                         .WithMany("Properties")
@@ -696,6 +866,12 @@ namespace DreamLuso.Data.Migrations
                         });
 
                     b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DreamLuso.Domain.Model.Address", b =>
+                {
+                    b.Navigation("Property")
                         .IsRequired();
                 });
 
