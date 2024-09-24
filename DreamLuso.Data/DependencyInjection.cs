@@ -24,6 +24,7 @@ public static class DependencyInjection
 
         //Repository
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IPropertyRepository, PropertyRepository>();

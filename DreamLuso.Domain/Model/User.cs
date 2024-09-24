@@ -23,7 +23,8 @@ public class User : AuditableEntity, IEntity<Guid>
         Id = Guid.NewGuid();
         FavoriteProperty = [];
     }
-    public User(string firstName, string lastName, string email, byte[] passwordHash, byte[] passwordSalt, Access access, string imageUrl, string phoneNumber, DateTime dateOfBirth)
+    public User(string firstName, string lastName, string email, byte[] passwordHash, byte[] passwordSalt,
+        Access access, string imageUrl, string phoneNumber, DateTime dateOfBirth)
     {
         Name = new(firstName, lastName);
         Account = new(email, passwordHash,passwordSalt);

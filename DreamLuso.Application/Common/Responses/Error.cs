@@ -31,4 +31,5 @@ public sealed record Error(string Code, string Description)
     public static readonly Error ExistingCategory = new("ExistingCategory", "This category already exists");
     public static readonly Error CategoryNotFound = new("CategoryNotFound", "Category Not Found");
     public static readonly Error CategoryNameAlreadyInUse = new("CategoryNameAlreadyInUse", "Category Name Already In Use");
+    public static readonly Error UserNotFound = new("UserNotFound", "User Not Found");
 }

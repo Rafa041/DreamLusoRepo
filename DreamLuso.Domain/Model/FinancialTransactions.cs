@@ -21,6 +21,9 @@ public class FinancialTransactions : AuditableEntity, IEntity<Guid>
     // Propriedades sugeridas
     // - Histórico de todas as transações associadas ao usuário
     public string TransactionHistory { get; set; }
+
+    public bool IsBuyer { get; set; }
+    public bool IsTenant { get; set; }
     public FinancialTransactions() { }
 
     public FinancialTransactions(
@@ -32,7 +35,10 @@ public class FinancialTransactions : AuditableEntity, IEntity<Guid>
         double referenceId,
         string paymentMethod,
         string transactionStatus,
-        string transactionHistory)
+        string transactionHistory,
+        bool isBuyer,
+        bool isTenant
+        )
     {
         Id = id;
         ClientId = userId;
@@ -43,6 +49,7 @@ public class FinancialTransactions : AuditableEntity, IEntity<Guid>
         PaymentMethod = paymentMethod;
         TransactionStatus = transactionStatus;
         TransactionHistory = transactionHistory;
-
+        IsBuyer = isBuyer;
+        IsTenant = isTenant;
     }
 }

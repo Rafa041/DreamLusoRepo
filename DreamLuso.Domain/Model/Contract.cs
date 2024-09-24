@@ -14,7 +14,6 @@ public class Contract : AuditableEntity, IEntity<Guid>
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public double Value { get; set; }
-
     // Propriedades sugeridas
     // - Termos e condições do contrato
     public string TermsAndConditions { get; set; }
