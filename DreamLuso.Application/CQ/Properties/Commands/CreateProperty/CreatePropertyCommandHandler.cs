@@ -9,36 +9,32 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
 {
     public async Task<Result<CreatePropertyResponse, Success, Error>> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
     {
-        // 1. Verificação do Agente Imobiliário (RealStateAgent)
-        var realStateAgent = await unitOfWork.RealStateAgentRepository.RetrieveAsync(request.RealStateAgentId, cancellationToken);
+        var realStateAgent = await unitOfWork.RealStateAgentRepository.GetByUserIdAsync(request.UserId);
         if (realStateAgent == null)
-        {
-            return Error.NotFound; // Caso o agente não exista
-        }
+            return Error.RealStateAgentNotFound;
 
-        // 2. Verificação do Endereço (Address)
-        var address = await unitOfWork.AddressRepository.RetrieveAsync(request.AddressId, cancellationToken);
-        if (address == null)
+        var address = new Address
         {
-            // Caso o endereço não exista, cria um novo
-            address = new Address
-            {
-                Street = request.Street,
-                City = request.City,
-                State = request.State,
-                PostalCode = request.PostalCode,
-                Country = request.Country,
-                AdditionalInfo = request.AdditionalInfo
-            };
-            await unitOfWork.AddressRepository.AddAsync(address, cancellationToken);
-        }
+            Id = new Guid(),
+            Street = request.Street,
+            City = request.City,
+            State = request.State,
+            PostalCode = request.PostalCode,
+            Country = request.Country,
+            AdditionalInfo = request.AdditionalInfo
+        };
+        var addressResult = await unitOfWork.AddressRepository.GetByFullAddressAsync(address, cancellationToken);
+        if (addressResult != null)
+            return Error.ExistingAddress;
 
-        // 3. Criação da Propriedade (Property)
+        await unitOfWork.AddressRepository.AddAsync(address, cancellationToken);
+
         var newProperty = new Property
         {
+            Id = new Guid(),
             Title = request.Title,
             Description = request.Description,
-            AddressId = address.Id,  // ID do endereço (existente ou recém-criado)
+            AddressId = address.Id,  // ID do endereço
             RealStateAgentId = realStateAgent.Id,  // ID do agente imobiliário existente
             Type = request.Type,
             Size = request.Size,
@@ -55,19 +51,12 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             LastModifiedDate = DateTime.UtcNow  // Última modificação
         };
 
-        // Adicionar as imagens se houver
         if (request.Images != null && request.Images.Any())
-        {
-            newProperty.Images = request.Images;
-        }
-
-        // 4. Adiciona a propriedade ao repositório
+            newProperty.Images = request.Images.Select(image => new PropertyImages(newProperty.Id, image.FileName, image.IsMainImage)).ToList();
+        
         await unitOfWork.PropertyRepository.AddAsync(newProperty, cancellationToken);
-
-        // 5. Commit no UnitOfWork
         await unitOfWork.CommitAsync();
 
-        // 6. Preparar a resposta
         var response = new CreatePropertyResponse
         {
             Id = newProperty.Id,
@@ -75,10 +64,8 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             Description = newProperty.Description,
             Price = newProperty.Price,
             Status = newProperty.Status,
-            RealStateAgentId = realStateAgent.Id
+            UserId = realStateAgent.Id
         };
-
-        // 7. Retornar sucesso com a resposta
         return response;
     }
 }

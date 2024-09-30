@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQ\Clients\Queries\" />
+    <Folder Include="CQ\Contracts\Queries\" />
   </ItemGroup>
 
 </Project>

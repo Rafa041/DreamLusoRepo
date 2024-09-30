@@ -5,6 +5,7 @@ using DreamLuso.Application.CQ.Users.Queries.Retrieve;
 using DreamLuso.Application.CQ.Users.Queries.RetrieveAllUsers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace DreamLuso.WebApi.Controllers;
 

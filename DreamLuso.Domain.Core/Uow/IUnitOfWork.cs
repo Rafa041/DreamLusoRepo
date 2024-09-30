@@ -13,6 +13,8 @@ public interface IUnitOfWork
     public IRealStateAgentRepository RealStateAgentRepository { get; }
     public ICategoryRepository CategoryRepository { get; }
     public IClientRepository ClientRepository { get; }
+    public ICommentRepository CommentRepository { get; }
+    public IContractRepository ContractRepository { get; }
 
     //JWT
     public ITokenService TokenService { get; }

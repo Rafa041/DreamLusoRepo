@@ -27,7 +27,7 @@ public class LoginUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<L
         var response = new LoginUserResponse
         {
             Id = user.Id,
-            Token = token,
+            Token = token
         };
 
         return Success.Ok;

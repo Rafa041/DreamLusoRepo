@@ -13,16 +13,14 @@ public class UpdateAccountCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
         if (account == null)
             return Error.AccountNotFound;
 
-        // Verificação da senha atual
         var isPasswordValid = unitOfWork.DataProtectionService.VerifyPassword(request.OldPassword, account.PasswordHash, account.PasswordSalt);
 
         if (!isPasswordValid)
             return Error.InvalidPassword;
 
-        // Proteção da nova senha
+
         var protectionKeys = unitOfWork.DataProtectionService.Protect(request.NewPassword);
 
-        // Atualizando senha no repositório
         account.PasswordHash = protectionKeys.PasswordHash;
         account.PasswordSalt = protectionKeys.PasswordSalt;
 

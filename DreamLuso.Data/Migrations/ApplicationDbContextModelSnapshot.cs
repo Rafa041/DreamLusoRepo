@@ -79,9 +79,6 @@ namespace DreamLuso.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PorpertyId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -154,7 +151,7 @@ namespace DreamLuso.Data.Migrations
                     b.ToTable("Clients", "DreamLuso");
                 });
 
-            modelBuilder.Entity("DreamLuso.Domain.Model.Comments", b =>
+            modelBuilder.Entity("DreamLuso.Domain.Model.Comment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -428,9 +425,6 @@ namespace DreamLuso.Data.Migrations
                     b.Property<Guid>("AddressId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AddressId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Amenities")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -518,10 +512,6 @@ namespace DreamLuso.Data.Migrations
 
                     b.HasIndex("AddressId")
                         .IsUnique();
-
-                    b.HasIndex("AddressId1")
-                        .IsUnique()
-                        .HasFilter("[AddressId1] IS NOT NULL");
 
                     b.HasIndex("RealStateAgentId");
 
@@ -665,7 +655,7 @@ namespace DreamLuso.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DreamLuso.Domain.Model.Comments", b =>
+            modelBuilder.Entity("DreamLuso.Domain.Model.Comment", b =>
                 {
                     b.HasOne("DreamLuso.Domain.Model.Property", "Property")
                         .WithMany()
@@ -792,10 +782,6 @@ namespace DreamLuso.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DreamLuso.Domain.Model.Address", null)
-                        .WithOne("Property")
-                        .HasForeignKey("DreamLuso.Domain.Model.Property", "AddressId1");
-
                     b.HasOne("DreamLuso.Domain.Model.RealStateAgent", "RealStateAgent")
                         .WithMany("Properties")
                         .HasForeignKey("RealStateAgentId")
@@ -863,12 +849,6 @@ namespace DreamLuso.Data.Migrations
                         });
 
                     b.Navigation("Name")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DreamLuso.Domain.Model.Address", b =>
-                {
-                    b.Navigation("Property")
                         .IsRequired();
                 });
 

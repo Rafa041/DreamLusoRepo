@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DreamLuso.Data.Configurations;
 
-internal class CommentsConfiguration : IEntityTypeConfiguration<Comments>
+internal class CommentsConfiguration : IEntityTypeConfiguration<Comment>
 {
-    public void Configure(EntityTypeBuilder<Comments> builder)
+    public void Configure(EntityTypeBuilder<Comment> builder)
     {
         builder.ToTable("Comments");
     }

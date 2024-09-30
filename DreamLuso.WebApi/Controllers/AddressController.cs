@@ -12,14 +12,7 @@ namespace DreamLuso.WebApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class AddressController(ISender sender) : Controller
-{
-    //private readonly ISender _sender;
-
-    //public AddressController(ISender sender)
-    //{
-    //    _sender = sender;
-    //}
-    
+{    
     [HttpGet("RetrieveAll")]
     public async Task<IActionResult> RetrieveAll(CancellationToken cancellationToken)
     {

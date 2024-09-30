@@ -6,8 +6,6 @@ namespace DreamLuso.Application.CQ.Properties.Commands.CreateProperty;
 
 public class CreatePropertyCommand : IRequest<Result<CreatePropertyResponse, Success, Error>>
 {
-
-
     //Address
     public string Street { get; set; }
     public string City { get; set; }
@@ -17,27 +15,20 @@ public class CreatePropertyCommand : IRequest<Result<CreatePropertyResponse, Suc
     public string AdditionalInfo { get; set; }  // Informações adicionais como número de apartamento
 
     //Real State Agent
-    public required Guid RealStateAgentId { get; init; }
-    public Guid UserId { get; set; }
-    public string OfficeEmail { get; set; }
-    public int TotalSales { get; set; }
-    public int TotalListings { get; set; }
-    public string Certifications { get; set; }
-    public List<Languages> LanguagesSpoken { get; set; }
+    public Guid UserId { get; init; }
 
     //Property
-    public required string Title { get; init; }
-    public required string Description { get; init; }
-    public required Guid AddressId { get; init; }
-    public required PropertyType Type { get; init; }
-    public required double Size { get; init; }
-    public required int Bedrooms { get; init; }
-    public required int Bathrooms { get; init; }
-    public required decimal Price { get; init; }
+    public  string Title { get; init; }
+    public  string Description { get; init; }
+    public  PropertyType Type { get; init; }
+    public  double Size { get; init; }
+    public  int Bedrooms { get; init; }
+    public  int Bathrooms { get; init; }
+    public  decimal Price { get; init; }
     public string? Amenities { get; init; }
-    public required PropertyStatus Status { get; init; }
+    public  PropertyStatus Status { get; init; }
     public List<PropertyImages>? Images { get; init; }  // Apenas IDs das imagens
-    public required DateTime YearBuilt { get; init; }
+    public  DateTime YearBuilt { get; init; }
     public string? OwnerInformation { get; init; }
     public string? HeatingSystem { get; init; }
     public string? CoolingSystem { get; init; }

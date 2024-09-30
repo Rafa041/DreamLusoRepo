@@ -17,14 +17,16 @@ public class PropertyController : Controller
         _sender = sender;
     }
 
-    [HttpPost("Register")]
-    public async Task<IActionResult> CreateUser([FromBody] CreatePropertyCommand command, CancellationToken cancellationToken)
+    [HttpPost("Create")]
+    [ProducesResponseType(typeof(CreatePropertyResponse), 200)]
+    [ProducesResponseType(typeof(Error), 400)]
+    public async Task<IActionResult> CreateProperty([FromBody] CreatePropertyCommand command, CancellationToken cancellationToken)
     {
         var result = await _sender.Send(command, cancellationToken);
 
         if (result.IsSuccess)
         {
-            return Ok(result.IsSuccess);
+            return Ok(result);
         }
 
         return BadRequest(result.Error);

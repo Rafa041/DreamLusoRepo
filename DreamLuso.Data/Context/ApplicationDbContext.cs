@@ -10,7 +10,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Client> Clients { get; set; }
-    public DbSet<Comments> Comments { get; set; }
+    public DbSet<Comment> Comments { get; set; }
     public DbSet<Contract> Contracts { get; set; }
     public DbSet<Favorites> Favorites{ get; set; }
     public DbSet<FinancialTransactions> FinancialTransactions { get; set; }

@@ -32,4 +32,11 @@ public sealed record Error(string Code, string Description)
     public static readonly Error CategoryNotFound = new("CategoryNotFound", "Category Not Found");
     public static readonly Error CategoryNameAlreadyInUse = new("CategoryNameAlreadyInUse", "Category Name Already In Use");
     public static readonly Error UserNotFound = new("UserNotFound", "User Not Found");
+    public static readonly Error ClientNotFound = new("ClientNotFound", "Client Not Found");
+    public static readonly Error ClientsEmptyDatabase = new("ClientsEmptyDatabase", "Not data found");
+    public static readonly Error CommentNotFound = new("CommentNotFound", "Comment Not Found");
+    public static readonly Error ContractNotFound = new("ContractNotFound", "Contract Not Found");
+    public static readonly Error ExistingAddress = new("ExistingAddress", "Existing Address");
+    public static readonly Error RealStateAgentNotFound = new("RealStateAgentNotFound", "Real State Agent Not Found");
+    public static readonly Error InvalidLanguage = new("InvalidLanguage", "The input provided is invalid");
 }

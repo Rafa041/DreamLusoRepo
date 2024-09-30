@@ -8,6 +8,6 @@ namespace DreamLuso.Application.CQ.Clients.Commands.CreateClient;
 
 public class CreateClientCommand : IRequest<Result<CreateClientResponse, Success, Error>>
 {
-    public Guid UserId { get; init; }
+    public required Guid UserId { get; init; }
 
 }

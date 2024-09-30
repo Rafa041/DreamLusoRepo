@@ -5,8 +5,6 @@ namespace DreamLuso.Domain.Model;
 public class Address : AuditableEntity, IEntity<Guid>
 {
     public Guid Id { get; set; }
-    public Property Property { get; set; }
-    public Guid PorpertyId { get; set; }
     public string Street { get; set; }
     public string City { get; set; }
     public string State { get; set; }

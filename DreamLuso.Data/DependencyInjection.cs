@@ -32,6 +32,8 @@ public static class DependencyInjection
         services.AddScoped<IRealStateAgentRepository, RealStateAgentRepository>();
         services.AddScoped<IClientRepository, ClientRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
+        services.AddScoped<IContractRepository, ContractRepository>();
 
         return services;
     }

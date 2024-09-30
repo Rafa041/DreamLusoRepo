@@ -2,7 +2,7 @@
 using DreamLuso.Domain.Common;
 namespace DreamLuso.Domain.Model;
 
-public class Comments : AuditableEntity, IEntity<Guid>
+public class Comment : AuditableEntity, IEntity<Guid>
 {
     public Guid Id { get; set; }
     public Guid PropertyId { get; set; }
@@ -16,11 +16,8 @@ public class Comments : AuditableEntity, IEntity<Guid>
     // - Indica se o comentário foi sinalizado como inapropriado
     public bool Flagged { get; set; }
 
-    private Comments()
-    {
-        Id = Guid.NewGuid();
-    }
-    public Comments(
+    public Comment() { }
+    public Comment(
         Guid id,
         Guid propertyId,
         Guid userId,
