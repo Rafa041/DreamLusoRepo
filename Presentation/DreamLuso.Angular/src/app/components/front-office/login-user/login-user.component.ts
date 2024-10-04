@@ -7,38 +7,48 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './login-user.component.html',
   styleUrl: './login-user.component.scss'
 })
+
 export class LoginUserComponent implements OnInit {
+
   loginObj: LoginModel = {} as LoginModel;
   errorMessage: string = '';
-  loginSuccess: boolean = false;
-  loginFailure: boolean = false;
+  loginStatus: boolean = false; // Usar uma única propriedade para controlar o status
   constructor(private router: Router, private authService: AuthService) {}
-
 
   ngOnInit() {
     if (sessionStorage.getItem('loggedUser')) {
-      this.router.navigateByUrl('');
+      this.redirectToDashboard();
     }
   }
+
   onLogin() {
     this.authService.login(this.loginObj).subscribe({
-      next: (res) => {
-        this.loginSuccess = true;
-        sessionStorage.setItem('loggedUser', JSON.stringify(res));
-        setTimeout(() => {
-          this.router.navigateByUrl('/dashboard');
-        }, 2000);
-      },
-      error: (error) => {
-        this.errorMessage = error.message || 'Ocorreu um erro durante o login';
-        this.loginFailure = true;
-        setTimeout(() => {
-          this.loginFailure = false;
-        }, 2000);
-      }
+      next: (res) => this.handleLoginSuccess(res),
+      error: (error) => this.handleLoginError(error)
     });
   }
+
   signUp() {
     this.router.navigateByUrl('/register');
+  }
+
+  private handleLoginSuccess(res: any) {
+    sessionStorage.setItem('loggedUser', JSON.stringify(res));
+    this.loginStatus = true;
+    setTimeout(() => {
+      this.redirectToDashboard();
+    }, 2000);
+  }
+
+  private handleLoginError(error: any) {
+    this.errorMessage = error.message || 'Ocorreu um erro durante o login';
+    this.loginStatus = false;
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 2000);
+  }
+
+  private redirectToDashboard() {
+    this.router.navigateByUrl('/header');
   }
 }

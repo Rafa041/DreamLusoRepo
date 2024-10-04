@@ -10,10 +10,12 @@ public class FileStorageService : IFileStorageService
     public FileStorageService(IConfiguration configuration)
     {
         _uploadDirectory = configuration.GetValue<string>("FileStorage:UploadDirectory")
-            ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                               ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 
         if (!Directory.Exists(_uploadDirectory))
+        {
             Directory.CreateDirectory(_uploadDirectory);
+        }
     }
     public async Task<string> SaveFileAsync(IFormFile file, CancellationToken cancellationToken)
     {

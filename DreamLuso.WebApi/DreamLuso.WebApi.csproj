@@ -24,4 +24,9 @@
     <ProjectReference Include="..\DreamLuso.IoC\DreamLuso.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Uploads\" />
+  </ItemGroup>
+
 </Project>

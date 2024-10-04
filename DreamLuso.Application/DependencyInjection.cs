@@ -25,8 +25,8 @@ public static class DepedencyInjection
 
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowAngularApp",
-                builder => builder.WithOrigins("http://localhost:4200")
+            options.AddPolicy("AllowAllOrigins",
+                builder => builder.AllowAnyOrigin()
                                   .AllowAnyMethod()
                                   .AllowAnyHeader());
         });

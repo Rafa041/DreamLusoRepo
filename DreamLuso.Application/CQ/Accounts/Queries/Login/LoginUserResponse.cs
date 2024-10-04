@@ -2,6 +2,6 @@
 
 public class LoginUserResponse
 {
-    public required Guid Id { get; set; }
-    public required string Token { get; set; }
+    public Guid Id { get; set; }
+    public string Token { get; set; }
 }

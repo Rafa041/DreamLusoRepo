@@ -18,6 +18,7 @@ const routes: Routes = [
     ],
 
   },
+  { path: 'userlist', component: UserListComponent },
   { path: 'login', component: LoginUserComponent },
 ];
 

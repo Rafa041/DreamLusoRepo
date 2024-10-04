@@ -30,6 +30,6 @@ public class LoginUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<L
             Token = token
         };
 
-        return Success.Ok;
+        return response;
     }
 }

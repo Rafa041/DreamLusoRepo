@@ -5,6 +5,7 @@ using DreamLuso.Application.CQ.Addresses.Commands.CreateAddress;
 using DreamLuso.Application.CQ.Addresses.Commands.UpdateAddress;
 using DreamLuso.Application.CQ.Addresses.Queries.Retrieve;
 using DreamLuso.Application.CQ.Addresses.Queries.RetrieveAllAddress;
+using DreamLuso.Application.CQ.Properties.Commands.CreateProperty;
 using DreamLuso.Application.CQ.RealStateAgents.Commands.CreateRealStateAgent;
 using DreamLuso.Application.CQ.RealStateAgents.Commands.UpdateRealStateAgent;
 using DreamLuso.Application.CQ.RealStateAgents.Queries.Retrieve;
@@ -16,17 +17,28 @@ using DreamLuso.Application.CQ.Users.Queries.RetrieveAllUsers;
 using DreamLuso.IoC;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddIoCServices(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthorization();
+
 
 var app = builder.Build();
+app.UseDeveloperExceptionPage();
+app.UseStaticFiles(); // Isso habilita o serviço de arquivos estáticos
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
+    RequestPath = "/uploads"
+});
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
@@ -39,28 +51,27 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseCors("AllowAngularApp");
 
-var sender = app.Services.GetRequiredService<ISender>();
 
-// ========== Users Endpoints ==========
-app.MapPost("/api/user/register", async ([FromBody] CreateUserCommand command, CancellationToken cancellationToken) =>
+ //========== Users Endpoints ==========
+app.MapPost("/api/user/register", async ([FromBody] CreateUserCommand command, ISender sender, CancellationToken cancellationToken) =>
 {
     var result = await sender.Send(command, cancellationToken);
-    return result.IsSuccess ? Results.Ok(result.IsSuccess) : Results.BadRequest(result.Error);
+    return result.IsSuccess;
 })
 .WithName("RegisterUser")
 .Produces<CreateUserResponse>(200)
 .Produces<Error>(400);
 
-app.MapGet("/api/user/retrieveall", async (CancellationToken cancellationToken) =>
+app.MapGet("/api/user/retrieveall", async (ISender sender, CancellationToken cancellationToken) =>
 {
     var result = await sender.Send(new RetrieveAllUsersQuery(), cancellationToken);
-    return result.IsSuccess ? Results.Ok(result.Value) : Results.NotFound(result.Error);
+    return result;
 })
 .WithName("RetrieveAllUsers")
 .Produces<List<RetrieveUserResponse>>(200)
 .Produces<Error>(404);
 
-app.MapPut("/api/user/{id}", async ([FromBody] UpdateUserCommand command) =>
+app.MapPut("/api/user/{id}", async ([FromBody] UpdateUserCommand command, ISender sender ) =>
 {
     var result = await sender.Send(command);
     return result.IsSuccess ? Results.Ok(result.IsSuccess) : Results.NotFound("User not found.");
@@ -69,7 +80,7 @@ app.MapPut("/api/user/{id}", async ([FromBody] UpdateUserCommand command) =>
 .Produces<UpdateUserResponse>(200)
 .Produces<Error>(404);
 
-app.MapGet("/api/user/{id}", async (Guid id, CancellationToken cancellationToken) =>
+app.MapGet("/api/user/{id}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
 {
     var query = new RetrieveUserQuery { Id = id };
     var result = await sender.Send(query, cancellationToken);
@@ -80,7 +91,7 @@ app.MapGet("/api/user/{id}", async (Guid id, CancellationToken cancellationToken
 .Produces<Error>(404);
 
 // ========== RealStateAgent Endpoints ==========
-app.MapPost("/api/realstateagent/create", async ([FromBody] CreateRealStateAgentCommand command, CancellationToken cancellationToken) =>
+app.MapPost("/api/realstateagent/create", async ([FromBody] CreateRealStateAgentCommand command, ISender sender, CancellationToken cancellationToken) =>
 {
     var result = await sender.Send(command, cancellationToken);
     return result.IsSuccess ? Results.Ok(result.IsSuccess) : Results.BadRequest(result.Error);
@@ -89,7 +100,7 @@ app.MapPost("/api/realstateagent/create", async ([FromBody] CreateRealStateAgent
 .Produces<CreateRealStateAgentResponse>(200)
 .Produces<Error>(400);
 
-app.MapGet("/api/realstateagent/retrieveall", async (CancellationToken cancellationToken) =>
+app.MapGet("/api/realstateagent/retrieveall", async (ISender sender, CancellationToken cancellationToken) =>
 {
     var result = await sender.Send(new RetrieveAllRealStateAgentsQuery(), cancellationToken);
     return result.IsSuccess ? Results.Ok(result.Value) : Results.NotFound(result.Error);
@@ -98,7 +109,7 @@ app.MapGet("/api/realstateagent/retrieveall", async (CancellationToken cancellat
 .Produces<List<RetrieveRealStateAgentResponse>>(200)
 .Produces<Error>(404);
 
-app.MapGet("/api/realstateagent/{id}", async (Guid id, CancellationToken cancellationToken) =>
+app.MapGet("/api/realstateagent/{id}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
 {
     var query = new RetrieveRealStateAgentQuery { Id = id };
     var result = await sender.Send(query, cancellationToken);
@@ -108,7 +119,7 @@ app.MapGet("/api/realstateagent/{id}", async (Guid id, CancellationToken cancell
 .Produces<RetrieveRealStateAgentResponse>(200)
 .Produces<Error>(404);
 
-app.MapPut("/api/realstateagent/{id}", async ([FromBody] UpdateRealStateAgentCommand command, CancellationToken cancellationToken) =>
+app.MapPut("/api/realstateagent/{id}", async ([FromBody] UpdateRealStateAgentCommand command, ISender sender, CancellationToken cancellationToken) =>
 {
     var result = await sender.Send(command, cancellationToken);
     return result.IsSuccess ? Results.Ok(result.IsSuccess) : Results.NotFound("RealStateAgent not found.");
@@ -118,16 +129,17 @@ app.MapPut("/api/realstateagent/{id}", async ([FromBody] UpdateRealStateAgentCom
 .Produces<Error>(404);
 
 // ========== Auth Endpoints ==========
-app.MapPost("/api/auth/login", async ([FromBody] LoginUserCommand command) =>
+app.MapPost("/api/auth/login", async ([FromBody] LoginUserCommand command, ISender sender) =>
 {
     var result = await sender.Send(command);
-    return result.IsSuccess ? Results.Ok(result.IsSuccess) : Results.BadRequest(result.Error);
+    return result.IsSuccess ? Results.Ok(new { Token = result.Value.Token, UserId = result.Value.Id }) 
+    : Results.BadRequest(result.Error);
 })
 .WithName("Login")
 .Produces(200)
 .Produces(400);
 
-app.MapPut("/api/auth/{id}", async ([FromBody] UpdateAccountPasswordCommand command) =>
+app.MapPut("/api/auth/{id}", async ([FromBody] UpdateAccountPasswordCommand command, ISender sender ) =>
 {
     var result = await sender.Send(command);
     return result != null ? Results.Ok(result.IsSuccess) : Results.NotFound("Account not found.");
@@ -137,7 +149,7 @@ app.MapPut("/api/auth/{id}", async ([FromBody] UpdateAccountPasswordCommand comm
 .Produces(404);
 
 // ========== Address Endpoints ==========
-app.MapGet("/api/address/retrieveall", async (CancellationToken cancellationToken) =>
+app.MapGet("/api/address/retrieveall", async (ISender sender, CancellationToken cancellationToken) =>
 {
     var result = await sender.Send(new RetrieveAllAddressQuery(), cancellationToken);
     return result.IsSuccess ? Results.Ok(result.Value) : Results.NotFound(result.Error);
@@ -146,7 +158,7 @@ app.MapGet("/api/address/retrieveall", async (CancellationToken cancellationToke
 .Produces(200)
 .Produces(404);
 
-app.MapGet("/api/address/{id:guid}", async (Guid id, CancellationToken cancellationToken) =>
+app.MapGet("/api/address/{id:guid}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
 {
     var query = new RetrieveAddressQuery { Id = id };  
     var result = await sender.Send(query, cancellationToken);
@@ -156,7 +168,7 @@ app.MapGet("/api/address/{id:guid}", async (Guid id, CancellationToken cancellat
 .Produces(200)
 .Produces(404);
 
-app.MapPost("/api/address/create", async ([FromBody] CreateAddressCommand command, CancellationToken cancellationToken) =>
+app.MapPost("/api/address/create", async ([FromBody] CreateAddressCommand command, ISender sender, CancellationToken cancellationToken) =>
 {
     var result = await sender.Send(command, cancellationToken);
     return result.IsSuccess ? Results.Ok(result.IsSuccess) : Results.BadRequest(result.Error);
@@ -165,7 +177,7 @@ app.MapPost("/api/address/create", async ([FromBody] CreateAddressCommand comman
 .Produces(200)
 .Produces(400);
 
-app.MapPut("/api/address/{id:guid}", async ([FromBody] UpdateAddressCommand command) =>
+app.MapPut("/api/address/{id:guid}", async ([FromBody] UpdateAddressCommand command, ISender sender) =>
 {
     var result = await sender.Send(command);
     return result != null && result.IsSuccess ? Results.Ok(result.IsSuccess) : Results.NotFound("Address not found.");
@@ -175,4 +187,16 @@ app.MapPut("/api/address/{id:guid}", async ([FromBody] UpdateAddressCommand comm
 .Produces(404);
 
 // Run the application
+
+
+// ========== Property Endpoints ==========
+app.MapPost("/api/property/register", async ([FromBody] CreatePropertyCommand command, ISender sender, CancellationToken cancellationToken) =>
+{
+    var result = await sender.Send(command, cancellationToken);
+    return result.IsSuccess ? Results.Ok(result.IsSuccess) : Results.BadRequest(result.Error);
+})
+.WithName("RegisterProperty")
+.Produces<CreatePropertyResponse>(200)
+.Produces<Error>(400);
+
 app.Run();
