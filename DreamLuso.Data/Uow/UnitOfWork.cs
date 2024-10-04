@@ -1,4 +1,5 @@
 ﻿using DreamLuso.Data.Context;
+using DreamLuso.Data.Infrastructure;
 using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.Security.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     ITokenService tokenService, IDataProtectionService dataProtectionService, IAccountRepository accountRepository,
     IAddressRepository addressRepository, IPropertyRepository propertyRepository, IRealStateAgentRepository realStateAgentRepository,
     ICategoryRepository categoryRepository,IClientRepository clientRepository, ICommentRepository commentRepository,
-    IContractRepository contractRepository) : IUnitOfWork
+    IContractRepository contractRepository, IFileStorageService fileStorageService) : IUnitOfWork
 {
     private IDbContextTransaction? _transaction;
     private bool _disposed;
@@ -27,11 +28,12 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     public IClientRepository ClientRepository => clientRepository;
     public ICommentRepository CommentRepository => commentRepository;
     public IContractRepository ContractRepository => contractRepository;
+    public IFileStorageService FileStorageService => fileStorageService;
     //JWT
     public ITokenService TokenService => tokenService;
     public IDataProtectionService DataProtectionService => dataProtectionService;
-
     
+
 
     public bool Commit()
     {

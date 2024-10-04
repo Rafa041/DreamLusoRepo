@@ -9,6 +9,7 @@ import { UserService } from './services/user.service';
 import { UserListComponent } from './components/front-office/user-list/user-list.component';
 import { UserComponent } from './components/front-office/user/user.component';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from './services/auth.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { FormsModule } from '@angular/forms';
     provideClientHydration(),
     provideHttpClient(withFetch()),
     UserService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

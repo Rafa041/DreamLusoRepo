@@ -1,26 +1,20 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../../services/user.service';
-import { UsersModel } from '../../../../models/UsersModel';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent  {
 
-  users: UsersModel[] = [];
+  constructor(private router: Router) { }
 
-  constructor(private http: HttpClient, private userService: UserService) {}
-
-  ngOnInit(): void {
-    //this.RetrieveAll();
+  navitageToLogin() {
+    this.router.navigateByUrl('/login');
   }
 
-  /*RetrieveAll(): void {
-    this.userService.RetrieveAll().subscribe((x) => (this.users = x));
-
-    console.log(this.users);
-  }*/
+  navitageToRegister() {
+    this.router.navigateByUrl('/register');
+}
 }

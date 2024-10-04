@@ -52,8 +52,12 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
         };
 
         if (request.Images != null && request.Images.Any())
-            newProperty.Images = request.Images.Select(image => new PropertyImages(newProperty.Id, image.FileName, image.IsMainImage)).ToList();
-        
+            foreach (var image in request.Images)
+            {
+                var fileName = await unitOfWork.FileStorageService.SaveFileAsync(image, cancellationToken);
+                newProperty.Images.Add(new PropertyImages(newProperty.Id, fileName, request.IsMainImage));
+            }
+
         await unitOfWork.PropertyRepository.AddAsync(newProperty, cancellationToken);
         await unitOfWork.CommitAsync();
 

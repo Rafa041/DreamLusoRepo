@@ -1,4 +1,5 @@
 ﻿using DreamLuso.Data.Context;
+using DreamLuso.Data.Infrastructure;
 using DreamLuso.Data.Interceptors;
 using DreamLuso.Data.Repository;
 using DreamLuso.Data.Uow;
@@ -34,6 +35,7 @@ public static class DependencyInjection
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddScoped<IContractRepository, ContractRepository>();
+        services.AddScoped<IFileStorageService, FileStorageService>();//Image => Service.
 
         return services;
     }

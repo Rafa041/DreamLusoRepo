@@ -5,17 +5,20 @@ import { MainComponent } from './main.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { UserComponent } from './user/user.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { LoginUserComponent } from './login-user/login-user.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent,
+    component: HeaderComponent,
     children: [
       { path: 'user', component: UserComponent },
       { path: 'user/:id', component: UserComponent },
 
     ],
+
   },
+  { path: 'login', component: LoginUserComponent },
 ];
 
 @NgModule({
@@ -25,4 +28,4 @@ const routes: Routes = [
 export class FrontOfficeRoutingModule {}
 
 
-// localhost:4200/user/1
+

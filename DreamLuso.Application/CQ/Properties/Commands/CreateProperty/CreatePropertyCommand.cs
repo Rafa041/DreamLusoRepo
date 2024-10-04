@@ -1,6 +1,7 @@
 ﻿using DreamLuso.Application.Common.Responses;
 using DreamLuso.Domain.Model;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace DreamLuso.Application.CQ.Properties.Commands.CreateProperty;
 
@@ -27,10 +28,12 @@ public class CreatePropertyCommand : IRequest<Result<CreatePropertyResponse, Suc
     public  decimal Price { get; init; }
     public string? Amenities { get; init; }
     public  PropertyStatus Status { get; init; }
-    public List<PropertyImages>? Images { get; init; }  // Apenas IDs das imagens
     public  DateTime YearBuilt { get; init; }
     public string? OwnerInformation { get; init; }
     public string? HeatingSystem { get; init; }
     public string? CoolingSystem { get; init; }
+    //Images
+    public List<IFormFile> Images { get; set; }
+    public bool IsMainImage { get; init; }
 }
 
