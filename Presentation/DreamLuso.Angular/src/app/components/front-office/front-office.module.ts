@@ -7,14 +7,14 @@ import { HeaderComponent } from './layout/header/header.component';
 import { UserComponent } from './user/user.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { FormsModule } from '@angular/forms';
-import { LoginUserComponent } from './login-user/login-user.component';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     MainComponent,
     HeaderComponent,
     UserComponent,
     UserListComponent,
-    LoginUserComponent
+    LoginComponent,
   ],
   imports: [FrontOfficeRoutingModule, CommonModule, SharedModule, FormsModule],
 })

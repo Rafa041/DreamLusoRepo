@@ -9,11 +9,11 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:4200/api/auth/login';
+  private apiUrl = 'https://localhost:7224/api/auth/login';
 
   constructor(private httpClient: HttpClient, private router: Router) { }
 
-  login(loginObj: LoginModel): Observable<any> {
-    return this.httpClient.post(this.apiUrl, loginObj);
+  login(loginObj: LoginModel) {
+    return this.httpClient.post<LoginModel>(this.apiUrl, loginObj);
   }
 }

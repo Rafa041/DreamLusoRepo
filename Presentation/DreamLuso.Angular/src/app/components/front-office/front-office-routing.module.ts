@@ -5,7 +5,7 @@ import { MainComponent } from './main.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { UserComponent } from './user/user.component';
 import { UserListComponent } from './user-list/user-list.component';
-import { LoginUserComponent } from './login-user/login-user.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
 
   },
   { path: 'userlist', component: UserListComponent },
-  { path: 'login', component: LoginUserComponent },
+  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({

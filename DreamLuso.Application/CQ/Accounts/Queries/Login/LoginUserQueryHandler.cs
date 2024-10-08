@@ -4,9 +4,9 @@ using MediatR;
 
 namespace DreamLuso.Application.CQ.Accounts.Queries.Login;
 
-public class LoginUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<LoginUserCommand, Result<LoginUserResponse, Success, Error>>
+public class LoginUserQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<LoginUserQuery, Result<LoginUserResponse, Success, Error>>
 {
-    public async Task<Result<LoginUserResponse, Success, Error>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<LoginUserResponse, Success, Error>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
     {
 
         var existingUser = await unitOfWork.AccountRepository.GetByEmailAsync(request.Email);

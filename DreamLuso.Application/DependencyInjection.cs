@@ -25,11 +25,13 @@ public static class DepedencyInjection
 
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowAllOrigins",
-                builder => builder.AllowAnyOrigin()
+            options.AddPolicy("AllowAngularApp",
+                builder => builder.WithOrigins("http://localhost:4200")
                                   .AllowAnyMethod()
                                   .AllowAnyHeader());
         });
+
+
 
         return services;
     }
