@@ -21,6 +21,7 @@ public static class AddressEndpoints
             .WithName("RetrieveAllAddresses")
             .Produces<List<RetrieveAddressResponse>>(200)
             .Produces<Error>(404);
+            
 
         // ========== Retrieve Address by Id Endpoint ==========
         addresses.MapGet("/{id:guid}", Queries.RetrieveAddressById)

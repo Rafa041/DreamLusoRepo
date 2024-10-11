@@ -4,6 +4,7 @@ using DreamLuso.Application.CQ.Users.Commands.UpdateUser;
 using DreamLuso.Application.CQ.Users.Queries.Retrieve;
 using DreamLuso.Application.CQ.Users.Queries.RetrieveAllUsers;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,8 @@ public static class UserEndpoints
         users.MapPost("/register", Queries.RegisterUser)
             .WithName("RegisterUser")
             .Produces<CreateUserResponse>(200)
-            .Produces<Error>(400);
+            .Produces<Error>(400)
+             .DisableAntiforgery();//Em teste 
 
         // ========== Retrieve All Users Endpoint ==========
         users.MapGet("/retrieveall", Queries.RetrieveAllUsers)
@@ -42,16 +44,35 @@ public static class UserEndpoints
 
     private static class Queries
     {
-        // ========== Register User ==========
         public static async Task<Results<Ok<bool>, BadRequest<Error>>> RegisterUser(
-            [FromServices] ISender sender,
-            [FromBody] CreateUserCommand command,
-            CancellationToken cancellationToken)
+      [FromServices] ISender sender,
+     [FromForm] CreateUserCommand command,
+    CancellationToken cancellationToken) 
         {
-            var result = await sender.Send(command, cancellationToken);
-            return result.IsSuccess ? TypedResults.Ok(result.IsSuccess) : TypedResults.BadRequest(result.Error);
-        }
+            
+            if (command.ImageFile != null && command.ImageFile.Length > 0)
+            {
+                var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "ImagesUsers");
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
 
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(command.ImageFile.FileName);
+                var filePath = Path.Combine(folderPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await command.ImageFile.CopyToAsync(stream, cancellationToken);
+                }
+
+                command.ImageUrl = $"/ImagesUsers/{fileName}";
+            }
+
+            var result = await sender.Send(command, cancellationToken);
+
+            return result.IsSuccess
+                ? TypedResults.Ok(result.IsSuccess)
+                : TypedResults.BadRequest(result.Error);
+        }
         // ========== Retrieve All Users ==========
         public static async Task<Results<Ok<IEnumerable<RetrieveUserResponse>>, NotFound<Error>>> RetrieveAllUsers(
             [FromServices] ISender sender,

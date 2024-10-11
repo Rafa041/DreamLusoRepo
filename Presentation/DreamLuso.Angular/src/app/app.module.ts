@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared.module';
 import { ErrorComponent } from './components/common/error/error.component';
 import { UserService } from './services/user.service';
-import { UserListComponent } from './components/front-office/user-list/user-list.component';
-import { UserComponent } from './components/front-office/user/user.component';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 @NgModule({
@@ -21,7 +19,7 @@ import { AuthService } from './services/auth.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     provideClientHydration(),

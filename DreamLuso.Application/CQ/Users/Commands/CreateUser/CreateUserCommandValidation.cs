@@ -22,9 +22,9 @@ public class CreateUserCommandValidation : AbstractValidator<CreateUserCommand>
             .NotEmpty().WithMessage("Password is required.")
             .MinimumLength(6).WithMessage("Password must be at least 6 characters long.");
 
-        RuleFor(x => x.PhoneNumber)
-            .NotEmpty().WithMessage("Phone number is required.")
-            .Matches(@"^\+?[1-9]\d{1,14}$").WithMessage("A valid phone number is required.");
+        //RuleFor(x => x.PhoneNumber)
+        //    .NotEmpty().WithMessage("Phone number is required.")
+        //    .Matches(@"^\+?[1-9]\d{1,14}$").WithMessage("A valid phone number is required.");
 
         RuleFor(x => x.DateOfBirth)
             .NotEmpty().WithMessage("Date of birth is required.")

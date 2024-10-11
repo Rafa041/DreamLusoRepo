@@ -1,0 +1,144 @@
+<section class="relative bg-gray-100 font-inter">
+  <div class="grid grid-cols-12 relative">
+    <!-- Seção de fundo com imagem -->
+    <div class="relative col-span-6 grid h-full bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/2565222/pexels-photo-2565222.jpeg');">
+      <div class="absolute w-full bottom-0 left-0 p-20 bg-gradient-to-t from-neutral-900/70">
+        <h1 class="text-6xl font-bold text-white pt-44">Welcome to<br><span class="text-white">DreamLuso</span></h1>
+        <p class="mt-4 text-xl leading-relaxed text-white">
+          Create your account and get access to all the properties.
+        </p>
+      </div>
+    </div>
+
+    <div aria-label="Main" class="col-span-6 grid items-center justify-center p-8">
+      <div class="max-w-xl lg:max-w-3xl">
+        <form (ngSubmit)="onRegister()" enctype="multipart/form-data" class="mt-8 grid grid-cols-6 gap-6 px-20 bg-white rounded-lg p-10 shadow-lg">
+          <div *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</div>
+          <h2 class="text-2xl font-bold text-gray-800">Register</h2>
+
+          <!-- Campo de Primeiro Nome -->
+          <div class="col-span-6">
+            <label for="FirstName" class="block text-sm font-medium text-gray-600">First Name</label>
+            <input
+              type="text"
+              [(ngModel)]="user.firstName"
+              name="firstName"
+              required
+              class="mt-1 w-full rounded-md text-sm bg-gray-100 text-gray-800 p-3 border-b-2 border-blue-600 focus:ring focus:ring-blue-600"
+            />
+            <span class="text-danger">Please enter your first name</span>
+          </div>
+
+          <!-- Campo de Sobrenome -->
+          <div class="col-span-6">
+            <label for="LastName" class="block text-sm font-medium text-gray-600">Last Name</label>
+            <input
+              type="text"
+              [(ngModel)]="user.lastName"
+              name="lastName"
+              required
+              class="mt-1 w-full rounded-md text-sm bg-gray-100 text-gray-800 p-3 border-b-2 border-blue-600 focus:ring focus:ring-blue-600"
+            />
+            <span class="text-danger">Please enter your last name</span>
+          </div>
+
+          <!-- Campo de Data de Nascimento -->
+          <div class="col-span-6">
+            <label for="Birthdate" class="block text-sm font-medium text-gray-600">Birthdate</label>
+            <input
+              type="date"
+              [(ngModel)]="user.dateOfBirth"
+              name="birthdate"
+              required
+              class="mt-1 w-full rounded-md text-sm bg-gray-100 text-gray-800 p-3 border-b-2 border-blue-600 focus:ring focus:ring-blue-600"
+            />
+            <span class="text-danger">Please enter your birthdate</span>
+          </div>
+
+          <!-- Campo de Email -->
+          <div class="col-span-6">
+            <label for="Email" class="block text-sm font-medium text-gray-600">Email</label>
+            <input
+              type="email"
+              [(ngModel)]="user.email"
+              name="email"
+              required
+              class="mt-1 w-full rounded-md text-sm bg-gray-100 text-gray-800 p-3 border-b-2 border-blue-600 focus:ring focus:ring-blue-600"
+            />
+            <span class="text-danger">Please enter a valid email</span>
+          </div>
+
+          <!-- Campo de Senha -->
+          <div class="col-span-6">
+            <label for="Password" class="block text-sm font-medium text-gray-600">Password</label>
+            <input
+              type="password"
+              [(ngModel)]="user.password"
+              name="password"
+              required
+              class="mt-1 w-full rounded-md text-sm bg-gray-100 text-gray-800 p-3 border-b-2 border-blue-600 focus:ring focus:ring-blue-600"
+            />
+            <span class="text-danger">Password is required</span>
+          </div>
+
+
+          <div class="col-span-full">
+            <label for="cover-photo" class="text-gray-600 block text-sm font-medium leading-6">Avatar photo</label>
+            <div class="border-gray-300 mt-2 flex justify-center rounded-lg border border-dashed px-6 py-10 bg-gray-50"
+                 [ngClass]="{'bg-green-50 border-green-300': selectedFile, 'bg-blue-50': isDragging}"
+                 (dragover)="onDragOver($event)"
+                 (dragleave)="onDragLeave($event)"
+                 (drop)="onDrop($event)">
+              <div class="text-center">
+                <!-- SVG icon here -->
+                <div class="text-gray-600 mt-4 flex text-sm leading-6" *ngIf="!selectedFile">
+                  <label for="file-upload" class="text-indigo-600 focus-within:ring-pink hover:text-blue-600 relative cursor-pointer rounded-md bg-white font-semibold focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2">
+                    <span>Upload a file</span>
+                    <input id="file-upload" type="file" (change)="onFileSelected($event)" class="sr-only" accept="image/*" />
+                  </label>
+                  <p class="pl-1">or drag and drop</p>
+                </div>
+                <p class="text-gray-600 text-xs leading-5" *ngIf="!selectedFile">PNG, JPG, GIF up to 10MB</p>
+                <p class="text-green-600 font-semibold" *ngIf="selectedFile">{{selectedFile.name}} selected</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aceite de marketing -->
+          <div class="col-span-6">
+            <label for="MarketingAccept" class="flex gap-4">
+              <input
+                type="checkbox"
+                id="MarketingAccept"
+                name="marketingAccept"
+                class="h-5 w-5 rounded-md border-gray-200 bg-white shadow-sm"
+              />
+              <span class="text-sm text-gray-600"> I want to receive emails about events, product updates, and company announcements. </span>
+            </label>
+          </div>
+
+          <!-- Termos e condições -->
+          <div class="col-span-6">
+            <p class="text-sm text-gray-500">
+              By creating an account, you agree to our
+              <a href="#" class="text-indigo-600 underline">terms and conditions</a> and
+              <a href="#" class="text-indigo-600 underline">privacy policy</a>.
+            </p>
+          </div>
+
+          <!-- Botão de submissão -->
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button type="submit" class="inline-block shrink-0 rounded-full bg-blue-600 px-12 py-3 text-lg font-bold text-white transition hover:bg-pink hover:shadow-lg focus:outline-none focus:ring">
+              Create an account
+            </button>
+
+            <p class="mt-4 text-sm text-gray-500 sm:mt-0">
+              Already have an account?
+              <a routerLink="/login" class="text-indigo-600 underline">Log in</a>.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

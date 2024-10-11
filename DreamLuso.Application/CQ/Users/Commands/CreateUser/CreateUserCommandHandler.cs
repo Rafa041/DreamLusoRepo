@@ -11,41 +11,51 @@ public class CreateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<
 {
     public async Task<Result<CreateUserResponse, Success, Error>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var existingUser = await unitOfWork.AccountRepository.GetByEmailAsync(request.Email);
-
-        if (existingUser != null)
-            return Error.ExistingUser;
-
-        var protectionKeys = unitOfWork.DataProtectionService.Protect(request.Password);
-
-        var newUser = new User
+       try
         {
-            Name = new Name
+            var existingUser = await unitOfWork.AccountRepository.GetByEmailAsync(request.Email);
+
+            if (existingUser != null)
+                return Error.ExistingUser;
+
+            var protectionKeys = unitOfWork.DataProtectionService.Protect(request.Password);
+
+            var newUser = new User
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName
-            },
-            ImageUrl = request.ImageUrl,
-            PhoneNumber = request.PhoneNumber,
-            DateOfBirth = request.DateOfBirth,
-        };
-        var newAccount = new Account
+                Name = new Name
+                {
+                    FirstName = request.FirstName,
+                    LastName = request.LastName
+                },
+                ImageUrl = request.ImageUrl ?? string.Empty,
+                PhoneNumber = request.PhoneNumber ?? string.Empty,
+                DateOfBirth = request.DateOfBirth,
+            };
+
+            await unitOfWork.UserRepository.AddAsync(newUser, cancellationToken);
+            await unitOfWork.CommitAsync();
+
+            var newAccount = new Account
+            {
+                Email = request.Email,
+                PasswordHash = protectionKeys.PasswordHash,
+                PasswordSalt = protectionKeys.PasswordSalt,
+                UserId = newUser.Id,
+            };
+
+            await unitOfWork.AccountRepository.AddAsync(newAccount, cancellationToken);
+            await unitOfWork.CommitAsync();
+
+            //VER SE E NECESSARIO 
+            var token = unitOfWork.TokenService.GenerateToken(newUser);
+
+            return Success.Ok;
+        }
+        catch(Exception ex)
         {
-            Email = request.Email,
-            PasswordHash = protectionKeys.PasswordHash,
-            PasswordSalt = protectionKeys.PasswordSalt,
-            UserId = newUser.Id,
-        };
-        await unitOfWork.UserRepository.AddAsync(newUser, cancellationToken);
+            Console.WriteLine($"Error occurred: {ex.Message}");
 
-        await unitOfWork.CommitAsync();
-
-        await unitOfWork.AccountRepository.AddAsync(newAccount, cancellationToken);
-
-        await unitOfWork.CommitAsync();
-        //VER SE E NECESSARIO 
-        var token = unitOfWork.TokenService.GenerateToken(newUser);
-
-        return Success.Ok;
+            return Error.NotFound;
+        }
     }
 }

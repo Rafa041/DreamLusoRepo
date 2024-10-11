@@ -2,6 +2,7 @@ using DreamLuso.IoC;
 using DreamLuso.WebApi.Endpoints;
 using DreamLuso.WebApi.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
    
 });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
@@ -47,6 +50,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors("AllowAngularApp");
+app.UseStaticFiles();
 
 // Mapeia o endpoint de tratamento de erros
 app.Map("/error", (HttpContext context) =>
@@ -60,6 +64,5 @@ app.Map("/error", (HttpContext context) =>
     };
     return Results.Problem(errorResponse); // Retorna a resposta em formato ProblemDetails
 });
-
 // Run the application
 app.Run();

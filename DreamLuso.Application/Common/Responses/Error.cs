@@ -39,4 +39,7 @@ public sealed record Error(string Code, string Description)
     public static readonly Error ExistingAddress = new("ExistingAddress", "Existing Address");
     public static readonly Error RealStateAgentNotFound = new("RealStateAgentNotFound", "Real State Agent Not Found");
     public static readonly Error InvalidLanguage = new("InvalidLanguage", "The input provided is invalid");
+    public static readonly Error InvalidAntiForgery = new("InvalidAntiForgery", "Invalid anti-forgery token");
+    public static readonly Error InvalidDateOfBirth = new("InvalidDateOfBirth", "The provided date of birth is invalid.");
+
 }

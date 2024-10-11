@@ -29,7 +29,8 @@ public static class DepedencyInjection
                 builder => builder.WithOrigins("http://localhost:4200")
                                   .AllowAnyMethod()
                                   .AllowAnyHeader());
-        });
+                                    
+    });
 
 
 
