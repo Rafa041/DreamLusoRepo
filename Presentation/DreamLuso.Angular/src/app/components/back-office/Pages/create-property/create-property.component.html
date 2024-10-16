@@ -1,0 +1,224 @@
+<div class="min-h-screen bg-gray-900 text-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-extrabold text-center mb-8">List Your Property</h2>
+
+    <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()" class="space-y-8" enctype="multipart/form-data">
+      <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+
+        <!-- Left Column -->
+        <div class="space-y-6">
+          <!-- Title -->
+          <div>
+            <label for="title" class="block text-sm font-medium text-gray-300">Property Title</label>
+            <input type="text" id="title" formControlName="title" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
+            <textarea id="description" formControlName="description" rows="4" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+          </div>
+
+          <!-- Address -->
+          <div class="space-y-4">
+            <div>
+              <label for="street" class="block text-sm font-medium text-gray-300">Street</label>
+              <input type="text" id="street" formControlName="street" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="city" class="block text-sm font-medium text-gray-300">City</label>
+                <input type="text" id="city" formControlName="city" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              </div>
+              <div>
+                <label for="state" class="block text-sm font-medium text-gray-300">State</label>
+                <input type="text" id="state" formControlName="state" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="postalCode" class="block text-sm font-medium text-gray-300">Postal Code</label>
+                <input type="text" id="postalCode" formControlName="postalCode" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              </div>
+              <div>
+                <label for="country" class="block text-sm font-medium text-gray-300">Country</label>
+                <select id="country" formControlName="country" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <option value="">Select a country</option>
+                  <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-6">
+          <!-- Property Details -->
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label for="size" class="block text-sm font-medium text-gray-300">Size (sq m)</label>
+              <input type="number" id="size" formControlName="size" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+              <label for="bedrooms" class="block text-sm font-medium text-gray-300">Bedrooms</label>
+              <input type="number" id="bedrooms" formControlName="bedrooms" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+              <label for="bathrooms" class="block text-sm font-medium text-gray-300">Bathrooms</label>
+              <input type="number" id="bathrooms" formControlName="bathrooms" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+          </div>
+
+          <!-- New Fields -->
+          <div class="space-y-4">
+            <div>
+              <label for="yearBuilt" class="block text-sm font-medium text-gray-300">Year Built</label>
+              <input type="date" id="yearBuilt" formControlName="yearBuilt" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+              <label for="ownerInformation" class="block text-sm font-medium text-gray-300">Owner Information</label>
+              <textarea id="ownerInformation" formControlName="ownerInformation" rows="2" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+            </div>
+          </div>
+
+          <!-- Type and Status -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="type" class="block text-sm font-medium text-gray-300">Type</label>
+              <select id="type" formControlName="type" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Select a type</option>
+                <option *ngFor="let type of propertyTypes" [value]="type">{{type}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="status" class="block text-sm font-medium text-gray-300">Status</label>
+              <select id="status" formControlName="status" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Select a status</option>
+                <option *ngFor="let status of propertyStatuses" [value]="status">{{status}}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-300">Price</label>
+            <input type="number" id="price" formControlName="price" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          </div>
+
+          <!-- Amenities -->
+          <div>
+            <label for="amenities" class="block text-sm font-medium text-gray-300">Amenities</label>
+            <select id="amenities" (change)="addAmenity($event)" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              <option value="">Select an Amenity</option>
+              <option *ngFor="let amenity of availableAmenities" [value]="amenity">{{amenity}}</option>
+            </select>
+
+            <div class="mt-4 p-4 bg-gray-800 rounded-md">
+              <ul class="list-disc pl-5 space-y-2">
+                <li *ngFor="let amenity of selectedAmenities" class="flex items-center justify-between">
+                  <span>{{amenity}}</span>
+                  <button type="button" (click)="removeAmenity(amenity)" class="text-red-400 hover:text-red-300 text-sm">Remove</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Images Upload -->
+          <div>
+            <label for="images" class="block text-sm font-medium text-gray-300">Property Images</label>
+            <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-700 border-dashed rounded-md">
+              <div class="space-y-1 text-center">
+                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                  <path d="M28 8H20V4H4v40h40V16H28V8z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M24 4v12h12M32 22a6 6 0 11-12 0 6 6 0 0112 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="flex text-sm text-gray-600">
+                  <label for="file-upload" class="relative cursor-pointer bg-gray-800 rounded-md font-medium text-blue-400 hover:text-blue-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                    <span>Upload a file</span>
+                    <input id="file-upload" name="file-upload" type="file" multiple (change)="onFileSelected($event)" class="sr-only" accept=".jpg,.jpeg,.png">
+                  </label>
+                </div>
+                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+              </div>
+            </div>
+          </div>
+          <div id="uploadedImages" class="flex gap-5 mt-5"></div>
+          <!-- Preview de Imagens -->
+          <div class="mt-4">
+            <div *ngFor="let image of uploadedImages; let i = index" class="relative inline-block m-2">
+              <img [src]="image" alt="Uploaded Image" class="h-32 w-32 object-cover rounded-md">
+              <button (click)="removeImage(i)" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">&times;</button>
+              <div class="text-center mt-1">
+                <button *ngIf="!imageMetadatas[i].isMain" (click)="setMainImage(i)" class="text-sm text-blue-500 hover:text-blue-400">Set as Main</button>
+                <span *ngIf="imageMetadatas[i].isMain" class="text-sm text-green-500 font-semibold">Main Image</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex justify-center">
+            <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              Submit
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+  function addSelectedAmenity() {
+        var selectElement = document.getElementById("amenities");
+        var selectedAmenity = selectElement.value;
+
+        // Verificar se o item já foi selecionado
+        var ulElement = document.getElementById("selectedAmenities");
+        if (ulElement.innerHTML.includes(selectedAmenity)) {
+            alert("This amenity is already selected!");
+            return;
+        }
+
+        // Crie um novo elemento de lista e adicione a amenidade selecionada
+        var liElement = document.createElement("li");
+        liElement.textContent = selectedAmenity;
+        ulElement.appendChild(liElement);
+
+        // Adicionar botão para remover o item selecionado
+        var removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.onclick = function() {
+            ulElement.removeChild(liElement);
+        };
+        liElement.appendChild(removeButton);
+    }
+
+    document.getElementById('upload').addEventListener('change', handleFileSelect);
+
+    function handleFileSelect(event) {
+        const files = event.target.files;
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+
+            if (!file.type.match('image.*')) {
+                continue;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const uploadedImagesDiv = document.getElementById('uploadedImages');
+                const imgElement = document.createElement('img');
+                imgElement.src = event.target.result;
+                imgElement.style.width = '150px';
+                imgElement.style.marginRight = '10px';
+                uploadedImagesDiv.appendChild(imgElement);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>

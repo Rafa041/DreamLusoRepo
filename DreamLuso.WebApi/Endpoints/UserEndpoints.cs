@@ -39,7 +39,8 @@ public static class UserEndpoints
         users.MapGet("/{id:guid}", Queries.RetrieveUserById)
             .WithName("RetrieveUser")
             .Produces<RetrieveUserResponse>(200)
-            .Produces<Error>(404);
+            .Produces<Error>(404)
+            .DisableAntiforgery();
     }
 
     private static class Queries

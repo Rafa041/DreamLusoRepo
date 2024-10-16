@@ -8,6 +8,7 @@ public static class RegisterAllEndpoints
         routes.RegisterAuthEndpoints();
         routes.RegisterRealStateAgentEndpoints();
         routes.RegisterUserEndpoints();
+        routes.RegisterPropertyEndpoints();
     }
 }
 

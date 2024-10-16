@@ -13,10 +13,11 @@ public class RealStateAgentRepository : PaginatedRepository<RealStateAgent, Guid
     {
         _context = context;
     }
-    public async Task<RealStateAgent> GetByUserIdAsync(Guid id)
+    public async Task<RealStateAgent> RetrieveByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        var realStates = await _context.RealStateAgent.ToListAsync();
-        var real = realStates.FirstOrDefault(a => a.UserId == id);
-        return real;
+        return await DbSet
+            .Include(r => r.User)
+            .ThenInclude(u => u.Account)
+            .FirstOrDefaultAsync(r => r.UserId == userId, cancellationToken);
     }
 }

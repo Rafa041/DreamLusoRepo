@@ -28,6 +28,7 @@ public static class DepedencyInjection
             options.AddPolicy("AllowAngularApp",
                 builder => builder.WithOrigins("http://localhost:4200")
                                   .AllowAnyMethod()
+                                  .AllowAnyOrigin()
                                   .AllowAnyHeader());
                                     
     });

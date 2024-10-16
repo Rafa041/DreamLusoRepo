@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
-import { UserComponent } from './user/user.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterUserComponent } from './register-user/register-user.component';
+import { UserComponent } from './Pages/user/user.component';
+import { LoginComponent } from './Pages/login/login.component';
+import { RegisterUserComponent } from './Pages/register-user/register-user.component';
+import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterUserComponent },
+  { path: 'dash', component: DashboardComponent },
 ];
 
 @NgModule({

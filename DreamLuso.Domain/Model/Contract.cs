@@ -18,7 +18,7 @@ public class Contract : AuditableEntity, IEntity<Guid>
     // - Termos e condições do contrato
     public string TermsAndConditions { get; set; }
     // - Taxas adicionais associadas ao contrato
-    public double AdditionalFees { get; set; }
+    public double AdditionalFees { get; set; }// tem que ser removido e mandado para FinancialTransaction 
     // - Frequência de pagamento (mensal, anual, etc.)
     public string PaymentFrequency { get; set; }
     // - Opção de renovação do contrato

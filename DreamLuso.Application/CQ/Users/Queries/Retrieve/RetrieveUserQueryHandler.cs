@@ -9,24 +9,32 @@ public class RetrieveUserQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<
 
     public async Task<Result<RetrieveUserResponse, Success, Error>> Handle(RetrieveUserQuery request, CancellationToken cancellationToken)
     {
-        var user = await unitOfWork.UserRepository.RetrieveAsync(request.Id);
-
-        if (user == null)
-            return Error.NotFound;
-
-        var response = new RetrieveUserResponse
+        try
         {
-            Id = user.Id,
-            FirstName = user.Name.FirstName,
-            LastName = user.Name.LastName,
-            Email = user.Account.Email,
-            Access = user.Access,
-            ImageUrl = user.ImageUrl,
-            PhoneNumber = user.PhoneNumber,
-            DateOfBirth = user.DateOfBirth
-        };
+            var user = await unitOfWork.UserRepository.RetrieveAsync(request.Id);
 
-        return response;
+            if (user == null)
+                return Error.NotFound;
+
+            var response = new RetrieveUserResponse
+            {
+                Id = user.Id,
+                FirstName = user.Name.FirstName,
+                LastName = user.Name.LastName,
+                Email = user.Account.Email,
+                Access = user.Access,
+                ImageUrl = user.ImageUrl,
+                PhoneNumber = user.PhoneNumber,
+                DateOfBirth = user.DateOfBirth
+            };
+
+            return response;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return Error.NotFound;
+        }
 
     }
 }

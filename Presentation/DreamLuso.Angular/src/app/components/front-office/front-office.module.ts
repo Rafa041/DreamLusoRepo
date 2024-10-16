@@ -4,18 +4,21 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared.module';
 import { FrontOfficeRoutingModule } from './front-office-routing.module';
 import { HeaderComponent } from './layout/header/header.component';
-import { UserComponent } from './user/user.component';
+import { UserComponent } from './Pages/user/user.component';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
-import { RegisterUserComponent } from './register-user/register-user.component';
-import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { LoginComponent } from './Pages/login/login.component';
+import { RegisterUserComponent } from './Pages/register-user/register-user.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from './Pages/dashboard/dashboard.component';
+
 @NgModule({
   declarations: [
     MainComponent,
     HeaderComponent,
     UserComponent,
     LoginComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    DashboardComponent
   ],
   imports: [FrontOfficeRoutingModule, CommonModule, SharedModule, FormsModule, HttpClientModule],
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { LoginModel } from '../../../models/LoginModel';
+import { AuthService } from '../../../../services/auth.service';
+import { LoginModel } from '../../../../models/LoginModel';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     // Se o usuário já estiver logado, redireciona para o dashboard
     if (sessionStorage.getItem('loggedUser')) {
-      this.router.navigateByUrl('/header');
+      this.router.navigateByUrl('/');
     }
   }
 
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
           setTimeout(() => {
             this.loginStatus = false;
-            this.router.navigateByUrl('/header');
+            this.router.navigateByUrl('/');
           }, 2000);
         },
         error: (error) => {

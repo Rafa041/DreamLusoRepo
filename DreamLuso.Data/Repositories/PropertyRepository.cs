@@ -2,6 +2,7 @@
 using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.Domain.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace DreamLuso.Data.Repository;
 
@@ -25,5 +26,16 @@ public class PropertyRepository : PaginatedRepository<Property, Guid>, IProperty
         return await _context.Properties
             .Where(p => !p.IsActive)
             .ToListAsync(cancellationToken);
+    }
+    public async Task<decimal> GetTotalSalesForMonthAsync(int month, int year, CancellationToken cancellationToken)
+    {
+        var startOfMonth = new DateTime(year, month, 1);
+        var endOfMonth = startOfMonth.AddMonths(1);
+
+        return await _context.Properties
+            .Where(p => p.IsForSale && p.Status == PropertyStatus.Sold
+                         && p.DateListed >= startOfMonth
+                         && p.DateListed < endOfMonth)
+            .SumAsync(p => p.Price, cancellationToken);
     }
 }

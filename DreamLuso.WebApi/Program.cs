@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 // Add services to the container
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,7 +52,12 @@ app.UseAuthorization();
 
 app.UseCors("AllowAngularApp");
 app.UseStaticFiles();
-
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
+    RequestPath = "/uploads"
+});
 // Mapeia o endpoint de tratamento de erros
 app.Map("/error", (HttpContext context) =>
 {

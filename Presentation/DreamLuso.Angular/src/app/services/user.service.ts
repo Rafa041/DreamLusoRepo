@@ -2,7 +2,7 @@ import { HttpClient, HttpXsrfTokenExtractor } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from '../models/UserModel';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Register } from '../models/Register';
 
 
@@ -25,7 +25,7 @@ export class UserService {
   }
 
   retrieve(userId: string): Observable<UserModel> {
-    return this.httpClient.get<UserModel>(`${this.apiUrl}/api/User/${userId}`);
+    return this.httpClient.get<UserModel>(`${this.apiUrl}/${userId}`);
   }
 
   register(user: Register, file: File | null): Observable<any> {
