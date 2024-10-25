@@ -27,15 +27,45 @@ public class PropertyRepository : PaginatedRepository<Property, Guid>, IProperty
             .Where(p => !p.IsActive)
             .ToListAsync(cancellationToken);
     }
+    public async Task<IEnumerable<Property>> RetrieveAllAsync(CancellationToken cancellationToken = default)
+    {
+        var properties = await DbSet
+            .Include(p => p.Address)
+            .Include(p => p.Images)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return properties;
+    }
+    public async Task<Property> RetrieveAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Properties
+            .Include(p => p.Address)
+            .Include(p => p.Images)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+    }
+    public async Task<decimal> GetTotalRentedForMonthAsync(int month, int year, CancellationToken cancellationToken)
+    {
+        var startOfMonth = new DateTime(year, month, 1);
+        var endOfMonth = startOfMonth.AddMonths(1);
+
+        return await _context.Properties
+            .Where(p => p.Status == PropertyStatus.Rent  // Filtro para arrendamento
+                         && p.DateListed >= startOfMonth
+                         && p.DateListed < endOfMonth)  // Considera apenas propriedades ativas
+            .SumAsync(p => p.Price, cancellationToken);  // Soma o preço do arrendamento
+    }
+
     public async Task<decimal> GetTotalSalesForMonthAsync(int month, int year, CancellationToken cancellationToken)
     {
         var startOfMonth = new DateTime(year, month, 1);
         var endOfMonth = startOfMonth.AddMonths(1);
 
         return await _context.Properties
-            .Where(p => p.IsForSale && p.Status == PropertyStatus.Sold
+            .Where(p => p.Status == PropertyStatus.Sale  // Filtro para arrendamento
                          && p.DateListed >= startOfMonth
-                         && p.DateListed < endOfMonth)
-            .SumAsync(p => p.Price, cancellationToken);
+                         && p.DateListed < endOfMonth)  // Considera apenas propriedades ativas
+            .SumAsync(p => p.Price, cancellationToken);  // Soma o preço do arrendamento
     }
 }

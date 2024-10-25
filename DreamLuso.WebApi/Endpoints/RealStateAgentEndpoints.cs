@@ -13,7 +13,7 @@ public static class RealStateAgentEndpoints
 {
     public static void RegisterRealStateAgentEndpoints(this IEndpointRouteBuilder routes)
     {
-        var agents = routes.MapGroup("api/realstateagent").RequireAuthorization();//Ter atenção ao Authorization
+        var agents = routes.MapGroup("api/realstateagent");//Ter atenção ao Authorization
 
         // ========== Create Real State Agent Endpoint ==========
         agents.MapPost("/create", Queries.CreateRealStateAgent)

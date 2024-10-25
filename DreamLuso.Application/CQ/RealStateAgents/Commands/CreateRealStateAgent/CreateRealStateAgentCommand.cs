@@ -38,13 +38,9 @@ public class CreateRealStateAgentCommandHandler(IUnitOfWork unitOfWork) : IReque
         foreach (var language in request.LanguagesSpoken)
         {
             if (Enum.TryParse<Languages>(language, out var parsedLanguage))
-            {
                 languagesSpoken.Add(parsedLanguage);
-            }
             else
-            {
                 return Error.NotFound;
-            }
         }
 
         var realStateAgent = new RealStateAgent

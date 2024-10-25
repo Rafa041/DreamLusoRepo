@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserModel } from '../models/UserModel';
 import { Observable, of } from 'rxjs';
 import { Register } from '../models/Register';
+import { RetrieveAllUsersResponse, RetrieveUserResponse } from '../models/RetrieveAllUsers';
 
 
 @Injectable({
@@ -12,18 +13,16 @@ import { Register } from '../models/Register';
 export class UserService {
 
 
-// private apiUrl = 'https://localhost:7224/api/User/RetrieveAll';
-
   private apiUrl = 'https://localhost:7224/api/user';
 
   private apiRetrieveAll = '/api/User/RetrieveAll';
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
-  retrieveAll() {
-    return this.httpClient.get<UserModel[]>(this.apiRetrieveAll);
-  }
 
+  getAllUsers(): Observable<{ users: RetrieveUserResponse[] }> {
+    return this.httpClient.get<{ users: RetrieveUserResponse[] }>(`${this.apiUrl}/retrieveall`);
+  }
   retrieve(userId: string): Observable<UserModel> {
     return this.httpClient.get<UserModel>(`${this.apiUrl}/${userId}`);
   }

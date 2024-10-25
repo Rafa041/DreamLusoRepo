@@ -10,16 +10,14 @@ public class PropertyImages : IEntity<Guid>
     public Guid PropertyId { get; set; }
     [JsonIgnore]
     public Property Property { get; set; }
-    public bool IsMainImage { get; set; }
     public string FileName { get; set; }
     [NotMapped]
     [JsonIgnore]
     public IFormFile Upload { get; set; }
     public PropertyImages() { }
-    public PropertyImages(Guid propertyId, string fileName, bool isMainImage)
+    public PropertyImages(Guid propertyId, string fileName)
     {
         PropertyId = propertyId;
         FileName = fileName;
-        IsMainImage = isMainImage;
     }
 }

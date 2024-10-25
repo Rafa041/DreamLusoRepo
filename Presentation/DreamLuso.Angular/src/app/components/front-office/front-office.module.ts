@@ -5,7 +5,7 @@ import { SharedModule } from '../../shared.module';
 import { FrontOfficeRoutingModule } from './front-office-routing.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { UserComponent } from './Pages/user/user.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './Pages/login/login.component';
 import { RegisterUserComponent } from './Pages/register-user/register-user.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,6 +20,13 @@ import { DashboardComponent } from './Pages/dashboard/dashboard.component';
     RegisterUserComponent,
     DashboardComponent
   ],
-  imports: [FrontOfficeRoutingModule, CommonModule, SharedModule, FormsModule, HttpClientModule],
+  imports: [
+    FrontOfficeRoutingModule,
+    CommonModule,
+    SharedModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
+  ],
 })
 export class FrontOfficeModule {}

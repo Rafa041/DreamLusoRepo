@@ -1,4 +1,5 @@
 export interface Property {
+  [key: string]: any;  // This allows string s
   id?: string;
   title: string;
   description: string;
@@ -7,19 +8,19 @@ export interface Property {
   state: string;
   postalCode: string;
   country: string;
-  additionalInfo?: string;  // Adicionando AdditionalInfo
-  userId: string;  // Este agora representa o UserId
+  additionalInfo?: string;
+  userId: string;
   type: PropertyType;
   size: number;
   bedrooms: number;
   bathrooms: number;
   price: number;
-  amenities?: string;  // Tornado opcional para corresponder ao backend
+  amenities: string;
   status: PropertyStatus;
-  yearBuilt?: string;  // Adicionando YearBuilt
-  ownerInformation?: string;  // Adicionando OwnerInformation
-  heatingSystem?: string;  // Adicionando HeatingSystem
-  coolingSystem?: string;  // Adicionando CoolingSystem
+  yearBuilt?: string;
+  ownerInformation?: string;
+  heatingSystem?: string;
+  coolingSystem?: string;
   images?: PropertyImage[];
 }
 
@@ -29,7 +30,6 @@ export interface PropertyImage {
   fileName: string;
   imagePath?: string;
   file?: File;
-  isMain: boolean;  // Adicionando isMain para controlar a imagem principal
 }
 
 export enum PropertyType {

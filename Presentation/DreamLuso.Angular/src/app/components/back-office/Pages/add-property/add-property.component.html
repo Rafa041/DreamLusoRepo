@@ -1,0 +1,232 @@
+<div class="flex flex-col font-inter ml-64 px-10">
+  <h3 class="inline-flex font-extrabold text-2xl bg-clip-text text-transparent bg-white mb-5">Property Registration</h3>
+
+  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()" class="gap-10" enctype="multipart/form-data">
+    <div class="flex-1">
+      <!-- TITLE -->
+      <div class="-mx-3 mb-6 flex flex-wrap">
+        <div class="mb-6 w-full px-3 md:mb-0">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="title">Property Title</label>
+          <input
+            type="text"
+            id="title"
+            formControlName="title"
+            required
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+            placeholder="Property Title"
+          />
+        </div>
+      </div>
+      <!-- DESCRIPTION -->
+      <div class="-mx-3 mb-6 flex flex-wrap">
+        <div class="w-full px-3">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="description">Description</label>
+          <textarea
+            rows="10"
+            id="description"
+            formControlName="description"
+            required
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+            placeholder="Description"
+          ></textarea>
+        </div>
+      </div>
+      <!-- ADDRESS -->
+      <div class="-mx-3 mb-6 flex flex-nowrap">
+        <div class="mb-6 w-full px-3 md:w-2/3">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="street"> Street </label>
+          <input
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+            id="street"
+            formControlName="street"
+            type="text"
+            placeholder="CA 95134 San Jose"
+          />
+        </div>
+        <div class="mb-6 w-full px-3 md:w-1/2">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="zip"> Zip </label>
+          <input
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+            id="postalCode"
+            formControlName="postalCode"
+            type="text"
+            placeholder="0000-000"
+          />
+        </div>
+        <div class="mb-6 w-full px-3 md:w-1/2">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="city"> City </label>
+          <input
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+            id="city"
+            formControlName="city"
+            type="text"
+            placeholder="Lisbon"
+          />
+        </div>
+        <div class="mb-6 w-full px-3 md:w-1/2">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="state"> State </label>
+          <input
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+            id="state"
+            formControlName="state"
+            type="text"
+            placeholder="CA"
+          />
+        </div>
+        <div class="mb-6 w-full px-3 md:w-1/2">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="country"> Country </label>
+          <div class="relative">
+            <select
+              formControlName="country"
+              class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              id="country"
+            >
+              <option value="" class="bg-gray-800">Select a country</option>
+              <option *ngFor="let country of countries" [value]="country" class="bg-gray-800">
+                {{ country }}
+              </option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1">
+      <div class="-mx-3 mb-6 flex flex-wrap">
+        <!-- SIZE -->
+        <div class="mb-6 w-full px-3 md:w-2/4">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="size">Property Size</label>
+          <input
+            type="number"
+            id="size"
+            formControlName="size"
+            required
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+            placeholder="60 sq"
+          />
+        </div>
+        <!-- BEDROOMS -->
+        <div class="mb-6 w-full px-3 md:w-1/4">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="bedrooms">Bedrooms</label>
+          <input
+            type="number"
+            id="bedrooms"
+            formControlName="bedrooms"
+            required
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+            placeholder="3"
+          />
+        </div>
+        <!-- BATHROOMS -->
+        <div class="mb-6 w-full px-3 md:w-1/4">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="bathrooms">Bathrooms</label>
+          <input
+            type="number"
+            id="bathrooms"
+            formControlName="bathrooms"
+            required
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+            placeholder="2"
+          />
+        </div>
+        <!-- TYPE -->
+        <div class="mb-6 w-full px-3 md:w-1/2">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="type">Type</label>
+          <div class="relative">
+            <select
+              formControlName="type"
+              class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              id="type"
+            >
+              <option *ngFor="let type of propertyTypes" [value]="type" class="bg-gray-800">{{ type }}</option>
+            </select>
+          </div>
+        </div>
+        <!-- STATUS -->
+        <div class="mb-6 w-full px-3 md:w-1/2">
+          <label class="mb-3 block text-sm font-medium text-gray-600" for="status">Status</label>
+          <div class="relative">
+            <select
+              formControlName="status"
+              class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              id="status"
+            >
+              <option *ngFor="let status of propertyStatus" [value]="status" class="bg-gray-800">
+                {{ status }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+       <!-- AMENITIES -->
+       <div formArrayName="amenities" class="mb-6 w-full px-3">
+        <label class="mb-3 block text-sm font-medium text-gray-600">Amenities</label>
+        <div class="relative">
+          <select
+            (change)="addAmenity($event)"
+            class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+          >
+            <option value="" class="bg-gray-800">Select an amenity</option>
+            <option *ngFor="let amenity of availableAmenities" [value]="amenity" class="bg-gray-800">{{ amenity }}</option>
+          </select>
+        </div>
+        <ul class="flex gap-2 mt-2">
+          <li *ngFor="let amenity of selectedAmenities" class="flex items-center text-xs gap-2 font-medium text-red-500 bg-red-500/20 p-2 rounded-full">
+            <span class="pl-2">{{ amenity }}</span>
+            <button type="button" (click)="removeAmenity(amenity)" class="rounded-full bg-red-600 p-2 text-red-200">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-3">
+                <path
+                  fill-rule="evenodd"
+                  d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </div>
+       <!-- PRICE -->
+       <div class="mb-6 w-full px-3">
+        <label class="mb-3 block text-sm font-medium text-gray-600" for="price">Price</label>
+        <input
+          type="text"
+          id="price"
+          name="Price"
+          formControlName="price"
+          required
+          class="block w-full appearance-none rounded-xl border border-gray-700/30 bg-gray-800/30 px-6 py-3 text-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+          placeholder="1200€"
+        />
+      </div>
+    <!-- Upload -->
+    <input
+      type="file"
+      accept="image/*"
+      (change)="onImageChange($event)"
+      multiple
+      formControlName="images"
+    />
+
+    <!-- Image Preview -->
+    <div class="w-full">
+      <h4 class="mt-4 font-semibold text-white">Images Preview</h4>
+      <div class="mt-2 flex flex-wrap gap-2">
+        <div *ngFor="let image of imagePreviews" class="relative h-32 w-32 overflow-hidden rounded-lg border border-gray-500">
+          <img [src]="image" alt="Property image" class="h-full w-full object-cover" />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex w-full justify-center">
+      <button type="submit" class="mt-10 mb-5 w-full rounded-lg bg-white px-5 py-2 text-lg font-medium text-gray-900 hover:bg-gray-300 md:w-1/4">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

@@ -9,8 +9,9 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
 {
     public async Task<Result<CreatePropertyResponse, Success, Error>> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
     {
-       try
+        try
         {
+
             var realStateAgent = await unitOfWork.RealStateAgentRepository.RetrieveByUserIdAsync(request.UserId, cancellationToken);
             if (realStateAgent == null)
                 return Error.RealStateAgentNotFound;
@@ -46,19 +47,24 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
                 Amenities = request.Amenities,
                 Status = request.Status,
                 YearBuilt = request.YearBuilt,
-                OwnerInformation = request.OwnerInformation,
-                HeatingSystem = request.HeatingSystem,
-                CoolingSystem = request.CoolingSystem,
                 DateListed = DateTime.UtcNow,  // Data de listagem
-                LastModifiedDate = DateTime.UtcNow  // Última modificação
-            };
+                LastModifiedDate = DateTime.UtcNow, // Última modificação
+                Images = new List<Domain.Model.PropertyImages>(), // Inicializando a lista de imagens
+                
 
+            };
+            await unitOfWork.PropertyRepository.AddAsync(newProperty, cancellationToken);
+            // Verificar e salvar arquivos de imagem
             if (request.Images != null && request.Images.Any())
-                foreach (var image in request.Images)
+            {
+                foreach (var imageFile in request.Images)
                 {
-                    var fileName = await unitOfWork.FileStorageService.SaveFileAsync(image, cancellationToken);
-                    newProperty.Images.Add(new PropertyImages(newProperty.Id, fileName, request.IsMainImage));
+                    // Salvar arquivo e obter o caminho ou nome do arquivo salvo
+                    var fileName = await unitOfWork.FileStorageService.SaveFileAsync(imageFile, cancellationToken);
+                    // Adicionar imagem à propriedade
+                    newProperty.Images.Add(new Domain.Model.PropertyImages(newProperty.Id, fileName));
                 }
+            }
 
             await unitOfWork.PropertyRepository.AddAsync(newProperty, cancellationToken);
             await unitOfWork.CommitAsync();
@@ -74,10 +80,10 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             };
             return response;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            return Error.None;
+            Console.WriteLine(ex.ToString());
+            return Error.PropertyNotFound;
         }
     }
 }

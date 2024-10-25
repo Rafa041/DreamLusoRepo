@@ -8,7 +8,7 @@ public class RetrieveUserResponse
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
-    public Access Access { get; set; }
+    public string Access { get; set; }
     public string ImageUrl { get; set; }
     public string PhoneNumber { get; set; }
     public DateTime DateOfBirth { get; set; }

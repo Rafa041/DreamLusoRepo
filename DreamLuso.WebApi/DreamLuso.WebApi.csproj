@@ -27,6 +27,7 @@
   <ItemGroup>
     <Folder Include="Uploads\" />
     <Folder Include="wwwroot\ImagesUsers\" />
+    <Folder Include="wwwroot\PropertyImages\" />
   </ItemGroup>
 
 </Project>

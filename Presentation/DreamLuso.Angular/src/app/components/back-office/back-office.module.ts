@@ -5,9 +5,12 @@ import { BackOfficeRoutingModule } from './back-office-routing.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { MainComponent } from './main.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CreatePropertyComponent } from './Pages/create-property/create-property.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GetAllUsersComponent } from './Pages/get-all-users/get-all-users.component';
+import { CreateAgentComponent } from './Pages/create-agent/create-agent.component';
+import { AddPropertyComponent } from './Pages/add-property/add-property.component';
+
 
 @NgModule({
   imports: [
@@ -15,13 +18,15 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     SharedModule,
     FormsModule,
-    HttpClientModule,
+    ReactiveFormsModule,
   ],
   declarations: [
-      HeaderComponent,
-      MainComponent,
-      DashboardComponent,
-      CreatePropertyComponent,
-    ]
+    HeaderComponent, // Certifique-se de declarar seus componentes aqui
+    MainComponent,
+    DashboardComponent,
+    GetAllUsersComponent,
+    CreateAgentComponent,
+    AddPropertyComponent,
+  ]
 })
 export class BackOfficeModule { }

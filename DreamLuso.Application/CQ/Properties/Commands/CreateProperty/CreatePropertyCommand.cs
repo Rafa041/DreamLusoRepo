@@ -8,12 +8,12 @@ namespace DreamLuso.Application.CQ.Properties.Commands.CreateProperty;
 public class CreatePropertyCommand : IRequest<Result<CreatePropertyResponse, Success, Error>>
 {
     // Address
-    public string Street { get; set; }
-    public string City { get; set; }
-    public string State { get; set; }
-    public string PostalCode { get; set; }
-    public string Country { get; set; }
-    public string AdditionalInfo { get; set; } // Informações adicionais como número de apartamento
+    public string Street { get; init; }
+    public string City { get; init; }
+    public string State { get; init; }
+    public string PostalCode { get; init; }
+    public string Country { get; init; }
+    public string AdditionalInfo { get; init; } // Informações adicionais como número de apartamento
 
     // Real State Agent
     public Guid UserId { get; init; }
@@ -29,13 +29,12 @@ public class CreatePropertyCommand : IRequest<Result<CreatePropertyResponse, Suc
     public string? Amenities { get; init; }
     public PropertyStatus Status { get; init; }
     public DateTime YearBuilt { get; init; }
-    public string? OwnerInformation { get; init; }
-    public string? HeatingSystem { get; init; }
-    public string? CoolingSystem { get; init; }
-
+    public bool ForSale { get; set; }
+    public bool ForRent { get; set; }
     // Images
-    public List<IFormFile> Images { get; set; }
-    public bool IsMainImage { get; init; }
+    public List<IFormFile> Images { get; set; } = new List<IFormFile>();
+    //public List<PropertyImages> Images { get; set; }
+    public List<string> ImageUrls { get; set; } = new List<string>(); // Guardar as URLs geradas
 
 }
 

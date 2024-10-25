@@ -1,0 +1,158 @@
+<div class="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-8xl mx-auto">
+    <h1 class="text-5xl font-extrabold text-center mb-12 text-blue-400">List Your Property</h1>
+
+    <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()" class="space-y-12" enctype="multipart/form-data">
+      <div class="grid grid-cols-1 gap-y-8 gap-x-8 lg:grid-cols-2">
+        <!-- Left Column -->
+        <div class="space-y-8 bg-gray-800 p-8 rounded-lg shadow-lg">
+          <h2 class="text-2xl font-bold mb-6 text-blue-300">Property Details</h2>
+
+          <!-- Title -->
+          <div>
+            <label for="title" class="block text-lg font-medium text-gray-300 mb-2">Property Title</label>
+            <input type="text" id="title" formControlName="title" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label for="description" class="block text-lg font-medium text-gray-300 mb-2">Description</label>
+            <textarea id="description" formControlName="description" rows="6" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"></textarea>
+          </div>
+
+          <!-- Address -->
+          <div class="space-y-6">
+            <h3 class="text-xl font-semibold text-blue-300">Address</h3>
+            <div>
+              <label for="street" class="block text-lg font-medium text-gray-300 mb-2">Street</label>
+              <input type="text" id="street" formControlName="street" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+            </div>
+            <div class="grid grid-cols-2 gap-6">
+              <div>
+                <label for="city" class="block text-lg font-medium text-gray-300 mb-2">City</label>
+                <input type="text" id="city" formControlName="city" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+              </div>
+              <div>
+                <label for="state" class="block text-lg font-medium text-gray-300 mb-2">State</label>
+                <input type="text" id="state" formControlName="state" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-6">
+              <div>
+                <label for="postalCode" class="block text-lg font-medium text-gray-300 mb-2">Postal Code</label>
+                <input type="text" id="postalCode" formControlName="postalCode" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+              </div>
+              <div>
+                <label for="country" class="block text-lg font-medium text-gray-300 mb-2">Country</label>
+                <select id="country" formControlName="country" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+                  <option value="">Select a country</option>
+                  <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-8 bg-gray-800 p-8 rounded-lg shadow-lg">
+          <h2 class="text-2xl font-bold mb-6 text-blue-300">Property Specifications</h2>
+
+         <!-- Property Details -->
+          <div class="grid grid-cols-3 gap-6">
+            <div>
+              <label for="size" class="block text-lg font-medium text-gray-300 mb-2">Size (sq m)</label>
+              <input type="number" id="size" formControlName="size" placeholder="e.g. 100"
+                    class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+            </div>
+            <div>
+              <label for="bedrooms" class="block text-lg font-medium text-gray-300 mb-2">Bedrooms</label>
+              <input type="number" id="bedrooms" formControlName="bedrooms" placeholder="e.g. 3"
+                    class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+            </div>
+            <div>
+              <label for="bathrooms" class="block text-lg font-medium text-gray-300 mb-2">Bathrooms</label>
+              <input type="number" id="bathrooms" formControlName="bathrooms" placeholder="e.g. 2"
+                    class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+            </div>
+          </div>
+
+              <!-- Year Built -->
+              <div>
+                <label for="yearBuilt" class="block text-lg font-medium text-gray-300 mb-2">Year Built</label>
+                <input type="number" id="yearBuilt" formControlName="yearBuilt" placeholder="e.g. 2000"
+                      class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+                <div *ngIf="propertyForm.get('yearBuilt')?.errors?.['invalidYear']" class="text-red-500 mt-2">
+                  Please enter a valid year between 1800 and the current year.
+                </div>
+              </div>
+
+              <!-- Type and Status -->
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <label for="type" class="block text-lg font-medium text-gray-300 mb-2">Type</label>
+                  <select id="type" formControlName="type"
+                          class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+                    <option value="">Select a type</option>
+                    <option *ngFor="let type of propertyTypes" [value]="type">{{type}}</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="status" class="block text-lg font-medium text-gray-300 mb-2">Status</label>
+                  <select id="status" formControlName="status"
+                          class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+                    <option value="">Select a status</option>
+                    <option *ngFor="let status of propertyStatuses" [value]="status">{{status}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Price -->
+              <div>
+                <label for="price" class="block text-lg font-medium text-gray-300 mb-2">Price</label>
+                <input type="number" id="price" formControlName="price" placeholder="e.g. 250000"
+                      class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+              </div>
+
+              <!-- Additional Info -->
+              <div>
+                <label for="additionalInfo" class="block text-lg font-medium text-gray-300 mb-2">Additional Info</label>
+                <input type="text" id="additionalInfo" formControlName="additionalInfo" placeholder="e.g. Recently renovated"
+                      class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+              </div>
+
+          <!-- Amenities -->
+          <div>
+            <label for="amenities" class="block text-lg font-medium text-gray-300 mb-2">Amenities</label>
+            <select id="amenities" (change)="addAmenity($event)" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-lg shadow-sm py-3 px-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+              <option value="">Select an Amenity</option>
+              <option *ngFor="let amenity of availableAmenities" [value]="amenity">{{amenity}}</option>
+            </select>
+
+            <div class="mt-6 p-4 bg-gray-700 rounded-lg">
+              <h4 class="text-lg font-semibold mb-3 text-blue-300">Selected Amenities</h4>
+              <ul class="list-disc pl-5 space-y-2">
+                <li *ngFor="let amenity of selectedAmenities" class="flex items-center justify-between">
+                  <span class="text-lg">{{amenity}}</span>
+                  <button type="button" (click)="removeAmenity(amenity)" class="text-red-400 hover:text-red-300 text-base font-semibold">Remove</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Images Upload -->
+          <div class="mt-8">
+            <h3 class="text-xl font-semibold text-blue-300 mb-4">Property Images</h3>
+            <app-image-upload (imagesChanged)="onImagesChanged($event)"></app-image-upload>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-center mt-12">
+        <button type="submit" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-xl font-bold rounded-lg shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+          Submit Property Listing
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

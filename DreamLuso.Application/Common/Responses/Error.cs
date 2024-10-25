@@ -41,5 +41,6 @@ public sealed record Error(string Code, string Description)
     public static readonly Error InvalidLanguage = new("InvalidLanguage", "The input provided is invalid");
     public static readonly Error InvalidAntiForgery = new("InvalidAntiForgery", "Invalid anti-forgery token");
     public static readonly Error InvalidDateOfBirth = new("InvalidDateOfBirth", "The provided date of birth is invalid.");
+    public static readonly Error PropertyNotFound = new("PropertyNotFound", "Property Not Found");
 
 }

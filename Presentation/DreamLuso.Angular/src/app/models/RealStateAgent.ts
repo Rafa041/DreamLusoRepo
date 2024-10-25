@@ -11,3 +11,11 @@ export interface RealStateAgent {
   certifications: string[];
   languagesSpoken: string[];
 }
+export enum Languages {
+  English = 'English',
+  Spanish = 'Spanish',
+  French = 'French',
+  German = 'German',
+  Italian = 'Italian',
+  Portuguese = 'Portuguese'
+}

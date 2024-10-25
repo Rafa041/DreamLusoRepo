@@ -8,6 +8,9 @@ import { ErrorComponent } from './components/common/error/error.component';
 import { UserService } from './services/user.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
+import { PropertyService } from './services/property.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RealStateAgentService } from './services/realStateAgent.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +21,7 @@ import { AuthService } from './services/auth.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
   ],
@@ -25,7 +29,9 @@ import { AuthService } from './services/auth.service';
     provideClientHydration(),
     provideHttpClient(withFetch()),
     UserService,
-    AuthService
+    AuthService,
+    PropertyService,
+    RealStateAgentService
   ],
   bootstrap: [AppComponent]
 })

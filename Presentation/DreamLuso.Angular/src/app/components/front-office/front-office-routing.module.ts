@@ -5,6 +5,7 @@ import { UserComponent } from './Pages/user/user.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { RegisterUserComponent } from './Pages/register-user/register-user.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
+import { CreateAgentComponent } from '../back-office/Pages/create-agent/create-agent.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterUserComponent },
   { path: 'dash', component: DashboardComponent },
+  { path: 'createAgent', component: CreateAgentComponent },
 ];
 
 @NgModule({

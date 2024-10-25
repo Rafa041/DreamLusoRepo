@@ -86,10 +86,10 @@ public static class UserEndpoints
         // ========== Update User ==========
         public static async Task<Results<Ok<bool>, NotFound<string>>> UpdateUser(
             [FromServices] ISender sender,
-            [FromBody] UpdateUserCommand command)
+            [FromForm] UpdateUserCommand command)
         {
             var result = await sender.Send(command);
-            return result.IsSuccess ? TypedResults.Ok(result.IsSuccess) : TypedResults.NotFound("User not found.");
+            return result.IsSuccess ? TypedResults.Ok(result.IsSuccess) : TypedResults.NotFound(result.Error.Description);
         }
 
         // ========== Retrieve User by Id ==========

@@ -30,9 +30,14 @@ public static class DepedencyInjection
                                   .AllowAnyMethod()
                                   .AllowAnyOrigin()
                                   .AllowAnyHeader());
-                                    
-    });
 
+
+        });
+        services.AddControllers()
+       .AddJsonOptions(options =>
+       {
+           options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+       });
 
 
         return services;

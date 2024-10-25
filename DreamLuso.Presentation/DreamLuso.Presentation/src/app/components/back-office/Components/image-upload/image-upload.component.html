@@ -1,0 +1,16 @@
+<div>
+  <label for="images" class="block text-sm font-medium text-gray-300">Property Images</label>
+  <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-700 border-dashed rounded-md">
+    <div class="space-y-1 text-center">
+      <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M28 8H20V4H4v40h40V16H28V8z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M24 4v12h12M32 22a6 6 0 11-12 0 6 6 0 0112 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <div>
+        <label for="images" class="block text-sm font-medium text-gray-300">Property Images</label>
+        <input type="file" id="images" (change)="onFileSelected($event)" multiple accept="image/*" class="mt-1 block w-full">
+      </div>
+      <div id="uploadedImages" class="mt-4 flex flex-wrap"></div>
+    </div>
+  </div>
+</div>

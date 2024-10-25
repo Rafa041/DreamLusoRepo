@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <Folder Include="CQ\Contracts\Queries\" />
+    <Folder Include="CQ\NewFolder\" />
+    <Folder Include="CQ\PropertyImages\Commands\CreatePropertyImages\" />
   </ItemGroup>
 
 </Project>

@@ -16,8 +16,6 @@ public class Property : AuditableEntity, IEntity<Guid>
     public int Bedrooms { get; set; }
     public int Bathrooms { get; set; }
     public decimal Price { get; set; }
-    public bool IsForRent { get; set; }
-    public bool IsForSale { get; set; }
     public string Amenities { get; set; }
     public PropertyStatus Status { get; set; }
     public List<PropertyImages> Images { get; set; } = new List<PropertyImages>();  // Inicializado para evitar nulls
@@ -27,9 +25,6 @@ public class Property : AuditableEntity, IEntity<Guid>
 
     // Propriedades adicionais
     public DateTime YearBuilt { get; set; }
-    public string OwnerInformation { get; set; }
-    public string HeatingSystem { get; set; }
-    public string CoolingSystem { get; set; }
     public bool IsActive { get; set; } = true;  // Soft delete flag
     public Property() { }
 
@@ -45,20 +40,15 @@ public class Property : AuditableEntity, IEntity<Guid>
         int bedrooms,
         int bathrooms,
         decimal price,
-        bool isForRent,
-        bool isForSale,
         string amenities,
         PropertyStatus status,
         List<PropertyImages> images,
         DateTime dateListed,
         DateTime lastModifiedDate,
         DateTime yearBuilt,
-        string ownerInformation,
-        string heatingSystem,
-        string coolingSystem,
         bool isActive)
     {
-        Id = id == Guid.Empty ? Guid.NewGuid() : id;  // Verificação para criar novo Guid se necessário
+        Id = id == Guid.Empty ? Guid.NewGuid() : id; 
         Title = title;
         Description = description;
         Address = address;
@@ -68,17 +58,12 @@ public class Property : AuditableEntity, IEntity<Guid>
         Bedrooms = bedrooms;
         Bathrooms = bathrooms;
         Price = price;
-        IsForRent = isForRent;
-        IsForSale = isForSale;
         Amenities = amenities;
         Status = status;
         Images = images ?? new List<PropertyImages>();  // Garantia de que não seja null
         DateListed = dateListed;
         LastModifiedDate = lastModifiedDate;
         YearBuilt = yearBuilt;
-        OwnerInformation = ownerInformation;
-        HeatingSystem = heatingSystem;
-        CoolingSystem = coolingSystem;
         IsActive = isActive;
     }
 }
@@ -101,6 +86,7 @@ public enum PropertyStatus
     Rented,
     UnderContract,
     Unavailable,
+    Sale,          // Venda
+    Rent,          // Para Arrendar
     Other
 }
-

@@ -435,10 +435,6 @@ namespace DreamLuso.Data.Migrations
                     b.Property<int>("Bedrooms")
                         .HasColumnType("int");
 
-                    b.Property<string>("CoolingSystem")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -453,25 +449,11 @@ namespace DreamLuso.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("HeatingSystem")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsForRent")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsForSale")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("OwnerInformation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -531,9 +513,6 @@ namespace DreamLuso.Data.Migrations
                     b.Property<string>("FileName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsMainImage")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("PropertyId")
                         .HasColumnType("uniqueidentifier");

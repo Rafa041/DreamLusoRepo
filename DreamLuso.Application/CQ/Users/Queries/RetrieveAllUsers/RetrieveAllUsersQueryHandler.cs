@@ -20,7 +20,7 @@ public class RetrieveAllUsersQueryHandler(IUnitOfWork unitOfWork) : IRequestHand
             FirstName = user.Name.FirstName,
             LastName = user.Name.LastName,
             Email = user.Account.Email,
-            Access = user.Access,
+            Access = user.Access.ToString(),
             ImageUrl = user.ImageUrl,
             PhoneNumber = user.PhoneNumber,
             DateOfBirth = user.DateOfBirth
