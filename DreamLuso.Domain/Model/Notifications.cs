@@ -10,7 +10,7 @@ public class Notifications : IEntity<Guid>
     public Guid RecipientId { get; set; }
     public User RecipentUser { get; set; }
     public string Message { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime CreateAt { get; set; }
     public NotificationStatus Status { get; set; }
     public NotificationType Type { get; set; }
     public DateTime ExpirationDate { get; set; }
@@ -19,25 +19,36 @@ public class Notifications : IEntity<Guid>
     public NotificationPriority Priority { get; set; }
     public Notifications() { }
 
+
     public Notifications(
         Guid senderId,
         Guid recipientId,
         string message,
-        DateTime date,
-        NotificationStatus status,
-        NotificationType notificationType,
-        DateTime expirationDate,
-        NotificationPriority notificationPriority)
+        NotificationType type,
+        NotificationPriority priority,
+        string referenceType = null) : this()
     {
         SenderId = senderId;
         RecipientId = recipientId;
         Message = message;
-        Date = date;
-        Status = status;
-        Type = notificationType;
-        ExpirationDate = expirationDate;
-        Priority = notificationPriority;
-
+        Type = type;
+        Priority = priority;
+        Type = type;
+        ExpirationDate = CalculateExpirationDate(type, priority);
+    }
+    public void MarkAsRead()
+    {
+        Status = NotificationStatus.Read;
+    }
+    private DateTime CalculateExpirationDate(NotificationType type, NotificationPriority priority)
+    {
+        return type switch
+        {
+            NotificationType.Payment => DateTime.UtcNow.AddMonths(6),
+            NotificationType.ContractUpdate => DateTime.UtcNow.AddMonths(3),
+            NotificationType.PropertyUpdate => DateTime.UtcNow.AddDays(30),
+            _ => DateTime.UtcNow.AddDays(7)
+        };
     }
 }
 
@@ -45,15 +56,23 @@ public enum NotificationStatus
 {
     Unread,
     Read,
-    Acknowledged,
-    Pending
+    Archived,
+    Deleted
 }
 public enum NotificationType
 {
-    Alert,
+    Payment,
+    Contract,
+    ContractUpdate,
+    PropertyUpdate,
+    PropertyViewing,
+    NewListing,
+    PriceChange,
+    DocumentUpload,
+    SystemAlert,
     Message,
-    Update,
-    Payment
+    Favorite,
+    Visit
 }
 
 public enum NotificationPriority

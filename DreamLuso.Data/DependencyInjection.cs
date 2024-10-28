@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
+using StackExchange.Redis.Extensions.Core.Configuration;
 
 namespace DreamLuso.Data;
 
@@ -21,6 +23,17 @@ public static class DependencyInjection
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(configuration.GetConnectionString("DreamLusoCS"));
+        });
+        services.AddSingleton<IConnectionMultiplexer>(sp =>
+        {
+            var connectionString = configuration.GetConnectionString("Redis");
+            return RedisConfiguration.CreateConnection(connectionString);
+        });
+
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetConnectionString("Redis");
+            options.InstanceName = "HorizonCache:";
         });
 
         //Repository
@@ -38,6 +51,8 @@ public static class DependencyInjection
         services.AddScoped<IFileStorageService, FileStorageService>();//Image => Service.
         services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         services.AddScoped<IPropertyVisitRepository, PropertyVisitRepository>();
+
+        services.AddScoped<INotificationStrategy, HybridNotificationStrategy>();
 
         return services;
     }
