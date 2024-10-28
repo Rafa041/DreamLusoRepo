@@ -6,9 +6,9 @@ public class Notifications : IEntity<Guid>
 {
     public Guid Id { get; set; }
     public Guid SenderId { get; set; }
-    public RealStateAgent SenderUser { get; set; }
+    public User SenderUser { get; set; }
     public Guid RecipientId { get; set; }
-    public Client RecipentUser { get; set; }
+    public User RecipentUser { get; set; }
     public string Message { get; set; }
     public DateTime Date { get; set; }
     public NotificationStatus Status { get; set; }

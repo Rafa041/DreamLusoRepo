@@ -25,11 +25,13 @@ export class CreateUserComponent {
 
       if (!validTypes.includes(file.type)) {
         this.errorMessage = 'Invalid file type. Please upload a PNG, JPG, or GIF.';
+        this.selectedFile = null;
         return;
       }
 
       if (file.size > maxSize) {
         this.errorMessage = 'File is too large. Maximum size is 10MB.';
+        this.selectedFile = null;
         return;
       }
 
@@ -40,20 +42,20 @@ export class CreateUserComponent {
 
   onRegister() {
     if (!this.selectedFile) {
-      this.errorMessage = 'Nenhum arquivo selecionado.';
+      this.errorMessage = 'Please select a profile image.';
       return;
     }
 
-    this.userService.register(this.user, this.selectedFile).subscribe(
-      (response) => {
-        console.log('Usuário criado com sucesso!', response);
+    this.userService.register(this.user, this.selectedFile).subscribe({
+      next: (response) => {
+        console.log('User created successfully!', response);
         this.router.navigate(['/login']);
       },
-      (error) => {
-        console.error('Erro ao criar usuário:', error);
-        this.errorMessage = error.message;
+      error: (error) => {
+        console.error('Error creating user:', error);
+        this.errorMessage = error.message || 'An error occurred during registration';
       }
-    );
+    });
   }
 
   onDragOver(event: DragEvent) {

@@ -14,7 +14,8 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     ITokenService tokenService, IDataProtectionService dataProtectionService, IAccountRepository accountRepository,
     IAddressRepository addressRepository, IPropertyRepository propertyRepository, IRealStateAgentRepository realStateAgentRepository,
     ICategoryRepository categoryRepository,IClientRepository clientRepository, ICommentRepository commentRepository,
-    IContractRepository contractRepository, IFileStorageService fileStorageService) : IUnitOfWork
+    IContractRepository contractRepository, IFileStorageService fileStorageService, IInvoiceRepository invoiceRepository,
+    IPropertyVisitRepository propertyVisitRepository) : IUnitOfWork
 {
     private IDbContextTransaction? _transaction;
     private bool _disposed;
@@ -29,6 +30,10 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     public ICommentRepository CommentRepository => commentRepository;
     public IContractRepository ContractRepository => contractRepository;
     public IFileStorageService FileStorageService => fileStorageService;
+    public IInvoiceRepository InvoiceRepository => invoiceRepository;
+    public IPropertyVisitRepository PropertyVisitRepository => propertyVisitRepository;
+
+
     //JWT
     public ITokenService TokenService => tokenService;
     public IDataProtectionService DataProtectionService => dataProtectionService;

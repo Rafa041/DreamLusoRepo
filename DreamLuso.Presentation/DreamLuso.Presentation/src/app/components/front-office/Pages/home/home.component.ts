@@ -16,6 +16,24 @@ export class HomeComponent  {
   errorMessage: string = "";
   private apiUrl = environment.apiUrl;
 
+   // Add these properties
+   isNotificationsOpen = false;
+   notificationCount = 3; // Example count
+   notifications = [
+     {
+       message: 'New property listed in Porto',
+       time: '5 minutes ago'
+     },
+     {
+       message: 'Your saved property price has been updated',
+       time: '1 hour ago'
+     },
+     {
+       message: 'Welcome to DreamLuso!',
+       time: '1 day ago'
+     }
+   ];
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -128,4 +146,23 @@ export class HomeComponent  {
       document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
     }
   }
+  // Add this method
+  toggleNotifications(event: Event) {
+    event.stopPropagation();
+    this.isNotificationsOpen = !this.isNotificationsOpen;
+    // Close other dropdowns when notifications is opened
+    if (this.isNotificationsOpen) {
+      this.isDropdownOpen = false;
+    }
+  }
+
+  // Modify existing document click handler
+  @HostListener('document:click', ['$event'])
+private handleOutsideClick(event: MouseEvent): void {
+  const target = event.target as HTMLElement;
+  if (!target.closest('.relative')) {
+    this.isDropdownOpen = false;
+    this.isNotificationsOpen = false;
+  }
+}
 }

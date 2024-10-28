@@ -36,6 +36,8 @@ public static class DependencyInjection
         services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddScoped<IContractRepository, ContractRepository>();
         services.AddScoped<IFileStorageService, FileStorageService>();//Image => Service.
+        services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+        services.AddScoped<IPropertyVisitRepository, PropertyVisitRepository>();
 
         return services;
     }

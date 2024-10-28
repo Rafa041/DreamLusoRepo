@@ -1,5 +1,6 @@
 ﻿using DreamLuso.Domain.Common;
 using DreamLuso.Domain.Interface;
+using System.Transactions;
 namespace DreamLuso.Domain.Model;
 
 public class Contract : AuditableEntity, IEntity<Guid>
@@ -11,6 +12,8 @@ public class Contract : AuditableEntity, IEntity<Guid>
     public Client Client { get; set; }
     public Guid RealStateAgentId { get; set; }
     public RealStateAgent RealStateAgent { get; set; }
+    public ContractType ContractType { get; set; }
+    public ContractStatus Status { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public double Value { get; set; }
@@ -26,24 +29,39 @@ public class Contract : AuditableEntity, IEntity<Guid>
     // - Cláusulas de rescisão do contrato
     public string TerminationClauses { get; set; }
 
+    public DateTime SignatureDate { get; set; }
+    public decimal? SecurityDeposit { get; set; }
+    public string? InsuranceDetails { get; set; }
+    public string? Notes { get; set; }
+    public string DocumentPath { get; set; }
+    public ICollection<Invoice> Invoices { get; set; }
+    public ICollection<FinancialTransactions> Transactions { get; set; }
+
     public Contract() { }
+
     public Contract(
-           Guid id,
-           Guid propertyId,
-           Property property,
-           Guid clientId,
-           Client client,
-           Guid realStateAgentId,
-           RealStateAgent realStateAgent,
-           DateTime startDate,
-           DateTime endDate,
-           double value,
-           string termsAndConditions,
-           double additionalFees,
-           string paymentFrequency,
-           bool renewalOption,
-           string terminationClauses
-       )
+        Guid id,
+        Guid propertyId,
+        Property property,
+        Guid clientId,
+        Client client,
+        Guid realStateAgentId,
+        RealStateAgent realStateAgent,
+        DateTime startDate,
+        DateTime endDate,
+        double value,
+        string termsAndConditions,
+        string paymentFrequency,
+        bool renewalOption,
+        string terminationClauses,
+        ContractStatus status,
+        DateTime signatureDate,
+        decimal? securityDeposit,
+        string? insuranceDetails,
+        string? notes,
+        string documentPath,
+        ICollection<FinancialTransactions> transactions
+    )
     {
         Id = id;
         PropertyId = propertyId;
@@ -56,10 +74,32 @@ public class Contract : AuditableEntity, IEntity<Guid>
         EndDate = endDate;
         Value = value;
         TermsAndConditions = termsAndConditions;
-        AdditionalFees = additionalFees;
         PaymentFrequency = paymentFrequency;
         RenewalOption = renewalOption;
         TerminationClauses = terminationClauses;
+        Status = status;
+        SignatureDate = signatureDate;
+        SecurityDeposit = securityDeposit;
+        InsuranceDetails = insuranceDetails;
+        Notes = notes;
+        DocumentPath = documentPath;
+        Transactions = transactions;
     }
 }
 
+
+public enum ContractType
+{
+    Sale,
+    Rent,
+}
+
+public enum ContractStatus
+{
+    Draft,
+    Pending,
+    Active,
+    Completed,
+    Terminated,
+    Expired
+}

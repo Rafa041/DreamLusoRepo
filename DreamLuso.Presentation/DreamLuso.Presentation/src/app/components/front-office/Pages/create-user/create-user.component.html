@@ -81,12 +81,30 @@
           <!-- Avatar upload -->
           <div class="col-span-6">
             <label for="cover-photo" class="text-neutral-300 block text-sm font-medium leading-6">Avatar photo</label>
-            <div class="mt-2 flex justify-center rounded-3xl border-2 border-dashed border-neutral-600 px-6 py-10 bg-neutral-700">
+
+            <div
+              class="mt-2 flex justify-center rounded-3xl border-2 border-dashed border-neutral-600 px-6 py-10 bg-neutral-700"
+              (dragover)="onDragOver($event)"
+              (dragleave)="onDragLeave($event)"
+              (drop)="onDrop($event)"
+              [class.border-neutral-400]="isDragging"
+            >
               <div class="text-center">
+                <!-- Show selected file name if exists -->
+                <div *ngIf="selectedFile" class="mb-4 text-neutral-300">
+                  Selected file: {{selectedFile.name}}
+                </div>
+
                 <div class="mt-4 flex text-sm leading-6 text-neutral-300">
                   <label for="file-upload" class="relative cursor-pointer rounded-full bg-neutral-600 px-4 py-2 font-semibold hover:bg-neutral-500 transition duration-200">
                     <span>Upload a file</span>
-                    <input id="file-upload" type="file" class="sr-only" accept="image/*" />
+                    <input
+                      id="file-upload"
+                      type="file"
+                      class="sr-only"
+                      (change)="onFileSelected($event)"
+                      accept="image/*"
+                    />
                   </label>
                   <p class="pl-3 pt-2">or drag and drop</p>
                 </div>

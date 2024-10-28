@@ -6,6 +6,8 @@ import { UserService } from '../../../../services/UserService/user.service';
 import { UserModel } from '../../../../models/UserModel';
 import { environment } from '../../../../../../environment';
 import { RealStateAgentService } from '../../../../services/RealStateAgent/real-state-agent.service';
+import { AuthService } from '../../../../services/AuthService/auth.service';
+import { Access } from '../../../../models/Access';
 
 @Component({
   selector: 'app-retrieve-property-id',
@@ -19,19 +21,25 @@ export class RetrievePropertyIdComponent implements OnInit {
   currentImageIndex: number = 0;
   amenitiesList: string[] = [];
   private apiUrl = environment.apiUrl;
+  isLoggedIn: boolean = false; // Variável para verificar o login do usuário
+  Access = Access;
 
   constructor(
     private route: ActivatedRoute,
     private propertyService: PropertyService,
-    private realStateAgentService: RealStateAgentService
+    private realStateAgentService: RealStateAgentService,
+    private authService: AuthService // Injeta o AuthService
   ) {}
+
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.loadProperty(id);
     }
+    this.isLoggedIn = this.authService.isLoggedIn(); // Verifica se o usuário está logado
   }
+
   loadProperty(id: string): void {
     this.propertyService.retrieve(id).subscribe({
       next: (property) => {
@@ -70,8 +78,7 @@ export class RetrievePropertyIdComponent implements OnInit {
         console.log('Full error:', error);
       }
     });
-}
-
+  }
 
   nextImage(): void {
     if (this.property?.images) {
@@ -86,6 +93,7 @@ export class RetrievePropertyIdComponent implements OnInit {
         : this.currentImageIndex - 1;
     }
   }
+
   getImageUrl(imageUrl: string | undefined): string {
     if (!imageUrl) {
       return 'assets/default-avatar.jpg'; // Path to a default image
@@ -97,4 +105,13 @@ export class RetrievePropertyIdComponent implements OnInit {
   handleImageError(event: any) {
     event.target.src = 'assets/default-avatar.jpg'; // Path to a default image
   }
+
+  scheduleVisit() {
+    // Implementar a lógica de agendamento de visitas aqui
+    console.log('Visit scheduled!'); // Você pode integrar aqui a lógica para agendar a visita
+  }
+  getCurrentDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
 }

@@ -14,16 +14,18 @@
   </div>
 
   <!-- Property Details Content -->
-  <div *ngIf="!loading && property" class="p-8">
+  <div *ngIf="!loading && property" class="p-8 animate-fade-in">
     <div class="max-w-6xl mx-auto">
-      <!-- Image Gallery -->
-      <div class="relative h-96 rounded-xl overflow-hidden mb-8">
+
+      <!-- Image Gallery with Zoom on Hover -->
+      <div class="relative h-96 rounded-xl overflow-hidden mb-8 group">
         <img
           [src]="property.images?.[currentImageIndex]?.imagePath"
           alt="Property Image"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
         >
-        <!-- Image Navigation -->
+
+        <!-- Image Navigation Buttons -->
         <div class="absolute inset-0 flex items-center justify-between p-4">
           <button
             (click)="previousImage()"
@@ -44,70 +46,97 @@
         </div>
       </div>
 
-      <!-- Main Info -->
+     <!-- Main Info -->
       <div class="mb-8">
         <div class="flex justify-between items-start mb-4">
           <h1 class="text-4xl font-bold text-white">{{property.title}}</h1>
-          <span class="text-2xl font-bold text-white">{{property.price | currency:'EUR'}}</span>
+          <span class="text-2xl font-bold text-emerald-400">{{property.price | currency:'EUR'}}</span>
         </div>
-        <p class="text-neutral-300">
-          {{property.street}}, {{property.city}}, {{property.state}} {{property.postalCode}}
-        </p>
+
+        <!-- Enhanced Address Display -->
+        <div class="bg-neutral-800 p-4 rounded-lg mt-4 border border-neutral-700">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <div>
+              <span class="text-neutral-400 text-sm">Location</span>
+              <p class="text-white text-lg font-medium">
+                {{property.street}}, {{property.city}}, {{property.state}} {{property.postalCode}}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Property Specs -->
+      <!-- Property Specs with Icons -->
       <div class="grid grid-cols-4 gap-6 mb-8">
-        <div class="bg-neutral-800 p-4 rounded-lg">
-          <span class="text-neutral-400 block">Bedrooms</span>
-          <span class="text-2xl text-white font-bold">{{property.bedrooms}}</span>
+        <div class="bg-neutral-800 p-4 rounded-lg flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400" viewBox="0 0 24 24" fill="currentColor"><path d="M..."></path></svg>
+          <div>
+            <span class="text-neutral-400 block">Bedrooms</span>
+            <span class="text-2xl text-white font-bold">{{property.bedrooms}}</span>
+          </div>
         </div>
-        <div class="bg-neutral-800 p-4 rounded-lg">
-          <span class="text-neutral-400 block">Bathrooms</span>
-          <span class="text-2xl text-white font-bold">{{property.bathrooms}}</span>
+        <div class="bg-neutral-800 p-4 rounded-lg flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400" viewBox="0 0 24 24" fill="currentColor"><path d="M..."></path></svg>
+          <div>
+            <span class="text-neutral-400 block">Bathrooms</span>
+            <span class="text-2xl text-white font-bold">{{property.bathrooms}}</span>
+          </div>
         </div>
-        <div class="bg-neutral-800 p-4 rounded-lg">
-          <span class="text-neutral-400 block">Size</span>
-          <span class="text-2xl text-white font-bold">{{property.size}}m²</span>
+        <div class="bg-neutral-800 p-4 rounded-lg flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400" viewBox="0 0 24 24" fill="currentColor"><path d="M..."></path></svg>
+          <div>
+            <span class="text-neutral-400 block">Size</span>
+            <span class="text-2xl text-white font-bold">{{property.size}}m²</span>
+          </div>
         </div>
-        <div class="bg-neutral-800 p-4 rounded-lg">
-          <span class="text-neutral-400 block">Year Built</span>
-          <span class="text-2xl text-white font-bold">{{property.yearBuilt}}</span>
+        <div class="bg-neutral-800 p-4 rounded-lg flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400" viewBox="0 0 24 24" fill="currentColor"><path d="M..."></path></svg>
+          <div>
+            <span class="text-neutral-400 block">Year Built</span>
+            <span class="text-2xl text-white font-bold">{{property.yearBuilt | date:'yyyy'}}</span>
+          </div>
         </div>
       </div>
 
-            <!-- Description -->
-            <div class="mb-8">
-              <h2 class="text-2xl font-bold text-white mb-4">Description</h2>
-              <p class="text-neutral-300">{{property.description}}</p>
-            </div>
+      <!-- Description -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-white mb-4">Description</h2>
+        <p class="text-neutral-300">{{property.description}}</p>
+      </div>
 
-            <!-- Property Owner Info -->
-            <div class="mb-8 bg-neutral-800 p-6 rounded-xl">
-              <h2 class="text-2xl font-bold text-white mb-4">Property Owner</h2>
-              <div *ngIf="propertyOwner" class="flex items-center gap-4">
-                <div class="w-16 h-16 rounded-full overflow-hidden">
-                  <img
-                    [src]="getImageUrl(propertyOwner.imageUrl) || 'assets/default-avatar.png'"
-                    alt="Owner"
-                    class="w-full h-full object-cover"
-                  >
-                </div>
-                <div>
-                  <h3 class="text-xl font-semibold text-white">
-                    {{propertyOwner.firstName}} {{propertyOwner.lastName}}
-                  </h3>
-                  <p class="text-neutral-400">{{propertyOwner.email}}</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Amenities -->
+      <!-- Property Owner Info with Tooltip -->
+      <div class="mb-8 bg-neutral-800 p-6 rounded-xl group relative">
+        <h2 class="text-2xl font-bold text-white mb-4">Property Owner</h2>
+        <div *ngIf="propertyOwner" class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-full overflow-hidden">
+            <img
+              [src]="getImageUrl(propertyOwner.imageUrl) || 'assets/default-avatar.png'"
+              alt="Owner"
+              class="w-full h-full object-cover"
+            >
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-white">
+              {{propertyOwner.firstName}} {{propertyOwner.lastName}}
+            </h3>
+            <p class="text-neutral-400">{{propertyOwner.email}}</p>
+            <p class="text-neutral-400" *ngIf="propertyOwner.phoneNumber">{{propertyOwner.phoneNumber }}</p>
+          </div>
+          <div class="absolute -top-10 bg-black bg-opacity-80 text-white text-sm p-2 rounded shadow-lg opacity-0 transition-opacity group-hover:opacity-100">
+            Contact Owner
+          </div>
+        </div>
+      </div>
+      <!-- Amenities -->
       <div class="mb-8">
         <h2 class="text-2xl font-bold text-white mb-4">Amenities</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div *ngFor="let amenity of amenitiesList"
-              class="flex items-center space-x-2 text-neutral-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <div *ngFor="let amenity of amenitiesList" class="flex items-center space-x-2 text-neutral-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
             </svg>
             <span>{{amenity}}</span>
@@ -115,7 +144,10 @@
         </div>
       </div>
 
-      <!-- Additional Info -->
+      <!-- Additional Info Separator -->
+      <div class="border-t border-neutral-600 mt-8 mb-8"></div>
+
+      <!-- Additional Property Details -->
       <div class="bg-neutral-800 p-6 rounded-xl">
         <h2 class="text-2xl font-bold text-white mb-4">Property Details</h2>
         <div class="grid grid-cols-2 gap-4 text-neutral-300">
@@ -140,11 +172,116 @@
     </div>
   </div>
 
-  <!-- Back Button -->
-  <a routerLink="/properties"
-     class="fixed bottom-8 left-8 bg-neutral-600 hover:bg-neutral-700 text-white rounded-full p-4 shadow-lg transition duration-300">
+
+
+    <!-- Schedule Visit Section -->
+    <div class="max-w-6xl mx-auto mb-8">
+          <div class="bg-neutral-800 p-8 rounded-xl shadow-lg border border-neutral-700">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl font-bold text-white">Schedule a Visit</h2>
+              <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-emerald-400 font-medium">Available for Visits</span>
+              </div>
+            </div>
+
+            <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+              <ng-container *ngIf="propertyOwner?.access !== Access.RealStateAgent && propertyOwner?.access !== Access.Admin">
+                <div class="space-y-6">
+                  <p class="text-neutral-300">Select your preferred date and time to visit this property. Our team will contact you to confirm your appointment.</p>
+
+                  <!-- Visit Form -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label class="block text-sm font-medium text-neutral-300 mb-2">Preferred Date</label>
+                      <input
+                        type="date"
+                        class="w-full rounded-lg bg-neutral-700 border-neutral-600 text-white px-4 py-2 focus:ring-2 focus:ring-emerald-500"
+                        [min]="getCurrentDate()"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-neutral-300 mb-2">Preferred Time</label>
+                      <select class="w-full rounded-lg bg-neutral-700 border-neutral-600 text-white px-4 py-2 focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Select a time</option>
+                        <option value="morning">Morning (9:00 - 12:00)</option>
+                        <option value="afternoon">Afternoon (14:00 - 17:00)</option>
+                        <option value="evening">Evening (17:00 - 19:00)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center justify-end space-x-4">
+                    <button
+                      (click)="scheduleVisit()"
+                      class="bg-emerald-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-emerald-600 transition duration-300 flex items-center space-x-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>Schedule Visit</span>
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div *ngIf="propertyOwner?.access === Access.RealStateAgent || propertyOwner?.access === Access.Admin"
+                  class="bg-neutral-700 p-4 rounded-lg text-neutral-300 text-center">
+                <p>You cannot schedule visits as a real estate agent or administrator.</p>
+              </div>
+            </ng-container>
+
+            <ng-template #notLoggedIn>
+              <div class="text-center space-y-4">
+                <p class="text-neutral-300 mb-4">To schedule a visit, please log in or create an account.</p>
+                <div class="flex justify-center space-x-4">
+                  <button
+                    routerLink="/login"
+                    class="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-300 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    <span>Log In</span>
+                  </button>
+                  <button
+                    routerLink="/register"
+                    class="bg-neutral-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-neutral-700 transition duration-300 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                    <span>Register</span>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+    </div>
+
+
+
+
+    <!-- Floating Action Menu -->
+    <div class="fixed bottom-8 right-8 flex flex-col space-y-4">
+      <button class="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-4 shadow-lg transition duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      </button>
+      <button class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 shadow-lg transition duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+        </svg>
+      </button>
+    </div>
+
+  <!-- Back Button with Tooltip -->
+  <a routerLink="/properties" class="fixed bottom-8 left-8 bg-neutral-600 hover:bg-neutral-700 text-white rounded-full p-4 shadow-lg transition duration-300 group">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
     </svg>
+    <span class="absolute -top-10 bg-black bg-opacity-80 text-white text-sm p-2 rounded shadow-lg opacity-0 transition-opacity group-hover:opacity-100">
+      Back to Listings
+    </span>
   </a>
 </section>

@@ -14,9 +14,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Contract> Contracts { get; set; }
     public DbSet<Favorites> Favorites{ get; set; }
     public DbSet<FinancialTransactions> FinancialTransactions { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Notifications> Notifications { get; set; }
     public DbSet<Property> Properties { get; set; }
     public DbSet<PropertyImages> PropertyImages { get; set; }
+    public DbSet<PropertyVisit> PropertyVisits { get; set; }
     public DbSet<RealStateAgent> RealStateAgent { get; set; }
     public DbSet<User> Users { get; set; }
 
@@ -42,8 +44,10 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ContractConfiguration());
         modelBuilder.ApplyConfiguration(new FavoritesConfiguration());
         modelBuilder.ApplyConfiguration(new FinancialTransactionsConfiguration());
+        modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
         modelBuilder.ApplyConfiguration(new NotificationsConfiguration());
         modelBuilder.ApplyConfiguration(new PropertyConfiguration());
+        modelBuilder.ApplyConfiguration(new PropertyImagesConfiguration());
         modelBuilder.ApplyConfiguration(new PropertyImagesConfiguration());
         modelBuilder.ApplyConfiguration(new RealStateAgentConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());

@@ -9,5 +9,17 @@ internal class NotificationsConfiguration : IEntityTypeConfiguration<Notificatio
     public void Configure(EntityTypeBuilder<Notifications> builder)
     {
         builder.ToTable("Notifications");
+
+        builder.HasKey(n => n.Id);
+
+        builder.HasOne(n => n.SenderUser)
+            .WithMany()
+            .HasForeignKey(n => n.SenderId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasOne(n => n.RecipentUser)
+            .WithMany()
+            .HasForeignKey(n => n.RecipientId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }
