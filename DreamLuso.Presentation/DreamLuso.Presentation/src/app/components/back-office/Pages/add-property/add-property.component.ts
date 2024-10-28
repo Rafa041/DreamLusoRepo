@@ -33,6 +33,12 @@ export class AddPropertyComponent implements OnInit {
   addPropertyFailure: boolean = false;
   userId: string = '';
 
+  selectedImages: string[] = [];
+  defaultImage: string = 'https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
+  currentImageIndex: number = 0;
+  private autoSlideInterval: any;
+  autoSlideDelay: number = 5000; // 5 seconds
+
   constructor(
     private fb: FormBuilder,
     private propertyService: PropertyService,
@@ -44,6 +50,7 @@ export class AddPropertyComponent implements OnInit {
     this.getLoggedUserId();
     this.initForm();
     this.loadCountries();
+    this.startAutoSlide(); // Start auto-sliding
   }
 
   getLoggedUserId() {
@@ -129,70 +136,68 @@ export class AddPropertyComponent implements OnInit {
     }
     return null;
   }
+
+  startAutoSlide() {
+    this.autoSlideInterval = setInterval(() => {
+      if (this.selectedImages.length > 1) {
+        if (this.currentImageIndex < this.selectedImages.length - 1) {
+          this.currentImageIndex++;
+        } else {
+          this.currentImageIndex = 0;
+        }
+      }
+    }, this.autoSlideDelay);
+  }
+
+  // Add this to clean up when component is destroyed
+  ngOnDestroy() {
+    if (this.autoSlideInterval) {
+      clearInterval(this.autoSlideInterval);
+    }
+  }
   onImagesChanged(images: PropertyImage[]) {
     this.propertyForm.patchValue({ images });
     this.propertyForm.get('images')?.updateValueAndValidity();
-  }
-  /*
-  onFileSelected(event: Event) {
-    const element = event.target as HTMLInputElement;
-    const fileList: FileList | null = element.files;
 
-    if (fileList) {
-      const newImages: PropertyImage[] = Array.from(fileList).map((file, index) => ({
-        id: '',
-        propertyId: '',
-        fileName: file.name,
-        file: file
-      }));
+    // Clear existing selected images
+    this.selectedImages = [];
 
-      const currentImages = this.propertyForm.get('images')?.value || [];
-      this.propertyForm.patchValue({
-        images: [...currentImages, ...newImages]
-      });
-      this.propertyForm.get('images')?.updateValueAndValidity();
-      this.previewImages();
-    }
-  }
-
-  previewImages() {
-    const uploadedImagesDiv = document.getElementById('uploadedImages');
-    if (uploadedImagesDiv) {
-      uploadedImagesDiv.innerHTML = '';
-
-      const images = this.propertyForm.get('images')?.value || [];
-      images.forEach((image: PropertyImage, index: number) => {
+    // Convert each uploaded file to base64 string
+    images.forEach(image => {
+      if (image.file) {
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          const imgElement = document.createElement('img');
-          imgElement.src = e.target.result;
-          imgElement.alt = image.fileName;
-          imgElement.classList.add('w-32', 'h-32', 'object-cover', 'rounded-lg', 'mr-2', 'mb-2');
-
-          const removeButton = document.createElement('button');
-          removeButton.textContent = 'Remove';
-          removeButton.onclick = () => this.removeImage(index);
-          removeButton.classList.add('mt-1', 'px-2', 'py-1', 'bg-red-500', 'text-white', 'rounded');
-
-          const imageContainer = document.createElement('div');
-          imageContainer.classList.add('inline-block', 'text-center');
-          imageContainer.appendChild(imgElement);
-          imageContainer.appendChild(removeButton);
-
-          uploadedImagesDiv.appendChild(imageContainer);
+          this.selectedImages.push(e.target.result);
+          // Set first image as current when images are first loaded
+          if (this.selectedImages.length === 1) {
+            this.currentImageIndex = 0;
+          }
         };
         reader.readAsDataURL(image.file as Blob);
-      });
+      }
+    });
+  }
+
+  nextImage() {
+    if (this.currentImageIndex < this.selectedImages.length - 1) {
+      this.currentImageIndex++;
+      this.resetAutoSlide();
     }
   }
 
-  removeImage(index: number) {
-    const images = this.propertyForm.get('images')?.value || [];
-    images.splice(index, 1);
-    this.propertyForm.patchValue({ images });
-    this.propertyForm.get('images')?.updateValueAndValidity();
-    this.previewImages();
-  }*/
+  previousImage() {
+    if (this.currentImageIndex > 0) {
+      this.currentImageIndex--;
+      this.resetAutoSlide();
+    }
+  }
+
+  resetAutoSlide() {
+    if (this.autoSlideInterval) {
+      clearInterval(this.autoSlideInterval);
+      this.startAutoSlide();
+    }
+  }
 
   addAmenity(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
