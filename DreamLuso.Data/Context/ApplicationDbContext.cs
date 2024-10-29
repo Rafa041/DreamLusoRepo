@@ -15,7 +15,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Favorites> Favorites{ get; set; }
     public DbSet<FinancialTransactions> FinancialTransactions { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
-    public DbSet<Notifications> Notifications { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
     public DbSet<Property> Properties { get; set; }
     public DbSet<PropertyImages> PropertyImages { get; set; }
     public DbSet<PropertyVisit> PropertyVisits { get; set; }

@@ -9,6 +9,7 @@ public static class RegisterAllEndpoints
         routes.RegisterRealStateAgentEndpoints();
         routes.RegisterUserEndpoints();
         routes.RegisterPropertyEndpoints();
+        routes.RegisterNotificationEndpoints();
     }
 }
 

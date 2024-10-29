@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DreamLuso.Data.Configurations;
 
-internal class NotificationsConfiguration : IEntityTypeConfiguration<Notifications>
+internal class NotificationsConfiguration : IEntityTypeConfiguration<Notification>
 {
-    public void Configure(EntityTypeBuilder<Notifications> builder)
+    public void Configure(EntityTypeBuilder<Notification> builder)
     {
         builder.ToTable("Notifications");
 

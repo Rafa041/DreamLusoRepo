@@ -1,19 +1,9 @@
-﻿
-
-using DreamLuso.Application.Common.Responses;
-using DreamLuso.Application.CQ.Users.Queries.Retrieve;
+﻿using DreamLuso.Application.Common.Responses;
 using DreamLuso.Domain.Core.Interfaces;
-using DreamLuso.Domain.Model;
 using MediatR;
 
-namespace DreamLuso.Application.CQ.Properties.Queries;
-public class GetTotalSalesQuery : IRequest<Result<GetTotalSalesResponse, Success, Error>>
-{
-}
-public class GetTotalSalesResponse
-{
-    public decimal TotalSales { get; set; }
-}
+namespace DreamLuso.Application.CQ.Properties.Queries.GetTotalSales;
+
 public class GetTotalSalesQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetTotalSalesQuery, Result<GetTotalSalesResponse, Success, Error>>
 {
     public async Task<Result<GetTotalSalesResponse, Success, Error>> Handle(GetTotalSalesQuery request, CancellationToken cancellationToken)

@@ -24,17 +24,6 @@ public static class DependencyInjection
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(configuration.GetConnectionString("DreamLusoCS"));
         });
-        services.AddSingleton<IConnectionMultiplexer>(sp =>
-        {
-            var connectionString = configuration.GetConnectionString("Redis");
-            return RedisConfiguration.CreateConnection(connectionString);
-        });
-
-        services.AddStackExchangeRedisCache(options =>
-        {
-            options.Configuration = configuration.GetConnectionString("Redis");
-            options.InstanceName = "HorizonCache:";
-        });
 
         //Repository
         services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -51,8 +40,8 @@ public static class DependencyInjection
         services.AddScoped<IFileStorageService, FileStorageService>();//Image => Service.
         services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         services.AddScoped<IPropertyVisitRepository, PropertyVisitRepository>();
-
-        services.AddScoped<INotificationStrategy, HybridNotificationStrategy>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
+        //services.AddScoped<INotificationStrategy, HybridNotificationStrategy>();
 
         return services;
     }

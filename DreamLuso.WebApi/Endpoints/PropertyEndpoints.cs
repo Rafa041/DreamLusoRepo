@@ -1,7 +1,7 @@
 ﻿using Azure.Core;
 using DreamLuso.Application.Common.Responses;
 using DreamLuso.Application.CQ.Properties.Commands.CreateProperty;
-using DreamLuso.Application.CQ.Properties.Queries;
+using DreamLuso.Application.CQ.Properties.Queries.GetTotalSales;
 using DreamLuso.Application.CQ.Properties.Queries.Retrieve;
 using DreamLuso.Application.CQ.Properties.Queries.RetrieveAll;
 using DreamLuso.Application.CQ.Users.Queries.Retrieve;

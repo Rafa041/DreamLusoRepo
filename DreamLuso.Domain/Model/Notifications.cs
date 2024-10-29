@@ -1,8 +1,9 @@
-﻿using DreamLuso.Domain.Interface;
+﻿using DreamLuso.Domain.Common;
+using DreamLuso.Domain.Interface;
 
 namespace DreamLuso.Domain.Model;
 
-public class Notifications : IEntity<Guid>
+public class Notification : AuditableEntity, IEntity<Guid>
 {
     public Guid Id { get; set; }
     public Guid SenderId { get; set; }
@@ -17,24 +18,25 @@ public class Notifications : IEntity<Guid>
 
     // - Prioridade da notificação (alta, média, baixa)
     public NotificationPriority Priority { get; set; }
-    public Notifications() { }
+    public Notification() { }
 
 
-    public Notifications(
+    public Notification(
+        Guid id,
         Guid senderId,
         Guid recipientId,
         string message,
         NotificationType type,
-        NotificationPriority priority,
-        string referenceType = null) : this()
+        NotificationPriority priority
+        ) : this()
     {
+        Id = id;
         SenderId = senderId;
         RecipientId = recipientId;
         Message = message;
         Type = type;
         Priority = priority;
-        Type = type;
-        ExpirationDate = CalculateExpirationDate(type, priority);
+        
     }
     public void MarkAsRead()
     {
