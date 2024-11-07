@@ -1,0 +1,218 @@
+<section class="grid grid-cols-12 min-h-screen">
+  <!-- Image Section -->
+  <div class="relative col-span-6 grid h-screen">
+    <img
+      [src]="getImageUrl(selectedImages[currentImageIndex])"
+      (error)="handleImageError($event)"
+      alt="Property Image"
+      class="w-full h-full object-cover"
+    >
+
+      <!-- Navigation arrows -->
+      <div *ngIf="selectedImages.length > 1" class="absolute top-1/2 w-full flex justify-between px-4 -translate-y-1/2">
+        <button
+          (click)="previousImage()"
+          class="bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          (click)="nextImage()"
+          class="bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Image counter -->
+      <div *ngIf="selectedImages.length > 0" class="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full">
+        {{currentImageIndex + 1}} / {{selectedImages.length}}
+      </div>
+
+      <!-- Title content -->
+      <div class="absolute w-full bottom-0 left-0 p-20 bg-gradient-to-t from-black/80">
+        <h1 class="text-6xl font-bold text-white pt-44">Update Property<br><span class="text-white">with DreamLuso</span></h1>
+        <p class="mt-4 text-xl leading-relaxed text-white">
+          Update your property listing details.
+        </p>
+      </div>
+  </div>
+
+    <!-- Form section -->
+    <div aria-label="Main" class="col-span-6 p-8 overflow-y-auto max-h-screen">
+      <div class="max-w-3xl mx-auto">
+        <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()" class="rounded-3xl p-10 shadow-lg bg-neutral-800 border-4 border-neutral-600">
+          <!-- Basic Details -->
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-6">Basic Details</h2>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Property Title</label>
+                <input type="text" formControlName="title"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Description</label>
+                <textarea formControlName="description" rows="4"
+                  class="mt-1 w-full rounded-2xl text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Property Specifications -->
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-6">Specifications</h2>
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Size (m²)</label>
+                <input type="number" formControlName="size"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Bedrooms</label>
+                <input type="number" formControlName="bedrooms"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Bathrooms</label>
+                <input type="number" formControlName="bathrooms"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Year Built</label>
+                <input type="number" formControlName="yearBuilt"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Property Type</label>
+                <select formControlName="type"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200">
+                  <option value="">Select type</option>
+                  <option *ngFor="let type of propertyTypes" [value]="type">{{type}}</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Status</label>
+                <select formControlName="status"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200">
+                  <option value="">Select status</option>
+                  <option *ngFor="let status of propertyStatuses" [value]="status">{{status}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-6">Location</h2>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="col-span-2">
+                <label class="block text-sm font-medium text-neutral-300">Street</label>
+                <input type="text" formControlName="street"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">City</label>
+                <input type="text" formControlName="city"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">State</label>
+                <input type="text" formControlName="state"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Postal Code</label>
+                <input type="text" formControlName="postalCode"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Country</label>
+                <select formControlName="country"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200">
+                  <option value="">Select country</option>
+                  <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price and Additional Info -->
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-6">Pricing & Additional Info</h2>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Price</label>
+                <input type="number" formControlName="price"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-neutral-300">Additional Information</label>
+                <input type="text" formControlName="additionalInfo"
+                  class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Amenities -->
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-6">Amenities</h2>
+            <div>
+              <select (change)="addAmenity($event)"
+                class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200">
+                <option value="">Add an amenity</option>
+                <option *ngFor="let amenity of availableAmenities" [value]="amenity">{{amenity}}</option>
+              </select>
+
+              <div class="mt-4 p-4 rounded-2xl bg-neutral-700 border-2 border-neutral-600">
+                <ul class="space-y-2">
+                  <li *ngFor="let amenity of selectedAmenities" class="flex items-center justify-between text-neutral-200">
+                    <span>{{amenity}}</span>
+                    <button type="button" (click)="removeAmenity(amenity)"
+                      class="text-red-400 hover:text-red-300 transition duration-200">Remove</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Images Upload -->
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-6">Property Images</h2>
+            <app-image-upload (imagesChanged)="onImagesChanged($event)"
+              class="block p-4 rounded-2xl bg-neutral-700 border-2 border-neutral-600"></app-image-upload>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex justify-center mt-8">
+            <button type="submit"
+              class="inline-block shrink-0 rounded-full bg-neutral-600 px-12 py-3 text-lg font-bold text-white transition hover:bg-neutral-500 hover:shadow-lg focus:outline-none focus:ring"
+              [disabled]="propertyForm.invalid">
+              Update Property
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+  <!-- Home button -->
+  <a href="/" class="fixed bottom-8 right-8 bg-neutral-600 hover:bg-neutral-500 text-white rounded-full p-4 shadow-lg transition duration-300 ease-in-out">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+    </svg>
+  </a>
+</section>

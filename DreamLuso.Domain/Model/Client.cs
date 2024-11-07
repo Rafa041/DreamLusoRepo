@@ -16,3 +16,4 @@ public class Client : AuditableEntity, IEntity<Guid>
         IsActive = isActive;
     }
 }
+

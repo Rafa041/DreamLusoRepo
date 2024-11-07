@@ -4,6 +4,8 @@ import { environment } from '../../../../../../environment';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/AuthService/auth.service';
 import { UserService } from '../../../../services/UserService/user.service';
+import { ApiNotification } from '../../../../models/Notification';
+import { NotificationService } from '../../../../services/NotificationService/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -18,28 +20,35 @@ export class HomeComponent  {
 
    // Add these properties
    isNotificationsOpen = false;
-   notificationCount = 3; // Example count
-   notifications = [
-     {
-       message: 'New property listed in Porto',
-       time: '5 minutes ago'
-     },
-     {
-       message: 'Your saved property price has been updated',
-       time: '1 hour ago'
-     },
-     {
-       message: 'Welcome to DreamLuso!',
-       time: '1 day ago'
-     }
-   ];
+   notifications: ApiNotification[] = [];
+   notificationCount = 0;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
+    private notificationService: NotificationService,
     private zone: NgZone
   ) {}
+
+  getDashboardRoute(access: string | undefined): void {
+    if (!access) return;
+
+    switch (access) {
+      case 'Admin':
+        this.router.navigate(['/back-office/dashboardAdmin']);
+        break;
+      case 'RealStateAgent':
+        this.router.navigate(['/back-office/dashboardAgent']);
+        break;
+      case 'None':
+        this.router.navigate(['/back-office/dashboardClient']);
+        break;
+      default:
+        this.router.navigate(['/']);
+        break;
+    }
+  }
 
   ngOnInit() {
     const loggedUserString = sessionStorage.getItem('loggedUser');
@@ -61,6 +70,32 @@ export class HomeComponent  {
         },
       });
     }
+
+    if (this.userId) {
+      this.loadNotifications();
+      setInterval(() => this.loadNotifications(), 30000);
+    }
+  }
+  loadNotifications() {
+    this.notificationService.getUnreadNotifications(this.userId).subscribe({
+      next: (notifications) => {
+        this.zone.run(() => {
+          this.notifications = notifications;
+          this.notificationCount = notifications.length;
+        });
+      },
+      error: (error) => {
+        console.error('Error loading notifications:', error);
+      }
+    });
+  }
+
+  markAsRead(notificationId: string) {
+    this.notificationService.markAsRead(notificationId).subscribe({
+      next: () => {
+        this.loadNotifications();
+      }
+    });
   }
 
   getImageUrl(imageUrl: string | undefined): string {

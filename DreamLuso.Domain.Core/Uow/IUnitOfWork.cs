@@ -17,6 +17,7 @@ public interface IUnitOfWork
     public IContractRepository ContractRepository { get; }
     public IFileStorageService FileStorageService { get; }
     public INotificationRepository NotificationRepository { get; }
+    public IPropertyVisitRepository PropertyVisitRepository { get; }
     //JWT
     public ITokenService TokenService { get; }
     public IDataProtectionService DataProtectionService { get; }

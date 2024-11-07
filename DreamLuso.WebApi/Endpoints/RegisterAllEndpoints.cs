@@ -10,6 +10,7 @@ public static class RegisterAllEndpoints
         routes.RegisterUserEndpoints();
         routes.RegisterPropertyEndpoints();
         routes.RegisterNotificationEndpoints();
+        routes.RegisterPropertyVisitEndpoints();
     }
 }
 

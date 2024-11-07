@@ -4,7 +4,7 @@ using DreamLuso.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 
-namespace DreamLuso.Data.Repository;
+namespace DreamLuso.Data.Repositories;
 
 public class PropertyRepository : PaginatedRepository<Property, Guid>, IPropertyRepository
 {
@@ -67,5 +67,47 @@ public class PropertyRepository : PaginatedRepository<Property, Guid>, IProperty
                          && p.DateListed >= startOfMonth
                          && p.DateListed < endOfMonth)  // Considera apenas propriedades ativas
             .SumAsync(p => p.Price, cancellationToken);  // Soma o preço do arrendamento
+    }
+    public async Task<IEnumerable<Property>> GetPropertiesByAgentIdAsync(Guid agentId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Properties
+            .Include(p => p.Address)
+            .Include(p => p.Images)
+            .Where(p => p.RealStateAgentId == agentId)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+    }
+    public async Task<Property> UpdateAsync(Property property, CancellationToken cancellationToken = default)
+    {
+        var existingProperty = await _context.Properties
+            .Include(p => p.Address)
+            .Include(p => p.Images)
+            .FirstOrDefaultAsync(p => p.Id == property.Id, cancellationToken);
+
+        if (existingProperty == null)
+            return null;
+
+        _context.Entry(existingProperty).CurrentValues.SetValues(property);
+
+        // Update Address
+        if (property.Address != null)
+        {
+            if (existingProperty.Address == null)
+                existingProperty.Address = new Address();
+            _context.Entry(existingProperty.Address).CurrentValues.SetValues(property.Address);
+        }
+
+        // Update Images
+        if (property.Images != null)
+        {
+            // Remove existing images
+            _context.PropertyImages.RemoveRange(existingProperty.Images);
+
+            // Add new images
+            existingProperty.Images = property.Images;
+        }
+
+        await _context.SaveChangesAsync(cancellationToken);
+        return existingProperty;
     }
 }

@@ -34,6 +34,7 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     public IPropertyVisitRepository PropertyVisitRepository => propertyVisitRepository;
     public INotificationRepository NotificationRepository => notificationRepository;
 
+
     //JWT
     public ITokenService TokenService => tokenService;
     public IDataProtectionService DataProtectionService => dataProtectionService;

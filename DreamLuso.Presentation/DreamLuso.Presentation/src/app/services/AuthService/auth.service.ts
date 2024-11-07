@@ -38,4 +38,11 @@ export class AuthService {
       return of(result as T); // Let the app keep running by returning an empty result
     };
   }
+  getCurrentUserId(): string {
+    const loggedUser = sessionStorage.getItem('loggedUser');
+    if (loggedUser) {
+      return JSON.parse(loggedUser).id;
+    }
+    return '';
+  }
 }

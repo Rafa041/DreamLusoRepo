@@ -7,11 +7,9 @@ import { NgModule } from "@angular/core";
 import { HomeComponent } from "./Pages/home/home.component";
 import { LoginComponent } from './Pages/login/login.component';
 import { CreateUserComponent } from './Pages/create-user/create-user.component';
-import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { RetrieveAllPropertiesComponent } from './Pages/retrieve-all-properties/retrieve-all-properties.component';
 import { RetrievePropertyIdComponent } from './Pages/retrieve-property-id/retrieve-property-id.component';
-
-
+import { ScheduleVisitComponent } from './Components/schedule-visit/schedule-visit.component';
 
 
 @NgModule({
@@ -21,9 +19,9 @@ import { RetrievePropertyIdComponent } from './Pages/retrieve-property-id/retrie
     HomeComponent,
     LoginComponent,
     CreateUserComponent,
-    DashboardComponent,
     RetrieveAllPropertiesComponent,
     RetrievePropertyIdComponent,
+    ScheduleVisitComponent,
   ],
   imports: [
     FrontOfficeRoutingModule,

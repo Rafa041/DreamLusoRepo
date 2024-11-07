@@ -17,217 +17,138 @@
   >
     <div id="hero" class="relative z-10 flex grow flex-col p-10">
       <nav class="flex h-14 items-center justify-between">
+        <!-- Logo Section -->
         <div id="logo" class="text-3xl font-semibold text-neutral-100">
           <span>DreamLuso</span>
         </div>
 
-        <ul
-          id="menu"
-          class="flex h-full items-center justify-center space-x-10 rounded-full bg-white/10 px-10 text-base font-medium text-neutral-200"
-        >
+        <!-- Main Menu -->
+        <ul id="menu" class="flex h-full items-center justify-center space-x-10 rounded-full bg-white/10 px-10 text-base font-medium text-neutral-200">
           <li><a routerLink="/properties" title="Properties">Properties</a></li>
           <li><a href="/" title="Rent">Rent</a></li>
           <li><a href="/" title="Buy">Buy</a></li>
           <li><a href="/" title="Services">Services</a></li>
           <ng-container *ngIf="isAuthenticated()">
             <li>
-              <a routerLink="/back-office/dashboard" title="Dashboard"
-                >Dashboard</a
-              >
+              <a class="cursor-pointer" (click)="getDashboardRoute(loggedUserDetails?.access)" title="Dashboard">Dashboard</a>
             </li>
           </ng-container>
         </ul>
 
+        <!-- Right Side Menu -->
         <ul class="flex h-full items-center justify-center space-x-6">
+          <!-- Login/Register Section -->
           <ng-container *ngIf="!isAuthenticated(); else userLoggedIn">
-            <li
-              class="flex h-12 items-center justify-center rounded-full border border-neutral-100/50 px-8"
-            >
-              <a
-                class="text-base font-medium text-neutral-100"
-                (click)="navitageToRegister()"
-                >Sign Up</a
-              >
+            <li class="flex h-12 items-center justify-center rounded-full border border-neutral-100/50 px-8">
+              <a class="text-base font-medium text-neutral-100" (click)="navitageToRegister()">Sign Up</a>
             </li>
-            <li
-              class="flex h-12 items-center justify-center rounded-full border border-neutral-100/50 px-8"
-            >
-              <a
-                class="text-base font-medium text-neutral-100"
-                (click)="navitageToLogin()"
-                >Log In</a
-              >
+            <li class="flex h-12 items-center justify-center rounded-full border border-neutral-100/50 px-8">
+              <a class="text-base font-medium text-neutral-100" (click)="navitageToLogin()">Log In</a>
             </li>
           </ng-container>
 
+          <!-- User Profile Section -->
           <ng-template #userLoggedIn>
             <li class="flex items-center space-x-4">
-              <div
-                class="flex h-12 w-12 items-center justify-center rounded-full bg-white overflow-hidden"
-              >
-                <img
-                  [src]="getImageUrl(loggedUserDetails?.imageUrl)"
-                  [alt]="
-                    loggedUserDetails?.firstName +
-                    ' ' +
-                    loggedUserDetails?.lastName
-                  "
-                  class="h-full w-full object-cover"
-                  (error)="handleImageError($event)"
-                />
+              <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white overflow-hidden">
+                <img [src]="getImageUrl(loggedUserDetails?.imageUrl)"
+                     [alt]="loggedUserDetails?.firstName + ' ' + loggedUserDetails?.lastName"
+                     class="h-full w-full object-cover"
+                     (error)="handleImageError($event)" />
               </div>
-              <span class="text-lg font-medium text-neutral-100"
-                >Welcome {{ loggedUserDetails?.firstName }}
-                {{ loggedUserDetails?.lastName }}</span
-              >
+              <span class="text-lg font-medium text-neutral-100">
+                Welcome {{ loggedUserDetails?.firstName }} {{ loggedUserDetails?.lastName }}
+              </span>
             </li>
           </ng-template>
 
-          <li
-            class="flex h-12 w-12 items-center justify-center rounded-full bg-white relative"
-          >
-            <a
-              (click)="toggleDropdown($event)"
-              class="cursor-pointer"
-              title="Menu"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-7 w-7 text-neutral-800"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
+          <!-- Notifications Section -->
+          <li class="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 relative mr-4 hover:bg-white/20 transition-colors duration-300">
+            <button (click)="toggleNotifications($event)"
+                    class="cursor-pointer relative group"
+                    title="Notifications">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   fill="none"
+                   viewBox="0 0 24 24"
+                   stroke-width="1.5"
+                   class="h-6 w-6 text-neutral-100 group-hover:text-neutral-200 transition-colors duration-300"
+                   stroke="currentColor">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
               </svg>
-            </a>
-            <div
-              *ngIf="isDropdownOpen"
-              class="absolute right-0 top-full mt-2 w-48 rounded-md shadow-lg bg-neutral-800 bg-opacity-60 backdrop-blur-md ring-1 ring-white ring-opacity-20 z-20 transition-opacity duration-150 ease-in-out"
-            >
-              <div
-                class="py-1"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="options-menu"
-              >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out"
-                  role="menuitem"
-                  >Option 1</a
-                >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out"
-                  role="menuitem"
-                  >Option 2</a
-                >
-                <a
-                  (click)="logout()"
-                  class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out cursor-pointer"
-                  role="menuitem"
-                  >Logout</a
-                >
-              </div>
-            </div>
-          </li>
-
-          <li
-            class="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 relative mr-4 hover:bg-white/20 transition-colors duration-300"
-          >
-            <button
-              (click)="toggleNotifications($event)"
-              class="cursor-pointer relative group"
-              title="Notifications"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                class="h-6 w-6 text-neutral-100 group-hover:text-neutral-200 transition-colors duration-300"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                />
-              </svg>
-
-              <span
-                *ngIf="notificationCount > 0"
-                class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-medium text-white"
-              >
+              <span *ngIf="notificationCount > 0"
+                    class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-medium text-white">
                 {{ notificationCount }}
               </span>
             </button>
 
-            <div
-              *ngIf="isNotificationsOpen"
-              class="absolute right-0 top-full mt-2 w-80 rounded-xl bg-neutral-800/95 backdrop-blur-md shadow-lg ring-1 ring-white/20 z-50"
-            >
+            <!-- Notifications Dropdown -->
+            <div *ngIf="isNotificationsOpen"
+                 class="absolute right-0 top-full mt-2 w-80 rounded-xl bg-neutral-800/95 backdrop-blur-md shadow-lg ring-1 ring-white/20 z-50">
               <div class="p-4">
                 <div class="flex justify-between items-center mb-4">
-                  <h3 class="text-lg font-medium text-neutral-100">
-                    Notifications
-                  </h3>
-                  <button
-                    class="text-sm text-neutral-300 hover:text-white transition-colors"
-                  >
+                  <h3 class="text-lg font-medium text-neutral-100">Notifications</h3>
+                  <button class="text-sm text-neutral-300 hover:text-white transition-colors">
                     Clear all
                   </button>
                 </div>
 
                 <div class="divide-y divide-neutral-700">
-                  <div
-                    *ngFor="let notification of notifications"
-                    class="py-3 hover:bg-white/5 rounded-lg transition-colors px-2 cursor-pointer"
-                  >
+                  <div *ngFor="let notification of notifications"
+                       class="py-3 hover:bg-white/5 rounded-lg transition-colors px-2 cursor-pointer">
                     <div class="flex items-start gap-3">
                       <div class="flex-shrink-0">
-                        <div
-                          class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-4 w-4 text-neutral-100"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
+                        <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg"
+                               class="h-4 w-4 text-neutral-100"
+                               fill="none"
+                               viewBox="0 0 24 24"
+                               stroke="currentColor">
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                         </div>
                       </div>
                       <div>
-                        <p class="text-sm text-neutral-100">
-                          {{ notification.message }}
-                        </p>
-                        <span class="text-xs text-neutral-400">{{
-                          notification.time
-                        }}</span>
+                        <p class="text-sm text-neutral-100">{{ notification.message }}</p>
+                        <span class="text-xs text-neutral-400">{{ notification.createdAt | date:'short' }}</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <button
-                  class="mt-4 w-full py-2 rounded-lg bg-white/10 text-neutral-100 hover:bg-white/20 transition-colors text-sm font-medium"
-                >
+                <button class="mt-4 w-full py-2 rounded-lg bg-white/10 text-neutral-100 hover:bg-white/20 transition-colors text-sm font-medium">
                   View All
                 </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- Menu Dropdown -->
+          <li class="flex h-12 w-12 items-center justify-center rounded-full bg-white relative">
+            <a (click)="toggleDropdown($event)"
+               class="cursor-pointer"
+               title="Menu">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   fill="none"
+                   viewBox="0 0 24 24"
+                   stroke-width="1.5"
+                   stroke="currentColor"
+                   class="h-7 w-7 text-neutral-800">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </a>
+            <div *ngIf="isDropdownOpen"
+                 class="absolute right-0 top-full mt-2 w-48 rounded-md shadow-lg bg-neutral-800 bg-opacity-60 backdrop-blur-md ring-1 ring-white ring-opacity-20 z-20 transition-opacity duration-150 ease-in-out">
+              <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <a href="#" class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out" role="menuitem">Option 1</a>
+                <a href="#" class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out" role="menuitem">Option 2</a>
+                <a (click)="logout()" class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out cursor-pointer" role="menuitem">Logout</a>
               </div>
             </div>
           </li>

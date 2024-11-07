@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { UserModel } from '../../../../models/UserModel';
-import { UserService } from '../../../../services/UserService/user.service';
+import { Component } from '@angular/core';
+import { UserModel } from '../../../../../../models/UserModel';
+import { UserService } from '../../../../../../services/UserService/user.service';
 import { Router } from '@angular/router';
-import { environment } from '../../../../../../environment';
+import { environment } from '../../../../../../../../environment';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardAgentComponent {
   loggedUserDetails: UserModel | null = null;
   userId: string = "";
   errorMessage: string = "";

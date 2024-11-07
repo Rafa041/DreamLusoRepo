@@ -6,7 +6,7 @@ using DreamLuso.Domain.Core;
 using System.Linq.Expressions;
 
 
-namespace DreamLuso.Data.Repository;
+namespace DreamLuso.Data.Repositories;
 
 public abstract class PaginatedRepository<T, TId> : Repository<T, TId>, IPaginatedRepository<T, TId> where T : class, IEntity<TId>
 {

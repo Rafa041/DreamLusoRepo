@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Property } from '../../../../models/property';
 import { ActivatedRoute } from '@angular/router';
 import { PropertyService } from '../../../../services/PropertyService/property.service';
@@ -8,6 +8,10 @@ import { environment } from '../../../../../../environment';
 import { RealStateAgentService } from '../../../../services/RealStateAgent/real-state-agent.service';
 import { AuthService } from '../../../../services/AuthService/auth.service';
 import { Access } from '../../../../models/Access';
+import { CreatePropertyVisit, TimeSlot } from '../../../../models/CreatePropertyVisit';
+import { PropertyVisitService } from '../../../../services/PropertyVisitService/property-visit.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from '../../../../services/NotificationService/notification.service';
 
 @Component({
   selector: 'app-retrieve-property-id',
@@ -24,13 +28,15 @@ export class RetrievePropertyIdComponent implements OnInit {
   isLoggedIn: boolean = false; // Variável para verificar o login do usuário
   Access = Access;
 
+  @ViewChild('notLoggedIn') notLoggedIn!: TemplateRef<any>;
+
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private propertyService: PropertyService,
     private realStateAgentService: RealStateAgentService,
-    private authService: AuthService // Injeta o AuthService
-  ) {}
-
+    private authService: AuthService,
+  ){ }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -105,13 +111,9 @@ export class RetrievePropertyIdComponent implements OnInit {
   handleImageError(event: any) {
     event.target.src = 'assets/default-avatar.jpg'; // Path to a default image
   }
-
-  scheduleVisit() {
-    // Implementar a lógica de agendamento de visitas aqui
-    console.log('Visit scheduled!'); // Você pode integrar aqui a lógica para agendar a visita
-  }
   getCurrentDate(): string {
     return new Date().toISOString().split('T')[0];
   }
+
 
 }

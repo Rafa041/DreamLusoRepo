@@ -16,12 +16,12 @@ internal class PropertyVisitConfiguration : IEntityTypeConfiguration<PropertyVis
                .HasForeignKey(pv => pv.PropertyId)
                .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(pv => pv.Client)
+        builder.HasOne(pv => pv.User)
                .WithMany()
-               .HasForeignKey(pv => pv.ClientId)
+               .HasForeignKey(pv => pv.UserId)
                .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(pv => pv.RealStateAgent)
+        builder.HasOne(pv => pv.RealStateAgentUser)
                .WithMany()
                .HasForeignKey(pv => pv.RealStateAgentId)
                .OnDelete(DeleteBehavior.Restrict);

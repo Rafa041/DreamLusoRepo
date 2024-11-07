@@ -1,4 +1,4 @@
-<section class="bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-700 min-h-screen">
+<section class="bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-700 min-h-screen pb-20">
   <!-- Loading Skeleton -->
   <div *ngIf="loading" class="animate-pulse p-8">
     <div class="max-w-6xl mx-auto">
@@ -175,7 +175,7 @@
 
 
     <!-- Schedule Visit Section -->
-    <div class="max-w-6xl mx-auto mb-8">
+    <div class="max-w-6xl mx-auto">
           <div class="bg-neutral-800 p-8 rounded-xl shadow-lg border border-neutral-700">
             <div class="flex items-center justify-between mb-6">
               <h2 class="text-2xl font-bold text-white">Schedule a Visit</h2>
@@ -187,79 +187,12 @@
               </div>
             </div>
 
-            <ng-container *ngIf="isLoggedIn; else notLoggedIn">
-              <ng-container *ngIf="propertyOwner?.access !== Access.RealStateAgent && propertyOwner?.access !== Access.Admin">
-                <div class="space-y-6">
-                  <p class="text-neutral-300">Select your preferred date and time to visit this property. Our team will contact you to confirm your appointment.</p>
-
-                  <!-- Visit Form -->
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label class="block text-sm font-medium text-neutral-300 mb-2">Preferred Date</label>
-                      <input
-                        type="date"
-                        class="w-full rounded-lg bg-neutral-700 border-neutral-600 text-white px-4 py-2 focus:ring-2 focus:ring-emerald-500"
-                        [min]="getCurrentDate()"
-                      >
-                    </div>
-                    <div>
-                      <label class="block text-sm font-medium text-neutral-300 mb-2">Preferred Time</label>
-                      <select class="w-full rounded-lg bg-neutral-700 border-neutral-600 text-white px-4 py-2 focus:ring-2 focus:ring-emerald-500">
-                        <option value="">Select a time</option>
-                        <option value="morning">Morning (9:00 - 12:00)</option>
-                        <option value="afternoon">Afternoon (14:00 - 17:00)</option>
-                        <option value="evening">Evening (17:00 - 19:00)</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="flex items-center justify-end space-x-4">
-                    <button
-                      (click)="scheduleVisit()"
-                      class="bg-emerald-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-emerald-600 transition duration-300 flex items-center space-x-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span>Schedule Visit</span>
-                    </button>
-                  </div>
-                </div>
-              </ng-container>
-
-              <div *ngIf="propertyOwner?.access === Access.RealStateAgent || propertyOwner?.access === Access.Admin"
-                  class="bg-neutral-700 p-4 rounded-lg text-neutral-300 text-center">
-                <p>You cannot schedule visits as a real estate agent or administrator.</p>
-              </div>
-            </ng-container>
-
-            <ng-template #notLoggedIn>
-              <div class="text-center space-y-4">
-                <p class="text-neutral-300 mb-4">To schedule a visit, please log in or create an account.</p>
-                <div class="flex justify-center space-x-4">
-                  <button
-                    routerLink="/login"
-                    class="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-300 flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                    </svg>
-                    <span>Log In</span>
-                  </button>
-                  <button
-                    routerLink="/register"
-                    class="bg-neutral-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-neutral-700 transition duration-300 flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                    </svg>
-                    <span>Register</span>
-                  </button>
-                </div>
-              </div>
-            </ng-template>
+            <app-schedule-visit
+            *ngIf="isLoggedIn && property"
+            [property]="property">
+            </app-schedule-visit>
           </div>
     </div>
-
-
-
 
     <!-- Floating Action Menu -->
     <div class="fixed bottom-8 right-8 flex flex-col space-y-4">

@@ -1,6 +1,8 @@
 ﻿using DreamLuso.Application.Common.Responses;
 using DreamLuso.Application.CQ.Accounts.Commands.UpdateAccount;
 using DreamLuso.Application.CQ.Accounts.Queries.Login;
+using DreamLuso.Application.CQ.Notifications.Commands.MarkNotificationAsReadCommand;
+using DreamLuso.Application.CQ.Notifications.Queries.GetUnreadNotificationsQuery;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;

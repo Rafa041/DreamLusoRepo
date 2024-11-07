@@ -3,7 +3,7 @@ using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace DreamLuso.Data.Repository;
+namespace DreamLuso.Data.Repositories;
 
 public class RealStateAgentRepository : PaginatedRepository<RealStateAgent, Guid>, IRealStateAgentRepository
 {

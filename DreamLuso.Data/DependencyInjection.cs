@@ -1,7 +1,7 @@
 ﻿using DreamLuso.Data.Context;
 using DreamLuso.Data.Infrastructure;
 using DreamLuso.Data.Interceptors;
-using DreamLuso.Data.Repository;
+using DreamLuso.Data.Repositories;
 using DreamLuso.Data.Uow;
 using DreamLuso.Domain.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using StackExchange.Redis.Extensions.Core.Configuration;
+using System.Text.Json.Serialization;
 
 namespace DreamLuso.Data;
 
@@ -23,6 +24,12 @@ public static class DependencyInjection
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(configuration.GetConnectionString("DreamLusoCS"));
+        });
+        services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // For TimeSlot Enum
+             // For DateOnly if using
         });
 
         //Repository

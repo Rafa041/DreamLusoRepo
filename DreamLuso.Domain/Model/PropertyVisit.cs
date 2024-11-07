@@ -8,27 +8,68 @@ public class PropertyVisit : AuditableEntity, IEntity<Guid>
     public Guid Id { get; set; }
     public Guid PropertyId { get; set; }
     public Property Property { get; set; }
-    public Guid ClientId { get; set; }
-    public Client Client { get; set; }
+    public Guid UserId { get; set; }
+    public User User { get; set; }
     public Guid RealStateAgentId { get; set; }
-    public RealStateAgent RealStateAgent { get; set; }
-    public DateTime Date { get; set; }
+    public RealStateAgent RealStateAgentUser { get; set; }
+    public DateOnly VisitDate { get; set; }
+    public TimeSlot TimeSlot { get; set; }
     public VisitStatus VisitStatus { get; set; }
+    public string? Notes { get; set; }
+    public string ConfirmationToken { get; private set; }
+    public DateTime? ConfirmedAt { get; private set; }
 
-    public PropertyVisit() { }
+    public PropertyVisit()
+    {
+        GenerateConfirmationToken();
+    }
 
-    public PropertyVisit(Guid id, Property property, Guid propertyId, Client client, Guid clientId, RealStateAgent realStateAgent, Guid realStateAgentId, DateTime date, VisitStatus visitStatus)
+    public PropertyVisit(
+        Guid id,
+        Property property,
+        Guid propertyId,
+        User user,
+        Guid userId,
+        RealStateAgent realStateUser,
+        Guid realtorUserId,
+        DateOnly visitDate,
+        TimeSlot timeSlot,
+        VisitStatus visitStatus)
     {
         Id = id;
-        Property = property ?? throw new ArgumentNullException(nameof(property));
+        Property = property;
         PropertyId = propertyId;
-        Client = client ?? throw new ArgumentNullException(nameof(client));
-        ClientId = clientId;
-        RealStateAgent = realStateAgent ?? throw new ArgumentNullException(nameof(realStateAgent));
-        RealStateAgentId = realStateAgentId;
-        Date = date;
+        User = user;
+        UserId = userId;
+        RealStateAgentUser = realStateUser;
+        RealStateAgentId = realtorUserId;
+        VisitDate = visitDate;
+        TimeSlot = timeSlot;
         VisitStatus = visitStatus;
+        GenerateConfirmationToken();
     }
+
+    private void GenerateConfirmationToken()
+    {
+        ConfirmationToken = $"VISIT-{Guid.NewGuid():N}";
+    }
+
+    public void Confirm()
+    {
+        VisitStatus = VisitStatus.Confirmed;
+        ConfirmedAt = DateTime.UtcNow;
+    }
+
+    public void Cancel() => VisitStatus = VisitStatus.Canceled;
+}
+
+public enum TimeSlot
+{
+    Morning_8AM_10AM,
+    Morning_10AM_12AM,
+    Afternoon_2PM_4PM,
+    Afternoon_4PM_6PM
+
 }
 
 public enum VisitStatus

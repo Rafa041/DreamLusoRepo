@@ -44,4 +44,9 @@ public sealed record Error(string Code, string Description)
     public static readonly Error PropertyNotFound = new("PropertyNotFound", "Property Not Found");
     public static readonly Error NotificationNotFound = new("NotificationNotFound", "Notification Not Found");
     public static readonly Error InvalidNotificationData = new("InvalidNotificationData", "Invalid Notification Data");
+    public static readonly Error PropertyVisitNotFound = new("PropertyVisitNotFound", "Property Visit Not Found");
+    public static readonly Error PropertyVisitInvalid = new("PropertyVisitInvalid", "Property Visit Invalid");
+    public static readonly Error SlotNotAvailable = new("SlotNotAvailable", "This time slot is already booked.");
+    public static readonly Error FailedToRetrieveVisits = new("PropertyVisits.RetrievalFailed","Failed to retrieve property visits");
+    public static readonly Error UpdateFailed = new("Property.UpdateFailed", "Failed to update the property");
 }

@@ -444,14 +444,21 @@ namespace DreamLuso.Data.Migrations
                     b.ToTable("Invoice", "DreamLuso");
                 });
 
-            modelBuilder.Entity("DreamLuso.Domain.Model.Notifications", b =>
+            modelBuilder.Entity("DreamLuso.Domain.Model.Notification", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
@@ -474,6 +481,13 @@ namespace DreamLuso.Data.Migrations
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -598,8 +612,12 @@ namespace DreamLuso.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ConfirmationToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ConfirmedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -608,14 +626,17 @@ namespace DreamLuso.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("PropertyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RealStateAgentId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TimeSlot")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -624,16 +645,22 @@ namespace DreamLuso.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("VisitDate")
+                        .HasColumnType("date");
+
                     b.Property<int>("VisitStatus")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
-
                     b.HasIndex("PropertyId");
 
                     b.HasIndex("RealStateAgentId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("PropertyVisits", "DreamLuso");
                 });
@@ -858,7 +885,7 @@ namespace DreamLuso.Data.Migrations
                     b.Navigation("Transaction");
                 });
 
-            modelBuilder.Entity("DreamLuso.Domain.Model.Notifications", b =>
+            modelBuilder.Entity("DreamLuso.Domain.Model.Notification", b =>
                 {
                     b.HasOne("DreamLuso.Domain.Model.User", "RecipentUser")
                         .WithMany()
@@ -917,29 +944,29 @@ namespace DreamLuso.Data.Migrations
 
             modelBuilder.Entity("DreamLuso.Domain.Model.PropertyVisit", b =>
                 {
-                    b.HasOne("DreamLuso.Domain.Model.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("DreamLuso.Domain.Model.Property", "Property")
                         .WithMany()
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DreamLuso.Domain.Model.RealStateAgent", "RealStateAgent")
+                    b.HasOne("DreamLuso.Domain.Model.RealStateAgent", "RealStateAgentUser")
                         .WithMany()
                         .HasForeignKey("RealStateAgentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Client");
+                    b.HasOne("DreamLuso.Domain.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Property");
 
-                    b.Navigation("RealStateAgent");
+                    b.Navigation("RealStateAgentUser");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DreamLuso.Domain.Model.RealStateAgent", b =>

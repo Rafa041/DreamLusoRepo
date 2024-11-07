@@ -2,7 +2,7 @@
 using DreamLuso.Domain.Core.Interfaces;
 using DreamLuso.Domain.Model;
 
-namespace DreamLuso.Data.Repository;
+namespace DreamLuso.Data.Repositories;
 
 public class InvoiceRepository : PaginatedRepository<Invoice, Guid>, IInvoiceRepository
 {

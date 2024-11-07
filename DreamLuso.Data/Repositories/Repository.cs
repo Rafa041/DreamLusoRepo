@@ -7,7 +7,7 @@ using DreamLuso.Domain.Interface;
 using System.Linq;
 
 
-namespace DreamLuso.Data.Repository;
+namespace DreamLuso.Data.Repositories;
 public abstract class Repository<T, TId> : IRepository<T, TId> where T : class, IEntity<TId>
 {
     protected readonly ApplicationDbContext Context;

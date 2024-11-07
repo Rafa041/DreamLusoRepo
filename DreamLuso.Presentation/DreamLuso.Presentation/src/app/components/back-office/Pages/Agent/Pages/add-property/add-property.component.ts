@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PropertyService } from '../../../../services/PropertyService/property.service';
-import { StateService } from '../../../../services/StateService/state.service';
-import { Property, PropertyImage, PropertyStatus, PropertyType } from '../../../../models/property';
+import { PropertyService } from '../../../../../../services/PropertyService/property.service';
+import { StateService } from '../../../../../../services/StateService/state.service';
+import { Property, PropertyImage, PropertyStatus, PropertyType } from '../../../../../../models/property';
 
 @Component({
   selector: 'app-add-property',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Languages } from '../../../../models/CreateRealStateAgent';
+import { Languages } from '../../../../../models/CreateRealStateAgent';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RealStateAgentService } from '../../../../services/RealStateAgent/real-state-agent.service';
+import { RealStateAgentService } from '../../../../../services/RealStateAgent/real-state-agent.service';
 import { Router } from '@angular/router';
 
 @Component({
