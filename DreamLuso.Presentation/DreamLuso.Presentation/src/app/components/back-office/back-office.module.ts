@@ -13,6 +13,8 @@ import { DashboardSidebarAgentComponent } from './Pages/Agent/Components/dashboa
 import { RealStateAgentPropertiesComponent } from './Pages/Agent/Pages/real-state-agent-properties/real-state-agent-properties.component';
 import { Router, RouterModule } from "@angular/router";
 import { UpdatePropertyComponent } from './Pages/Agent/Pages/update-property/update-property.component';
+import { AppointmentsComponent } from './Pages/Agent/Pages/appointments/appointments.component';
+import { AppointmentCalendarComponent } from './Pages/Agent/Components/appointment-calendar/appointment-calendar.component';
 
 
 @NgModule({
@@ -35,6 +37,8 @@ import { UpdatePropertyComponent } from './Pages/Agent/Pages/update-property/upd
     DashboardSidebarAgentComponent,
     RealStateAgentPropertiesComponent,
     UpdatePropertyComponent,
+    AppointmentsComponent,
+    AppointmentCalendarComponent,
   ]
 })
 export class BackOfficeModule { }

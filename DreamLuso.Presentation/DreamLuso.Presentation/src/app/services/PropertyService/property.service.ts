@@ -66,6 +66,7 @@ export class PropertyService {
   getPropertiesByAgentId(agentId: string): Observable<Property[]> {
     return this.httpClient.get<Property[]>(`${this.apiUrl}/agent/${agentId}`);
   }
+
   updateProperty(id: string, propertyData: Property): Observable<any> {
     const formData = new FormData();
 

@@ -22,4 +22,8 @@ export class RealStateAgentService {
     console.log(`Calling API: ${this.apiUrl}/retrieve/${id}`);
     return this.httpClient.get<RealStateAgentModel>(`${this.apiUrl}/${id}`);
   }
+  retrieveByUserId(userId: string): Observable<RealStateAgentModel> {
+    console.log(`Calling API: ${this.apiUrl}/user/${userId}`);
+    return this.httpClient.get<RealStateAgentModel>(`${this.apiUrl}/user/${userId}`);
+  }
 }

@@ -45,7 +45,15 @@ public class PropertyVisitRepository : PaginatedRepository<PropertyVisit, Guid>,
             .Include(pv => pv.RealStateAgentUser)
             .FirstOrDefaultAsync(pv => pv.UserId == userId, cancellationToken);
     }
-
+    public async Task<IEnumerable<PropertyVisit>> RetrieveByRealAgentIdSingleAsync(Guid realstateAgentId, CancellationToken cancellationToken)
+    {
+        return await _dbSet
+            .Include(pv => pv.Property)
+            .Include(pv => pv.User)
+            .Include(pv => pv.RealStateAgentUser)
+            .Where(pv => pv.RealStateAgentId == realstateAgentId)
+            .ToListAsync(cancellationToken);
+    }
     public async Task<IEnumerable<PropertyVisit>> RetrieveAllAsync(CancellationToken cancellationToken)
     {
         return await _context.PropertyVisits
@@ -91,5 +99,26 @@ public class PropertyVisitRepository : PaginatedRepository<PropertyVisit, Guid>,
                 .ThenInclude(r => r.User)
             .FirstOrDefaultAsync(v => v.ConfirmationToken == token);
     }
+    public async Task ConfirmVisitAsync(Guid visitId, CancellationToken cancellationToken)
+    {
+        var visit = await _dbSet
+            .FirstOrDefaultAsync(v => v.Id == visitId, cancellationToken);
 
+        if (visit != null)
+        {
+            visit.Confirm(); // Chama o método `Confirm` no modelo `PropertyVisit`
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+    }
+    public async Task CancelVisitAsync(Guid visitId, CancellationToken cancellationToken)
+    {
+        var visit = await _dbSet
+            .FirstOrDefaultAsync(v => v.Id == visitId, cancellationToken);
+
+        if (visit != null)
+        {
+            visit.Cancel(); // Chama o método `Cancel` no modelo `PropertyVisit`
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+    }
 }

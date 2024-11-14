@@ -50,6 +50,14 @@ public class NotificationRepository : PaginatedRepository<Notification, Guid>, I
             .OrderByDescending(n => n.CreateAt)
             .ToListAsync();
     }
+    public async Task<IEnumerable<Notification>> GetAllUserNotificationsAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        return await _context.Notifications
+            .Include(n => n.SenderUser)
+            .Where(n => n.RecipientId == userId)
+            .OrderByDescending(n => n.CreateAt)
+            .ToListAsync(cancellationToken);
+    }
 
     public Task<IEnumerable<Notification>> GetNotificationsAsync(Guid userId)
     {

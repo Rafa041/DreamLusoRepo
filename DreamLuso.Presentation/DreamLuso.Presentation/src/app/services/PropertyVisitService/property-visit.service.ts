@@ -4,6 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CreatePropertyVisit, TimeSlot } from '../../models/CreatePropertyVisit';
 import { PropertyVisitResponse } from '../../models/PropertyVisitResponse';
 import { Observable } from 'rxjs/internal/Observable';
+import { tap } from 'rxjs/internal/operators/tap';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 @Injectable({
   providedIn: 'root'
@@ -50,14 +53,35 @@ export class PropertyVisitService {
   }
 
   getAgentVisits(agentId: string): Observable<PropertyVisitResponse[]> {
-    return this.http.get<PropertyVisitResponse[]>(`${this.apiUrl}/agent/${agentId}`);
+    // Add error handling and logging
+    return this.http.get<PropertyVisitResponse[]>(`${this.apiUrl}/user/${agentId}`).pipe(
+      tap(response => console.log('Agent visits response:', response)),
+      catchError(error => {
+        console.error('Error fetching agent visits:', error);
+        return throwError(() => error);
+      })
+    );
   }
-  cancelVisit(visitId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${visitId}`);
+  cancelVisit(visitId: string): Observable<any> {
+    if (!visitId) {
+        return throwError(() => new Error('Visit ID is required'));
+    }
+
+    const command = { visitId: visitId };
+    return this.http.put(`${this.apiUrl}/cancelVisit`, command).pipe(
+        tap(response => console.log('Cancel visit response:', response)),
+        catchError(error => {
+            console.error('Error in cancel visit:', error);
+            return throwError(() => error);
+        })
+    );
   }
   getVisitsByDate(propertyId: string, date: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/visitsByDate`, {
       params: { propertyId, date }
     });
+  }
+  confirmVisit(confirmationToken: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/confirmVisit`, { confirmationToken });
   }
 }

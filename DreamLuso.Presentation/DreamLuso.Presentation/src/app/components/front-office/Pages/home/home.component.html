@@ -63,16 +63,17 @@
           </ng-template>
 
           <!-- Notifications Section -->
+
           <li class="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 relative mr-4 hover:bg-white/20 transition-colors duration-300">
             <button (click)="toggleNotifications($event)"
                     class="cursor-pointer relative group"
                     title="Notifications">
               <svg xmlns="http://www.w3.org/2000/svg"
-                   fill="none"
-                   viewBox="0 0 24 24"
-                   stroke-width="1.5"
-                   class="h-6 w-6 text-neutral-100 group-hover:text-neutral-200 transition-colors duration-300"
-                   stroke="currentColor">
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  class="h-6 w-6 text-neutral-100 group-hover:text-neutral-200 transition-colors duration-300"
+                  stroke="currentColor">
                 <path stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
@@ -85,26 +86,25 @@
 
             <!-- Notifications Dropdown -->
             <div *ngIf="isNotificationsOpen"
-                 class="absolute right-0 top-full mt-2 w-80 rounded-xl bg-neutral-800/95 backdrop-blur-md shadow-lg ring-1 ring-white/20 z-50">
+                class="absolute right-0 top-full mt-2 w-80 rounded-xl bg-neutral-800/95 backdrop-blur-md shadow-lg ring-1 ring-white/20 z-50">
               <div class="p-4">
                 <div class="flex justify-between items-center mb-4">
                   <h3 class="text-lg font-medium text-neutral-100">Notifications</h3>
-                  <button class="text-sm text-neutral-300 hover:text-white transition-colors">
-                    Clear all
-                  </button>
                 </div>
 
                 <div class="divide-y divide-neutral-700">
                   <div *ngFor="let notification of notifications"
-                       class="py-3 hover:bg-white/5 rounded-lg transition-colors px-2 cursor-pointer">
+                      (click)="handleNotificationClick(notification)"
+                      class="py-3 hover:bg-white/5 rounded-lg transition-colors px-2 cursor-pointer"
+                      [ngClass]="{'opacity-50': notification.status === 'Read', 'opacity-100': notification.status === 'Unread'}">
                     <div class="flex items-start gap-3">
                       <div class="flex-shrink-0">
                         <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center">
                           <svg xmlns="http://www.w3.org/2000/svg"
-                               class="h-4 w-4 text-neutral-100"
-                               fill="none"
-                               viewBox="0 0 24 24"
-                               stroke="currentColor">
+                              class="h-4 w-4 text-neutral-100"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor">
                             <path stroke-linecap="round"
                                   stroke-linejoin="round"
                                   stroke-width="2"
@@ -119,13 +119,11 @@
                     </div>
                   </div>
                 </div>
-
-                <button class="mt-4 w-full py-2 rounded-lg bg-white/10 text-neutral-100 hover:bg-white/20 transition-colors text-sm font-medium">
-                  View All
-                </button>
               </div>
             </div>
           </li>
+
+
 
           <!-- Menu Dropdown -->
           <li class="flex h-12 w-12 items-center justify-center rounded-full bg-white relative">

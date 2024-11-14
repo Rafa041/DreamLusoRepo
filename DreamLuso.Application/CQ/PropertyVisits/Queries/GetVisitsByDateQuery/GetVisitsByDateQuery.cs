@@ -47,4 +47,5 @@ public class PropertyVisitResponse
     public Guid PropertyId { get; set; }
     public DateOnly VisitDate { get; set; }
     public TimeSlot TimeSlot { get; set; }
+    public string? Status { get; set; }
 }

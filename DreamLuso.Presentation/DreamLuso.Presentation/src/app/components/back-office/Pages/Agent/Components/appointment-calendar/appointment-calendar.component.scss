@@ -1,0 +1,118 @@
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.calendar-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  button {
+    background-color: #3f3f46;
+    color: #e4e4e7;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #52525b;
+    }
+
+    &.active {
+      background-color: #2563eb;
+      color: white;
+    }
+  }
+}
+
+::ng-deep {
+  .cal-month-view {
+    background-color: transparent;
+    border: 1px solid #3f3f46;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .cal-cell-row {
+      border-color: #3f3f46;
+    }
+
+    .cal-cell {
+      min-height: 110px;
+    }
+
+    .cal-day-cell {
+      background-color: #27272a;
+      color: #e4e4e7;
+
+      &:hover {
+        background-color: #3f3f46;
+      }
+
+      &.cal-out-month {
+        color: #52525b;
+      }
+    }
+
+    .cal-header {
+      background-color: #27272a;
+      color: #e4e4e7;
+      padding: 12px 0;
+      font-weight: 500;
+    }
+
+    .cal-today {
+      background-color: #18181b !important;
+    }
+
+    .cal-day-badge {
+      background-color: #2563eb;
+      border-radius: 12px;
+      padding: 2px 8px;
+    }
+
+    .cal-event {
+      margin: 2px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+
+    .cal-day-number {
+      opacity: 0.9;
+      margin: 5px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+
+  .cal-week-view, .cal-day-view {
+    background-color: #27272a;
+    border: 1px solid #3f3f46;
+    border-radius: 8px;
+    color: #e4e4e7;
+
+    .cal-header {
+      background-color: #18181b;
+      font-weight: 500;
+    }
+
+    .cal-hour-segment {
+      background-color: #27272a;
+      border-color: #3f3f46;
+    }
+
+    .cal-time {
+      color: #e4e4e7;
+    }
+  }
+}

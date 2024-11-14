@@ -7,4 +7,5 @@ public interface IRealStateAgentRepository : IRepository<RealStateAgent, Guid>
 
     Task<RealStateAgent> RetrieveByUserIdAsync(Guid id, CancellationToken cancellationToken = default);
 
+
 }

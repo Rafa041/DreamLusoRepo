@@ -3,6 +3,7 @@ using DreamLuso.Application.CQ.RealStateAgents.Commands.CreateRealStateAgent;
 using DreamLuso.Application.CQ.RealStateAgents.Commands.UpdateRealStateAgent;
 using DreamLuso.Application.CQ.RealStateAgents.Queries.Retrieve;
 using DreamLuso.Application.CQ.RealStateAgents.Queries.RetrieveAll;
+using DreamLuso.Application.CQ.RealStateAgents.Queries.RetrieveByUserId;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,12 @@ public static class RealStateAgentEndpoints
             .WithName("UpdateRealStateAgent")
             .Produces<UpdateRealStateAgentResponse>(200)
             .Produces<Error>(404);
+        // ========== Retrieve Real State Agent by UserId Endpoint ==========
+        agents.MapGet("/user/{userId:guid}", Queries.RetrieveRealStateAgentByUserId)
+            .WithName("RetrieveRealStateAgentByUserId")
+            .Produces<RetrieveRealStateAgentResponse>(200)
+            .Produces<Error>(404);
+
     }
 
     private static class Queries
@@ -80,6 +87,17 @@ public static class RealStateAgentEndpoints
         {
             var result = await sender.Send(command, cancellationToken);
             return result.IsSuccess ? TypedResults.Ok(result.IsSuccess) : TypedResults.NotFound("RealStateAgent not found.");
+        }
+        // ========== Retrieve Real State Agent by UserId ==========
+        public static async Task<Results<Ok<RetrieveRealStateAgentResponse>, NotFound<Error>>> RetrieveRealStateAgentByUserId(
+            [FromServices] ISender sender,
+            [FromRoute] Guid userId,
+            CancellationToken cancellationToken)
+        {
+            var query = new RetrieveRealStateAgentByUserIdQuery { UserId = userId };
+            var result = await sender.Send(query, cancellationToken);
+
+            return result.IsSuccess ? TypedResults.Ok(result.Value) : TypedResults.NotFound(result.Error);
         }
     }
 }

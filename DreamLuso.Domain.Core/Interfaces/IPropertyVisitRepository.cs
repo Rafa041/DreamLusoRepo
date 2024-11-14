@@ -10,4 +10,7 @@ public interface IPropertyVisitRepository : IRepository<PropertyVisit, Guid>
     Task<IEnumerable<PropertyVisit>> RetrieveAllByUserAsync(Guid userId, CancellationToken cancellationToken);
     Task<PropertyVisit> RetrieveByTokenAsync(string token);
     Task<bool> IsTimeSlotAvailable(Guid propertyId, DateOnly visitDate, TimeSlot timeSlot, CancellationToken cancellationToken);
+    Task ConfirmVisitAsync(Guid visitId, CancellationToken cancellationToken);
+    Task CancelVisitAsync(Guid visitId, CancellationToken cancellationToken);
+    Task<IEnumerable<PropertyVisit>> RetrieveByRealAgentIdSingleAsync(Guid realstateAgentId, CancellationToken cancellationToken);
 }

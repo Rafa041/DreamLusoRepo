@@ -52,6 +52,7 @@ public class CreatePropertyVisitCommandHandler(IUnitOfWork unitOfWork) : IReques
                 PropertyId = request.PropertyId,
                 UserId = request.UserId,
                 RealStateAgentId = request.RealStateAgentId,
+                VisitStatus = VisitStatus.Pending,
                 VisitDate = request.VisitDate,
                 TimeSlot = request.TimeSlot,
                 CreatedAt = DateTime.UtcNow

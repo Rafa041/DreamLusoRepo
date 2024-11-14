@@ -77,17 +77,26 @@ export class HomeComponent  {
     }
   }
   loadNotifications() {
-    this.notificationService.getUnreadNotifications(this.userId).subscribe({
-      next: (notifications) => {
-        this.zone.run(() => {
-          this.notifications = notifications;
-          this.notificationCount = notifications.length;
-        });
-      },
-      error: (error) => {
-        console.error('Error loading notifications:', error);
-      }
+    if (this.userId) {
+      this.notificationService.getUnreadNotifications(this.userId).subscribe(notifications => {
+        this.notifications = notifications;
+        this.notificationCount = notifications.filter(n => n.status === 'Unread').length; // Contando as não lidas
+      });
+    }
+  }
+
+  handleNotificationClick(notification: ApiNotification) {
+    this.notificationService.markAsRead(notification.id).subscribe(() => {
+      // Update the local notification status
+      notification.status = 'Read';
+      // Update notification count
+      this.notificationCount = this.notifications.filter(n => n.status === 'Unread').length;
     });
+  }
+
+  toggleNotifications(event: Event) {
+    event.stopPropagation();
+    this.isNotificationsOpen = !this.isNotificationsOpen;
   }
 
   markAsRead(notificationId: string) {
@@ -181,16 +190,6 @@ export class HomeComponent  {
       document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
     }
   }
-  // Add this method
-  toggleNotifications(event: Event) {
-    event.stopPropagation();
-    this.isNotificationsOpen = !this.isNotificationsOpen;
-    // Close other dropdowns when notifications is opened
-    if (this.isNotificationsOpen) {
-      this.isDropdownOpen = false;
-    }
-  }
-
   // Modify existing document click handler
   @HostListener('document:click', ['$event'])
 private handleOutsideClick(event: MouseEvent): void {

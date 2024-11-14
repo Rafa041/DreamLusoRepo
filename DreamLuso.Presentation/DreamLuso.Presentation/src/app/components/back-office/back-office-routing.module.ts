@@ -8,6 +8,7 @@ import { DashboardAgentComponent } from "./Pages/Agent/Pages/dashboard/dashboard
 import { DashboardClientComponent } from "./Pages/Client/dashboard/dashboard.component";
 import { RealStateAgentPropertiesComponent } from "./Pages/Agent/Pages/real-state-agent-properties/real-state-agent-properties.component";
 import { UpdatePropertyComponent } from "./Pages/Agent/Pages/update-property/update-property.component";
+import { AppointmentsComponent } from "./Pages/Agent/Pages/appointments/appointments.component";
 
 
 
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'dashboardAdmin',component: DashboardAdminComponent },
   { path: 'dashboardAgent',component: DashboardAgentComponent },
   { path: 'agent/properties',component: RealStateAgentPropertiesComponent },
-  { path: 'agent/properties/edit/:id', component: UpdatePropertyComponent }
+  { path: 'agent/properties/edit/:id', component: UpdatePropertyComponent },
+  { path: 'appointmentsAgent', component: AppointmentsComponent }
 ];
 
 @NgModule({
