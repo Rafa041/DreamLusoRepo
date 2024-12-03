@@ -1,4 +1,4 @@
-<section class="bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-700 min-h-screen pb-20">
+<section class="min-h-screen font-inter">
   <!-- Loading Skeleton -->
   <div *ngIf="loading" class="animate-pulse p-8">
     <div class="max-w-6xl mx-auto">
@@ -14,261 +14,460 @@
   </div>
 
   <!-- Property Details Content -->
-  <div *ngIf="!loading && property" class="p-8 animate-fade-in">
-    <div class="max-w-6xl mx-auto">
+  <div *ngIf="!loading && property" class="p-20 animate-fade-in">
+    <!-- Image Gallery with Zoom on Hover -->
+    <div
+      class="relative h-96 rounded-xl overflow-hidden mb-8 group cursor-pointer"
+    >
+      <img
+        [src]="getImagePath()"
+        alt="Property Image"
+        class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+        (click)="openImageModal()"
+      />
 
-      <!-- Image Gallery with Zoom on Hover -->
-      <div class="relative h-96 rounded-xl overflow-hidden mb-8 group cursor-pointer">
-        <img
-            [src]="getImagePath()"
-            alt="Property Image"
-            class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-            (click)="openImageModal()"
+      <!-- Image Navigation Buttons -->
+      <div class="absolute inset-0 flex items-center justify-between p-4">
+        <button
+          (click)="previousImage()"
+          class="bg-black bg-opacity-50 text-neutral-900 p-2 rounded-full hover:bg-opacity-75"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-
-        <!-- Image Navigation Buttons -->
-        <div class="absolute inset-0 flex items-center justify-between p-4">
-          <button
-            (click)="previousImage()"
-            class="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            (click)="nextImage()"
-            class="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-     <!-- Main Info -->
-      <div class="mb-8">
-        <div class="flex justify-between items-start mb-4">
-          <h1 class="text-4xl font-bold text-white">{{property.title}}</h1>
-          <span class="text-2xl font-bold text-emerald-400">{{property.price | currency:'EUR'}}</span>
-        </div>
-
-        <!-- Enhanced Address Display -->
-        <div class="bg-neutral-800 p-4 rounded-lg mt-4 border border-neutral-700">
-          <div class="flex items-center space-x-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <div>
-              <span class="text-neutral-400 text-sm">Location</span>
-              <p class="text-white text-lg font-medium">
-                {{property.street}}, {{property.city}}, {{property.state}} {{property.postalCode}}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Property Specs with Icons -->
-      <div class="grid grid-cols-4 gap-6 mb-8">
-        <div class="bg-neutral-800 p-4 rounded-lg flex items-center space-x-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400" viewBox="0 0 24 24" fill="currentColor"><path d="M..."></path></svg>
-          <div>
-            <span class="text-neutral-400 block">Bedrooms</span>
-            <span class="text-2xl text-white font-bold">{{property.bedrooms}}</span>
-          </div>
-        </div>
-        <div class="bg-neutral-800 p-4 rounded-lg flex items-center space-x-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400" viewBox="0 0 24 24" fill="currentColor"><path d="M..."></path></svg>
-          <div>
-            <span class="text-neutral-400 block">Bathrooms</span>
-            <span class="text-2xl text-white font-bold">{{property.bathrooms}}</span>
-          </div>
-        </div>
-        <div class="bg-neutral-800 p-4 rounded-lg flex items-center space-x-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400" viewBox="0 0 24 24" fill="currentColor"><path d="M..."></path></svg>
-          <div>
-            <span class="text-neutral-400 block">Size</span>
-            <span class="text-2xl text-white font-bold">{{property.size}}m²</span>
-          </div>
-        </div>
-        <div class="bg-neutral-800 p-4 rounded-lg flex items-center space-x-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400" viewBox="0 0 24 24" fill="currentColor"><path d="M..."></path></svg>
-          <div>
-            <span class="text-neutral-400 block">Year Built</span>
-            <span class="text-2xl text-white font-bold">{{property.yearBuilt | date:'yyyy'}}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Description -->
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold text-white mb-4">Description</h2>
-        <p class="text-neutral-300">{{property.description}}</p>
-      </div>
-
-     <!-- Property Owner Info Section -->
-      <div class="mb-8 bg-neutral-800 p-6 rounded-xl group relative">
-        <h2 class="text-2xl font-bold text-white mb-4">Property Owner</h2>
-        <div *ngIf="propertyOwner" class="flex items-center gap-4">
-          <div class="w-16 h-16 rounded-full overflow-hidden">
-            <img
-              [src]="getImageUrl(propertyOwner.imageUrl) || 'assets/default-avatar.png'"
-              alt="Owner"
-              class="w-full h-full object-cover"
-            >
-          </div>
-          <div>
-            <h3 class="text-xl font-semibold text-white">
-              {{propertyOwner.firstName}} {{propertyOwner.lastName}}
-            </h3>
-            <p class="text-neutral-400">{{propertyOwner.email}}</p>
-            <p class="text-neutral-400" *ngIf="propertyOwner.phoneNumber">{{propertyOwner.phoneNumber }}</p>
-          </div>
-
-          <!-- Chat Icon for non-realstateagent users -->
-          <button
-          *ngIf="showChatButton"
-          (click)="openChat()"
-          class="ml-auto bg-emerald-500 hover:bg-emerald-600 text-white p-3 rounded-full transition-all duration-300 ease-in-out"
-          title="Chat with Agent">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </button>
-        </div>
+        <button
+          (click)="nextImage()"
+          class="bg-black bg-opacity-50 text-neutral-900 p-2 rounded-full hover:bg-opacity-75"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </button>
       </div>
-      <!-- Amenities -->
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold text-white mb-4">Amenities</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div *ngFor="let amenity of amenitiesList" class="flex items-center space-x-2 text-neutral-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
-            <span>{{amenity}}</span>
-          </div>
-        </div>
+    </div>
+
+    <!-- Main Info -->
+    <div class="mb-8">
+      <div class="flex justify-between items-start mb-4">
+        <h1 class="text-6xl font-poppins font-bold text-neutral-900">
+          {{ property.title }}
+        </h1>
+        <span class="text-6xl font-poppins font-bold text-green-500">{{
+          property.price | currency : "EUR"
+        }}</span>
       </div>
 
-      <!-- Additional Info Separator -->
-      <div class="border-t border-neutral-600 mt-8 mb-8"></div>
+      <!-- Enhanced Address Display -->
+      <div class="mt-5">
+        <div class="flex items-center space-x-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-green-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+          <div class="font-inter">
+            <span class="text-neutral-400 text-sm font-medium">Location</span>
+            <p class="text-neutral-900 text-2xl font-bold font-poppins">
+              {{ property.street }}, {{ property.city }}, {{ property.state }}
+              {{ property.postalCode }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- Additional Property Details -->
-      <div class="bg-neutral-800 p-6 rounded-xl">
-        <h2 class="text-2xl font-bold text-white mb-4">Property Details</h2>
-        <div class="grid grid-cols-2 gap-4 text-neutral-300">
-          <div>
-            <span class="block text-neutral-400">Property Type</span>
-            <span>{{property.type}}</span>
-          </div>
-          <div>
-            <span class="block text-neutral-400">Status</span>
-            <span>{{property.status}}</span>
-          </div>
-          <div>
-            <span class="block text-neutral-400">Country</span>
-            <span>{{property.country}}</span>
-          </div>
-          <div *ngIf="property.additionalInfo">
-            <span class="block text-neutral-400">Additional Information</span>
-            <span>{{property.additionalInfo}}</span>
-          </div>
+    <!-- Property Specs with Icons -->
+    <div class="flex gap-10 mb-10">
+      <div class="p-4 rounded-lg flex items-center space-x-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-neutral-400"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M..."></path>
+        </svg>
+        <div>
+          <span class="text-neutral-400 text-sm font-medium block"
+            >Bedrooms</span
+          >
+          <span class="text-5xl text-neutral-900 font-bold font-poppins">{{
+            property.bedrooms
+          }}</span>
+        </div>
+      </div>
+      <div class="p-4 rounded-lg flex items-center space-x-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-neutral-400"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M..."></path>
+        </svg>
+        <div>
+          <span class="text-neutral-400 text-sm font-medium block"
+            >Bathrooms</span
+          >
+          <span class="text-5xl text-neutral-900 font-bold font-poppins">{{
+            property.bathrooms
+          }}</span>
+        </div>
+      </div>
+      <div class="p-4 rounded-lg flex items-center space-x-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-neutral-400"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M..."></path>
+        </svg>
+        <div>
+          <span class="text-neutral-400 text-sm font-medium block">Size</span>
+          <span class="text-5xl text-neutral-900 font-bold font-poppins"
+            >{{ property.size }}m²</span
+          >
+        </div>
+      </div>
+      <div class="p-4 rounded-lg flex items-center space-x-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-neutral-400"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M..."></path>
+        </svg>
+        <div>
+          <span class="text-neutral-400 text-sm font-medium block"
+            >Year Built</span
+          >
+          <span class="text-5xl text-neutral-900 font-bold font-poppins">{{
+            property.yearBuilt | date : "yyyy"
+          }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold font-poppins text-neutral-900 mb-5">
+        Description
+      </h2>
+      <p class="text-neutral-500 whitespace-pre-line">
+        {{ property.description }}
+      </p>
+    </div>
+
+    <!-- Property Owner Info Section -->
+    <div class="mb-8 group relative">
+      <h2 class="text-2xl font-bold font-poppins text-neutral-900 mb-5">
+        Property Owner
+      </h2>
+      <div *ngIf="propertyOwner" class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-full overflow-hidden">
+          <img
+            [src]="
+              getImageUrl(propertyOwner.imageUrl) || 'assets/default-avatar.png'
+            "
+            alt="Owner"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-neutral-900 font-poppins">
+            {{ propertyOwner.firstName }} {{ propertyOwner.lastName }}
+          </h3>
+          <p class="text-neutral-500 text-sm">{{ propertyOwner.email }}</p>
+          <p class="text-neutral-400" *ngIf="propertyOwner.phoneNumber">
+            {{ propertyOwner.phoneNumber }}
+          </p>
+        </div>
+
+        <!-- Chat Icon for non-realstateagent users -->
+        <button
+          *ngIf="showChatButton"
+          (click)="openChat()"
+          class="ml-auto bg-emerald-500 hover:bg-emerald-600 text-neutral-900 p-3 rounded-full transition-all duration-300 ease-in-out"
+          title="Chat with Agent"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- Amenities -->
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold font-poppins text-neutral-900 mb-5">
+        Amenities
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-5">
+        <div
+          *ngFor="let amenity of amenitiesList"
+          class="flex items-center space-x-2 text-neutral-300"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="size-4 text-green-500"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span class="text-neutral-500 font-medium">{{ amenity }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Property Details -->
+    <div class="p-10 rounded-xl bg-neutral-200/70">
+      <h2 class="text-2xl font-bold font-poppins text-neutral-900 mb-5">
+        Property Details
+      </h2>
+      <div class="grid grid-cols-2 gap-4 text-neutral-300">
+        <div>
+          <span class="block text-neutral-400 text-sm font-medium"
+            >Property Type</span
+          >
+          <span class="font-medium text-neutral-600">{{ property.type }}</span>
+        </div>
+        <div>
+          <span class="block text-neutral-400 text-sm font-medium">Status</span>
+          <span class="font-medium text-neutral-600">{{
+            property.status
+          }}</span>
+        </div>
+        <div>
+          <span class="block text-neutral-400 text-sm font-medium"
+            >Country</span
+          >
+          <span class="font-medium text-neutral-600">{{
+            property.country
+          }}</span>
+        </div>
+        <div *ngIf="property.additionalInfo">
+          <span class="block text-neutral-400 text-sm font-medium"
+            >Additional Information</span
+          >
+          <span class="font-medium text-neutral-600">{{
+            property.additionalInfo
+          }}</span>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Floating Action Menu -->
+  <div class="fixed bottom-5 right-5 flex flex-col space-y-5">
+    <!-- Back Button with Tooltip -->
+    <a
+      routerLink="/properties"
+      class="bg-neutral-600 hover:bg-neutral-700 text-white rounded-full p-4 transition duration-300 group"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        />
+      </svg>
+      <span
+        class="absolute -top-10 bg-black bg-opacity-80 text-neutral-900 text-sm p-2 rounded shadow-lg opacity-0 transition-opacity group-hover:opacity-100"
+      >
+        Back to Listings
+      </span>
+    </a>
+    <button
+      class="bg-green-500 hover:bg-green-600 text-white rounded-full p-4 transition duration-300"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+        />
+      </svg>
+    </button>
+    <button
+      class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 transition duration-300"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+        />
+      </svg>
+    </button>
+  </div>
 
-
-    <!-- Schedule Visit Section -->
-    <div class="max-w-6xl mx-auto">
-          <div class="bg-neutral-800 p-8 rounded-xl shadow-lg border border-neutral-700">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="text-2xl font-bold text-white">Schedule a Visit</h2>
-              <div class="flex items-center space-x-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <span class="text-emerald-400 font-medium">Available for Visits</span>
-              </div>
-            </div>
-
-            <app-schedule-visit
-            *ngIf="isLoggedIn && property"
-            [property]="property">
-            </app-schedule-visit>
-          </div>
-    </div>
-
-    <!-- Floating Action Menu -->
-    <div class="fixed bottom-8 right-8 flex flex-col space-y-4">
-      <button class="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-4 shadow-lg transition duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg>
-      </button>
-      <button class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 shadow-lg transition duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-        </svg>
-      </button>
-    </div>
-
-  <!-- Back Button with Tooltip -->
-  <a routerLink="/properties" class="fixed bottom-8 left-8 bg-neutral-600 hover:bg-neutral-700 text-white rounded-full p-4 shadow-lg transition duration-300 group">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-    </svg>
-    <span class="absolute -top-10 bg-black bg-opacity-80 text-white text-sm p-2 rounded shadow-lg opacity-0 transition-opacity group-hover:opacity-100">
-      Back to Listings
-    </span>
-  </a>
   <!-- Image Modal -->
-  <div *ngIf="isModalOpen"
-       class="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center image-modal"
-       (click)="closeImageModal()">
-
-    <div class="relative w-full h-full flex items-center justify-center"
-         (click)="$event.stopPropagation()">
-
+  <div
+    *ngIf="isModalOpen"
+    class="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center image-modal"
+    (click)="closeImageModal()"
+  >
+    <div
+      class="relative w-full h-full flex items-center justify-center"
+      (click)="$event.stopPropagation()"
+    >
       <img
         [src]="property.images?.[currentImageIndex]?.imagePath"
         alt="Property Image"
-        [style.transform]="'scale(' + scale + ') translate(' + position.x + 'px, ' + position.y + 'px)'"
+        [style.transform]="
+          'scale(' +
+          scale +
+          ') translate(' +
+          position.x +
+          'px, ' +
+          position.y +
+          'px)'
+        "
         class="zoomed-image max-w-full max-h-[90vh] transition-transform duration-200"
         (mousedown)="startDrag($event)"
         (mousemove)="onDrag($event)"
         (mouseup)="stopDrag()"
         (mouseleave)="stopDrag()"
-      >
+      />
 
       <!-- Zoom Controls -->
-      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-4 zoom-controls">
+      <div
+        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-4 zoom-controls"
+      >
         <button
-          class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 text-white"
-          (click)="zoomOut()">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 text-neutral-900"
+          (click)="zoomOut()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20 12H4"
+            />
           </svg>
         </button>
         <button
-          class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 text-white"
-          (click)="zoomIn()">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 text-neutral-900"
+          (click)="zoomIn()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            />
           </svg>
         </button>
       </div>
 
       <!-- Close Button -->
       <button
-        class="absolute top-4 right-4 text-white bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2"
-        (click)="closeImageModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        class="absolute top-4 right-4 text-neutral-900 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2"
+        (click)="closeImageModal()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
         </svg>
       </button>
     </div>
