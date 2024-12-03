@@ -2,7 +2,7 @@ export enum Access {
   None = 'None',
   Guest = 'Guest',
   User = 'User',
-  RealStateAgent = 'Real State Agent',
+  RealStateAgent = 'Agent',
   Admin = 'Admin',
   Blocked = 'Blocked'
 }

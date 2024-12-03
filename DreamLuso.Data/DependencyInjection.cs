@@ -48,7 +48,8 @@ public static class DependencyInjection
         services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         services.AddScoped<IPropertyVisitRepository, PropertyVisitRepository>();
         services.AddScoped<INotificationRepository, NotificationRepository>();
-        //services.AddScoped<INotificationStrategy, HybridNotificationStrategy>();
+        services.AddScoped<IChatRepository, ChatRepository>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
 
         return services;
     }

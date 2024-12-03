@@ -110,4 +110,19 @@ public class PropertyRepository : PaginatedRepository<Property, Guid>, IProperty
         await _context.SaveChangesAsync(cancellationToken);
         return existingProperty;
     }
+    public async Task<Property> UpdateIsActiveAsync(Guid id, bool isActive, CancellationToken cancellationToken = default)
+    {
+        var property = await _context.Properties
+            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+
+        if (property == null)
+            return null;
+
+        property.IsActive = isActive;
+        property.LastModifiedDate = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return property;
+    }
 }

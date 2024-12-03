@@ -20,7 +20,8 @@ public static class RealStateAgentEndpoints
         agents.MapPost("/create", Queries.CreateRealStateAgent)
             .WithName("CreateRealStateAgent")
             .Produces<CreateRealStateAgentResponse>(200)
-            .Produces<Error>(400);
+            .Produces<Error>(400)
+            .DisableAntiforgery();//Em teste 
 
         // ========== Retrieve All Real State Agents Endpoint ==========
         agents.MapGet("/retrieveall", Queries.RetrieveAllRealStateAgents)

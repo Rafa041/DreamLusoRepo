@@ -2,32 +2,50 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AddPropertyComponent } from "./Pages/Agent/Pages/add-property/add-property.component";
 import { HomeComponent } from "../front-office/Pages/home/home.component";
-import { DashboardAdminComponent } from "./Pages/Admin/dashboard/dashboard.component";
-import { CreateAgentComponent } from "./Pages/Admin/create-agent/create-agent.component";
+import { DashboardAdminComponent } from "./Pages/Admin/Pages/dashboard/dashboard.component";
+import { CreateAgentComponent } from "./Pages/Admin/Pages/create-agent/create-agent.component";
 import { DashboardAgentComponent } from "./Pages/Agent/Pages/dashboard/dashboard.component";
-import { DashboardClientComponent } from "./Pages/Client/dashboard/dashboard.component";
+import { DashboardClientComponent } from "./Pages/Client/Pages/dashboard/dashboard.component";
 import { RealStateAgentPropertiesComponent } from "./Pages/Agent/Pages/real-state-agent-properties/real-state-agent-properties.component";
 import { UpdatePropertyComponent } from "./Pages/Agent/Pages/update-property/update-property.component";
 import { AppointmentsComponent } from "./Pages/Agent/Pages/appointments/appointments.component";
+import { UsersComponent } from "./Pages/Admin/Pages/users/users.component";
+import { ChatOverlayComponent } from "./Pages/Agent/Pages/chat-overlay/chat-overlay.component";
+import { ChatClientComponent } from "./Pages/Client/Pages/chat-client/chat-client.component";
 
 
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: HomeComponent,
+    path: 'admin',
     children: [
+      { path: 'dashboard', component: DashboardAdminComponent },
+      { path: 'users', component: UsersComponent },
+      { path: 'create-agent', component: CreateAgentComponent }
     ]
   },
-  { path: 'agent/createProperty',component: AddPropertyComponent },
-  { path: 'createAgent',component: CreateAgentComponent },
-  { path: 'dashboardAgent',component: DashboardAgentComponent },
-  { path: 'dashboardClient',component: DashboardClientComponent },
-  { path: 'dashboardAdmin',component: DashboardAdminComponent },
-  { path: 'dashboardAgent',component: DashboardAgentComponent },
-  { path: 'agent/properties',component: RealStateAgentPropertiesComponent },
-  { path: 'agent/properties/edit/:id', component: UpdatePropertyComponent },
-  { path: 'appointmentsAgent', component: AppointmentsComponent }
+  {
+    path: 'agent',
+    children: [
+      { path: 'dashboard', component: DashboardAgentComponent },
+      { path: 'create-property', component: AddPropertyComponent },
+      { path: 'properties', component: RealStateAgentPropertiesComponent },
+      { path: 'properties/edit/:id', component: UpdatePropertyComponent },
+      { path: 'appointments', component: AppointmentsComponent }
+    ]
+  },
+  {
+    path: 'client',
+    children: [
+      { path: 'dashboard', component: DashboardClientComponent },
+      { path: 'chat-overlay', component: ChatOverlayComponent },
+      { path: 'chatClient', component: ChatClientComponent }
+    ]
+  },
+  {
+    path: '',
+    component: HomeComponent
+  }
 ];
 
 @NgModule({

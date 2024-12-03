@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CQ\Chat\Queries\NewFolder\" />
     <Folder Include="CQ\Contracts\Queries\" />
     <Folder Include="CQ\PropertyImages\Commands\CreatePropertyImages\" />
   </ItemGroup>

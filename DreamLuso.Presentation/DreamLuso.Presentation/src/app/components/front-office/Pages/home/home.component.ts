@@ -36,13 +36,13 @@ export class HomeComponent  {
 
     switch (access) {
       case 'Admin':
-        this.router.navigate(['/back-office/dashboardAdmin']);
+        this.router.navigate(['/back-office/admin/dashboard']);
         break;
       case 'RealStateAgent':
-        this.router.navigate(['/back-office/dashboardAgent']);
+        this.router.navigate(['/back-office/agent/dashboard']);
         break;
       case 'None':
-        this.router.navigate(['/back-office/dashboardClient']);
+        this.router.navigate(['/back-office/client/dashboard']);
         break;
       default:
         this.router.navigate(['/']);

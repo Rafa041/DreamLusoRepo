@@ -50,4 +50,6 @@ public sealed record Error(string Code, string Description)
     public static readonly Error FailedToRetrieveVisits = new("PropertyVisits.RetrievalFailed","Failed to retrieve property visits");
     public static readonly Error UpdateFailed = new("Property.UpdateFailed", "Failed to update the property");
     public static readonly Error VisitAlreadyConfirmed = new ("VisitAlreadyConfirmed", "The visit has already been confirmed.");
+    public static readonly Error ChatNotFound = new("ChatNotFound", "Chat Not Found.");
+    public static readonly Error NotificationCreationFailed = new("NotificationCreationFailed", "Notification Creation Failed");
 }

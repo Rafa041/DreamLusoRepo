@@ -1,0 +1,85 @@
+<div class="flex h-screen bg-zinc-900 font-sans overflow-hidden">
+  <app-dashboard-sidebar-client [loggedUserDetails]="loggedUserDetails"></app-dashboard-sidebar-client>
+
+  <div class="flex-1 ml-64 lg:ml-[25%] xl:ml-[20%] 2xl:ml-[15%] p-4">
+    <div class="chat-container">
+      <!-- Chat List -->
+      <div class="chat-list">
+        <h2 class="text-2xl font-bold text-zinc-100 mb-6">Conversations</h2>
+        <div class="chat-items">
+          <div *ngFor="let chat of activeChats"
+               (click)="selectChat(chat)"
+               class="chat-item"
+               [ngClass]="{'active': selectedChat?.id === chat.id}">
+            <div class="chat-item-content">
+              <img [src]="getImageUrl(chat.agentDetails?.imageUrl)"
+                   class="chat-avatar"
+                   (error)="handleImageError($event)"
+                   alt="Agent photo">
+              <div class="chat-info">
+                <h3 class="chat-name">{{chat.realStateAgentName}}</h3>
+                <p class="chat-preview">{{chat.lastMessageContent}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Messages -->
+      <div class="chat-messages">
+        <div *ngIf="selectedChat" class="chat-active">
+          <!-- Chat Header -->
+          <div class="chat-header">
+            <div class="chat-header-content">
+              <img [src]="getImageUrl(selectedChat.agentDetails?.imageUrl)"
+                   class="chat-header-avatar"
+                   (error)="handleImageError($event)"
+                   alt="Agent photo">
+              <div class="chat-header-info">
+                <h3 class="chat-header-name">{{selectedChat.realStateAgentName}}</h3>
+                <p class="chat-header-status">{{selectedChat.propertyTitle}}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div class="messages-container">
+            <div *ngFor="let message of messages"
+                 class="message"
+                 [ngClass]="{'own-message': message.senderId === userId}">
+              <div class="message-content">
+                <p>{{message.content}}</p>
+                <div class="message-meta">
+                  <span class="message-time">{{message.sentAt | date:'HH:mm'}}</span>
+                  <span *ngIf="message.senderId === userId" class="message-status">
+                    <i class="fas fa-check-double" [ngClass]="{'read': message.isRead}"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message Input -->
+          <div class="message-input">
+            <button class="attachment-button">
+              <i class="fas fa-paperclip"></i>
+            </button>
+            <input type="text"
+                   [(ngModel)]="newMessage"
+                   (keyup.enter)="sendMessage()"
+                   placeholder="Type your message...">
+            <button class="send-button"
+                    (click)="sendMessage()"
+                    [disabled]="!newMessage.trim()">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="!selectedChat" class="no-chat-selected">
+          <p>Select a conversation to start chatting</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

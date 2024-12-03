@@ -18,6 +18,8 @@ public interface IUnitOfWork
     public IFileStorageService FileStorageService { get; }
     public INotificationRepository NotificationRepository { get; }
     public IPropertyVisitRepository PropertyVisitRepository { get; }
+    public IChatRepository ChatRepository { get; }
+    public IMessageRepository MessageRepository { get; }
     //JWT
     public ITokenService TokenService { get; }
     public IDataProtectionService DataProtectionService { get; }

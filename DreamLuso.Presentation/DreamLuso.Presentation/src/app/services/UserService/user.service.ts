@@ -1,28 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RetrieveUserResponse } from '../../models/RetrieveAllUsers';
+import { RetrieveAllUsersResponse, RetrieveUserResponse } from '../../models/RetrieveAllUsers';
 import { Observable } from 'rxjs/internal/Observable';
 import { UserModel } from '../../models/UserModel';
 import { Register } from '../../models/Register';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private apiUrl = 'https://localhost:7224/api/user';
+  private apiUrl = `${environment.apiUrl}/api/user`;
 
-  private apiRetrieveAll = '/api/User/RetrieveAll';
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
 
-  getAllUsers(): Observable<{ users: RetrieveUserResponse[] }> {
-    return this.httpClient.get<{ users: RetrieveUserResponse[] }>(`${this.apiUrl}/retrieveall`);
+  getAllUsers(): Observable<RetrieveUserResponse[]> {
+    return this.httpClient.get<RetrieveUserResponse[]>(`${this.apiUrl}/retrieveall`);
   }
   retrieve(userId: string): Observable<UserModel> {
     return this.httpClient.get<UserModel>(`${this.apiUrl}/${userId}`);
+  }
+  updateAccess(userId: string, userData: any): Observable<any> {
+    return this.httpClient.put(`${this.apiUrl}/users/${userId}`, userData);
   }
 
   register(user: Register, file: File | null): Observable<any> {

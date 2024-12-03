@@ -1,0 +1,105 @@
+<div class="flex h-screen bg-zinc-900 font-sans overflow-hidden">
+  <app-dashboard-sidebar-agent [loggedAgentDetails]="loggedAgentDetails"></app-dashboard-sidebar-agent>
+
+  <div class="flex-1 ml-64 lg:ml-[25%] xl:ml-[20%] 2xl:ml-[15%] p-4">
+    <div class="chat-container">
+      <div class="chat-list">
+        <div class="chat-header-section">
+          <h2 class="text-2xl font-bold text-zinc-100">Client Inquiries</h2>
+          <div class="chat-filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Urgent</button>
+            <button class="filter-btn">New</button>
+          </div>
+        </div>
+
+        <div class="chat-items">
+          <div *ngFor="let chat of activeChats"
+               (click)="selectChat(chat)"
+               class="chat-item"
+               [ngClass]="{'active': selectedChat?.id === chat.id, 'urgent': chat.isUrgent}">
+            <div class="chat-item-content">
+              <img [src]="getImageUrl(chat.clientDetails?.imageUrl)"
+                   class="chat-avatar"
+                   (error)="handleImageError($event)"
+                   alt="Client photo">
+              <div class="chat-info">
+                <div class="chat-header">
+                  <h3 class="chat-name">{{chat.clientDetails?.name}}</h3>
+                  <button class="urgent-toggle" (click)="toggleUrgent(chat.id)">
+                    <i class="fas fa-star" [class.active]="chat.isUrgent"></i>
+                  </button>
+                </div>
+                <p class="property-reference">{{chat.propertyDetails?.title}}</p>
+                <p class="chat-preview">{{chat.lastMessageContent}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-messages">
+        <div *ngIf="selectedChat" class="chat-active">
+          <div class="chat-header">
+            <div class="chat-header-content">
+              <img [src]="getImageUrl(selectedChat.clientDetails?.imageUrl)"
+                   class="chat-header-avatar"
+                   alt="Client photo">
+              <div class="chat-header-info">
+                <h3 class="chat-header-name">{{selectedChat.clientDetails?.name}}</h3>
+                <div class="property-info">
+                  <p class="property-title">{{selectedChat.propertyDetails?.title}}</p>
+                  <p class="property-price">{{selectedChat.propertyDetails?.price | currency}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="messages-container">
+            <div *ngFor="let message of messages"
+                 class="message"
+                 [ngClass]="{'own-message': message.senderId === agentId}">
+              <div class="message-content">
+                <p>{{message.content}}</p>
+                <div class="message-meta">
+                  <span class="message-time">{{message.sentAt | date:'HH:mm'}}</span>
+                  <span *ngIf="message.senderId === agentId" class="message-status">
+                    <i class="fas fa-check-double" [ngClass]="{'read': message.isRead}"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-responses">
+            <div *ngFor="let response of quickResponses"
+                 class="quick-response"
+                 (click)="useQuickResponse(response)">
+              {{response}}
+            </div>
+          </div>
+
+          <div class="message-input">
+            <button class="attachment-button">
+              <i class="fas fa-paperclip"></i>
+            </button>
+            <input type="text"
+                   [(ngModel)]="newMessage"
+                   (keyup.enter)="sendMessage()"
+                   placeholder="Type your message...">
+            <button class="send-button"
+                    (click)="sendMessage()"
+                    [disabled]="!newMessage.trim()">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="!selectedChat" class="no-chat-selected">
+          <i class="fas fa-comments no-chat-icon"></i>
+          <p>Select a conversation to start responding</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

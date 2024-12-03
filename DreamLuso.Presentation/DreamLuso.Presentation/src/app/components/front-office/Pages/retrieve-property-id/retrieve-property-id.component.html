@@ -18,12 +18,13 @@
     <div class="max-w-6xl mx-auto">
 
       <!-- Image Gallery with Zoom on Hover -->
-      <div class="relative h-96 rounded-xl overflow-hidden mb-8 group">
+      <div class="relative h-96 rounded-xl overflow-hidden mb-8 group cursor-pointer">
         <img
-          [src]="property.images?.[currentImageIndex]?.imagePath"
-          alt="Property Image"
-          class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-        >
+            [src]="getImagePath()"
+            alt="Property Image"
+            class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+            (click)="openImageModal()"
+          >
 
         <!-- Image Navigation Buttons -->
         <div class="absolute inset-0 flex items-center justify-between p-4">
@@ -108,7 +109,7 @@
         <p class="text-neutral-300">{{property.description}}</p>
       </div>
 
-      <!-- Property Owner Info with Tooltip -->
+     <!-- Property Owner Info Section -->
       <div class="mb-8 bg-neutral-800 p-6 rounded-xl group relative">
         <h2 class="text-2xl font-bold text-white mb-4">Property Owner</h2>
         <div *ngIf="propertyOwner" class="flex items-center gap-4">
@@ -126,9 +127,17 @@
             <p class="text-neutral-400">{{propertyOwner.email}}</p>
             <p class="text-neutral-400" *ngIf="propertyOwner.phoneNumber">{{propertyOwner.phoneNumber }}</p>
           </div>
-          <div class="absolute -top-10 bg-black bg-opacity-80 text-white text-sm p-2 rounded shadow-lg opacity-0 transition-opacity group-hover:opacity-100">
-            Contact Owner
-          </div>
+
+          <!-- Chat Icon for non-realstateagent users -->
+          <button
+          *ngIf="showChatButton"
+          (click)="openChat()"
+          class="ml-auto bg-emerald-500 hover:bg-emerald-600 text-white p-3 rounded-full transition-all duration-300 ease-in-out"
+          title="Chat with Agent">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </button>
         </div>
       </div>
       <!-- Amenities -->
@@ -217,4 +226,51 @@
       Back to Listings
     </span>
   </a>
+  <!-- Image Modal -->
+  <div *ngIf="isModalOpen"
+       class="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center image-modal"
+       (click)="closeImageModal()">
+
+    <div class="relative w-full h-full flex items-center justify-center"
+         (click)="$event.stopPropagation()">
+
+      <img
+        [src]="property.images?.[currentImageIndex]?.imagePath"
+        alt="Property Image"
+        [style.transform]="'scale(' + scale + ') translate(' + position.x + 'px, ' + position.y + 'px)'"
+        class="zoomed-image max-w-full max-h-[90vh] transition-transform duration-200"
+        (mousedown)="startDrag($event)"
+        (mousemove)="onDrag($event)"
+        (mouseup)="stopDrag()"
+        (mouseleave)="stopDrag()"
+      >
+
+      <!-- Zoom Controls -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-4 zoom-controls">
+        <button
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 text-white"
+          (click)="zoomOut()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+          </svg>
+        </button>
+        <button
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 text-white"
+          (click)="zoomIn()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Close Button -->
+      <button
+        class="absolute top-4 right-4 text-white bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2"
+        (click)="closeImageModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
 </section>

@@ -106,5 +106,8 @@ export class PropertyService {
     }
 
     return this.httpClient.put(`${this.apiUrl}/${id}`, formData);
+  }
+  updatePropertyIsActive(id: string, isActive: boolean): Observable<any> {
+    return this.httpClient.patch(`${this.apiUrl}/${id}/active`, { id, isActive });
 }
 }

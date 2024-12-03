@@ -3,27 +3,32 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { RealStateAgentModel } from '../../models/RealStateAgentModel';
+import { environment } from '../../../../environment';
+import { CreateAgentComponent } from '../../components/back-office/Pages/Admin/Pages/create-agent/create-agent.component';
+import { CreateRealStateAgent } from '../../models/CreateRealStateAgent';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class RealStateAgentService {
+  private apiUrl = `${environment.apiUrl}/api/realstateagent`;
 
-  private apiUrl = 'https://localhost:7224/api/realstateagent';
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
-
-  createAgent(agentData: FormData): Observable<any> {
-    return this.httpClient.post<any>(`${this.apiUrl}/create`, agentData);
+  createAgent(agentRequest: CreateRealStateAgent): Observable<any> {
+    // Send as JSON instead of FormData
+    return this.httpClient.post(`${this.apiUrl}/create`, agentRequest, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
   retrieve(id: string): Observable<RealStateAgentModel> {
-    // Add error handling and logging
-    console.log(`Calling API: ${this.apiUrl}/retrieve/${id}`);
     return this.httpClient.get<RealStateAgentModel>(`${this.apiUrl}/${id}`);
   }
+
   retrieveByUserId(userId: string): Observable<RealStateAgentModel> {
-    console.log(`Calling API: ${this.apiUrl}/user/${userId}`);
     return this.httpClient.get<RealStateAgentModel>(`${this.apiUrl}/user/${userId}`);
   }
 }

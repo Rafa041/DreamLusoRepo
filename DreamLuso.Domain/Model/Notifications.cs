@@ -5,6 +5,8 @@ namespace DreamLuso.Domain.Model;
 
 public class Notification : AuditableEntity, IEntity<Guid>
 {
+
+
     public Guid Id { get; set; }
     public Guid SenderId { get; set; }
     public User SenderUser { get; set; }
@@ -38,6 +40,9 @@ public class Notification : AuditableEntity, IEntity<Guid>
         Priority = priority;
         
     }
+
+
+
     public void MarkAsRead()
     {
         Status = NotificationStatus.Read;
@@ -83,4 +88,3 @@ public enum NotificationPriority
     Medium,
     Low
 }
-

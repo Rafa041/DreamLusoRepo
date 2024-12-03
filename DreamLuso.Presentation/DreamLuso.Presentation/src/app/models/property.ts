@@ -19,6 +19,7 @@ export interface Property {
   status: PropertyStatus;
   images?: PropertyImage[];
   yearBuilt: string;
+  isActive: boolean;
 }
 
 export interface PropertyImage {

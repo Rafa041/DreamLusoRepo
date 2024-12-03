@@ -2,6 +2,7 @@
 using DreamLuso.Application.Common.Responses;
 using DreamLuso.Application.CQ.Properties.Commands.CreateProperty;
 using DreamLuso.Application.CQ.Properties.Commands.UpdateProperty;
+using DreamLuso.Application.CQ.Properties.Commands.UpdatePropertyActive;
 using DreamLuso.Application.CQ.Properties.Queries.GetTotalSales;
 using DreamLuso.Application.CQ.Properties.Queries.Retrieve;
 using DreamLuso.Application.CQ.Properties.Queries.RetrieveAgentPropertiesQuery;
@@ -49,6 +50,12 @@ public static class PropertyEndpoints
         .Produces<UpdatePropertyResponse>(200)
         .Produces<Error>(404)
         .Produces<Error>(400);
+
+        properties.MapPatch("/{id:guid}/active", Commands.UpdatePropertyIsActive)
+       .WithName("UpdatePropertyIsActive")
+       .Produces<UpdatePropertyIsActiveResponse>(200)
+       .Produces<Error>(404)
+       .Produces<Error>(400);
     }
     private static class Queries
     {
@@ -118,6 +125,25 @@ public static class PropertyEndpoints
                 {
                     _ when result.Error == Error.PropertyNotFound => TypedResults.NotFound(result.Error),
                     _ when result.Error == Error.RealStateAgentNotFound => TypedResults.NotFound(result.Error),
+                    _ => TypedResults.BadRequest(result.Error)
+                };
+        }
+        public static async Task<Results<Ok<UpdatePropertyIsActiveResponse>, NotFound<Error>, BadRequest<Error>>> UpdatePropertyIsActive(
+       [FromRoute] Guid id,
+       [FromBody] UpdatePropertyIsActiveCommand command,
+       [FromServices] ISender sender,
+       CancellationToken cancellationToken)
+        {
+            if (id != command.Id)
+                return TypedResults.BadRequest(Error.UpdateFailed);
+
+            var result = await sender.Send(command, cancellationToken);
+
+            return result.IsSuccess
+                ? TypedResults.Ok(result.Value)
+                : result.Error switch
+                {
+                    _ when result.Error == Error.PropertyNotFound => TypedResults.NotFound(result.Error),
                     _ => TypedResults.BadRequest(result.Error)
                 };
         }

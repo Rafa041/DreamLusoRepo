@@ -1,5 +1,6 @@
 ﻿using DreamLuso.Application.Common.Responses;
 using DreamLuso.Application.CQ.Users.Commands.CreateUser;
+using DreamLuso.Application.CQ.Users.Commands.UpdateAccess;
 using DreamLuso.Application.CQ.Users.Commands.UpdateUser;
 using DreamLuso.Application.CQ.Users.Queries.Retrieve;
 using DreamLuso.Application.CQ.Users.Queries.RetrieveAllUsers;
@@ -41,6 +42,11 @@ public static class UserEndpoints
             .Produces<RetrieveUserResponse>(200)
             .Produces<Error>(404)
             .DisableAntiforgery();
+        // ========== Update User Access Endpoint ==========
+        users.MapPut("/{id:guid}/access", Queries.UpdateUserAccess)
+            .WithName("UpdateUserAccess")
+            .Produces<bool>(200)
+            .Produces<Error>(404);
     }
 
     private static class Queries
@@ -101,6 +107,20 @@ public static class UserEndpoints
             var query = new RetrieveUserQuery { Id = id };
             var result = await sender.Send(query, cancellationToken);
             return result.IsSuccess ? TypedResults.Ok(result.Value) : TypedResults.NotFound(result.Error);
+        }
+        // ========== Update User Access ==========
+        public static async Task<Results<Ok<bool>, NotFound<Error>>> UpdateUserAccess(
+            [FromServices] ISender sender,
+            [FromRoute] Guid id,
+            [FromBody] UpdateAccessCommand command,
+            CancellationToken cancellationToken)
+        {
+            command.UserId = id;
+            var result = await sender.Send(command, cancellationToken);
+
+            return result.IsSuccess
+                ? TypedResults.Ok(result.IsSuccess)
+                : TypedResults.NotFound(result.Error);
         }
     }
 }

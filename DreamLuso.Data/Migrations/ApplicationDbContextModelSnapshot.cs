@@ -118,6 +118,52 @@ namespace DreamLuso.Data.Migrations
                     b.ToTable("Category", "DreamLuso");
                 });
 
+            modelBuilder.Entity("DreamLuso.Domain.Model.Chat", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastMessageAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PropertyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RealStateAgentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
+
+                    b.HasIndex("RealStateAgentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Chats", "DreamLuso");
+                });
+
             modelBuilder.Entity("DreamLuso.Domain.Model.Client", b =>
                 {
                     b.Property<Guid>("Id")
@@ -444,6 +490,52 @@ namespace DreamLuso.Data.Migrations
                     b.ToTable("Invoice", "DreamLuso");
                 });
 
+            modelBuilder.Entity("DreamLuso.Domain.Model.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatId");
+
+                    b.ToTable("Messages", "DreamLuso");
+                });
+
             modelBuilder.Entity("DreamLuso.Domain.Model.Notification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -764,6 +856,33 @@ namespace DreamLuso.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DreamLuso.Domain.Model.Chat", b =>
+                {
+                    b.HasOne("DreamLuso.Domain.Model.Property", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DreamLuso.Domain.Model.RealStateAgent", "RealStateAgent")
+                        .WithMany()
+                        .HasForeignKey("RealStateAgentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DreamLuso.Domain.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Property");
+
+                    b.Navigation("RealStateAgent");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DreamLuso.Domain.Model.Client", b =>
                 {
                     b.HasOne("DreamLuso.Domain.Model.User", "User")
@@ -883,6 +1002,17 @@ namespace DreamLuso.Data.Migrations
                     b.Navigation("Contract");
 
                     b.Navigation("Transaction");
+                });
+
+            modelBuilder.Entity("DreamLuso.Domain.Model.Message", b =>
+                {
+                    b.HasOne("DreamLuso.Domain.Model.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
                 });
 
             modelBuilder.Entity("DreamLuso.Domain.Model.Notification", b =>
@@ -1007,6 +1137,11 @@ namespace DreamLuso.Data.Migrations
 
                     b.Navigation("Name")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DreamLuso.Domain.Model.Chat", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("DreamLuso.Domain.Model.Contract", b =>

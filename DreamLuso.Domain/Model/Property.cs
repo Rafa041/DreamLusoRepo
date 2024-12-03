@@ -25,7 +25,7 @@ public class Property : AuditableEntity, IEntity<Guid>
 
     // Propriedades adicionais
     public DateTime YearBuilt { get; set; }
-    public bool IsActive { get; set; } = true;  // Soft delete flag
+    public bool IsActive { get; set; } = false;  // Soft delete flag
     public Property() { }
 
     // Construtor completo

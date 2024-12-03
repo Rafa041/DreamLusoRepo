@@ -67,6 +67,9 @@ export class RetrieveAllPropertiesComponent implements OnInit{
 
   applyFilters(): void {
     this.filteredProperties = this.properties.filter(property => {
+      // First check if property is active
+      const isActive = property.isActive === true;
+
       const matchesSearch = !this.searchTerm ||
         property.city.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         property.postalCode.includes(this.searchTerm);
@@ -76,10 +79,10 @@ export class RetrieveAllPropertiesComponent implements OnInit{
       const matchesMinPrice = !this.filters.minPrice || property.price >= this.filters.minPrice;
       const matchesMaxPrice = !this.filters.maxPrice || property.price <= this.filters.maxPrice;
 
-      return matchesSearch && matchesType && matchesStatus &&
+      return isActive && matchesSearch && matchesType && matchesStatus &&
              matchesMinPrice && matchesMaxPrice;
     });
-  }
+}
 
   onSearch(event: any): void {
     this.searchTerm = event.target.value;

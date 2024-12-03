@@ -11,6 +11,8 @@ public static class RegisterAllEndpoints
         routes.RegisterPropertyEndpoints();
         routes.RegisterNotificationEndpoints();
         routes.RegisterPropertyVisitEndpoints();
+        //routes.RegisterMessageEndpoints();
+        routes.RegisterChatEndpoints();
     }
 }
 

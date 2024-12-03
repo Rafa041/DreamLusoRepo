@@ -21,6 +21,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<PropertyVisit> PropertyVisits { get; set; }
     public DbSet<RealStateAgent> RealStateAgent { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Chat> Chats { get; set; }
+    public DbSet<Message> Messages { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)

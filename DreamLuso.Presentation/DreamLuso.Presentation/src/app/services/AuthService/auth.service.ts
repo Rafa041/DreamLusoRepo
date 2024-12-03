@@ -5,6 +5,7 @@ import { LoginModel } from '../../models/LoginModel';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs/internal/observable/of';
 import { catchError } from 'rxjs';
+import { UserModel } from '../../models/UserModel';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +45,12 @@ export class AuthService {
       return JSON.parse(loggedUser).id;
     }
     return '';
+  }
+  getCurrentUser(): UserModel | null {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      return JSON.parse(userString) as UserModel;
+    }
+    return null;
   }
 }

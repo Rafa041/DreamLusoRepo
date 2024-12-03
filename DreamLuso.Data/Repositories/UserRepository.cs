@@ -32,4 +32,19 @@ public class UserRepository : PaginatedRepository<User, Guid>, IUserRepository
             .Include(u => u.Account)
             .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
+    public async Task<User> UpdateAccessAsync(Guid id, Access access, CancellationToken cancellationToken = default)
+    {
+        var user = await DbSet
+            .Include(u => u.Account)
+            .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+
+        if (user != null)
+        {
+            user.Access = access;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        return user;
+    }
 }
