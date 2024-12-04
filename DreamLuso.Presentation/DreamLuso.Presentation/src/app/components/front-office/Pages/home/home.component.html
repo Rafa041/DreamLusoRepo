@@ -13,7 +13,7 @@
   <!-- Content over the video -->
   <div
     id="header-child"
-    class="relative flex grow flex-col overflow-hidden rounded-3xl bg-neutral-800 bg-opacity-60 z-10"
+    class="relative flex grow flex-col overflow-hidden rounded-3xl bg-opacity-60 z-10"
   >
     <div id="hero" class="relative z-10 flex grow flex-col p-10">
       <nav class="flex h-14 items-center justify-between">
@@ -23,14 +23,22 @@
         </div>
 
         <!-- Main Menu -->
-        <ul id="menu" class="flex h-full items-center justify-center space-x-10 rounded-full bg-white/10 px-10 text-base font-medium text-neutral-200">
+        <ul
+          id="menu"
+          class="flex h-full items-center justify-center space-x-10 rounded-full bg-white/10 px-10 text-base font-medium text-neutral-200"
+        >
           <li><a routerLink="/properties" title="Properties">Properties</a></li>
           <li><a href="/" title="Rent">Rent</a></li>
           <li><a href="/" title="Buy">Buy</a></li>
           <li><a href="/" title="Services">Services</a></li>
           <ng-container *ngIf="isAuthenticated()">
             <li>
-              <a class="cursor-pointer" (click)="getDashboardRoute(loggedUserDetails?.access)" title="Dashboard">Dashboard</a>
+              <a
+                class="cursor-pointer"
+                (click)="getDashboardRoute(loggedUserDetails?.access)"
+                title="Dashboard"
+                >Dashboard</a
+              >
             </li>
           </ng-container>
         </ul>
@@ -39,82 +47,132 @@
         <ul class="flex h-full items-center justify-center space-x-6">
           <!-- Login/Register Section -->
           <ng-container *ngIf="!isAuthenticated(); else userLoggedIn">
-            <li class="flex h-12 items-center justify-center rounded-full border border-neutral-100/50 px-8">
-              <a class="text-base font-medium text-neutral-100" (click)="navitageToRegister()">Sign Up</a>
+            <li
+              class="flex h-12 items-center justify-center rounded-full border border-neutral-100/50 px-8"
+            >
+              <a
+                class="text-base font-medium text-neutral-100"
+                (click)="navitageToRegister()"
+                >Sign Up</a
+              >
             </li>
-            <li class="flex h-12 items-center justify-center rounded-full border border-neutral-100/50 px-8">
-              <a class="text-base font-medium text-neutral-100" (click)="navitageToLogin()">Log In</a>
+            <li
+              class="flex h-12 items-center justify-center rounded-full border border-neutral-100/50 px-8"
+            >
+              <a
+                class="text-base font-medium text-neutral-100"
+                (click)="navitageToLogin()"
+                >Log In</a
+              >
             </li>
           </ng-container>
 
           <!-- User Profile Section -->
           <ng-template #userLoggedIn>
             <li class="flex items-center space-x-4">
-              <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white overflow-hidden">
-                <img [src]="getImageUrl(loggedUserDetails?.imageUrl)"
-                     [alt]="loggedUserDetails?.firstName + ' ' + loggedUserDetails?.lastName"
-                     class="h-full w-full object-cover"
-                     (error)="handleImageError($event)" />
+              <div
+                class="flex h-12 w-12 items-center justify-center rounded-full bg-white overflow-hidden"
+              >
+                <img
+                  [src]="getImageUrl(loggedUserDetails?.imageUrl)"
+                  [alt]="
+                    loggedUserDetails?.firstName +
+                    ' ' +
+                    loggedUserDetails?.lastName
+                  "
+                  class="h-full w-full object-cover"
+                  (error)="handleImageError($event)"
+                />
               </div>
               <span class="text-lg font-medium text-neutral-100">
-                Welcome {{ loggedUserDetails?.firstName }} {{ loggedUserDetails?.lastName }}
+                Welcome {{ loggedUserDetails?.firstName }}
+                {{ loggedUserDetails?.lastName }}
               </span>
             </li>
           </ng-template>
 
           <!-- Notifications Section -->
 
-          <li class="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 relative mr-4 hover:bg-white/20 transition-colors duration-300">
-            <button (click)="toggleNotifications($event)"
-                    class="cursor-pointer relative group"
-                    title="Notifications">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  class="h-6 w-6 text-neutral-100 group-hover:text-neutral-200 transition-colors duration-300"
-                  stroke="currentColor">
-                <path stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+          <li
+            class="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 relative mr-4 hover:bg-white/20 transition-colors duration-300"
+          >
+            <button
+              (click)="toggleNotifications($event)"
+              class="cursor-pointer relative group"
+              title="Notifications"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                class="h-6 w-6 text-neutral-100 group-hover:text-neutral-200 transition-colors duration-300"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                />
               </svg>
-              <span *ngIf="notificationCount > 0"
-                    class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-medium text-white">
+              <span
+                *ngIf="notificationCount > 0"
+                class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-medium text-white"
+              >
                 {{ notificationCount }}
               </span>
             </button>
 
             <!-- Notifications Dropdown -->
-            <div *ngIf="isNotificationsOpen"
-                class="absolute right-0 top-full mt-2 w-80 rounded-xl bg-neutral-800/95 backdrop-blur-md shadow-lg ring-1 ring-white/20 z-50">
+            <div
+              *ngIf="isNotificationsOpen"
+              class="absolute right-0 top-full mt-2 w-80 rounded-xl /95 backdrop-blur-md shadow-lg ring-1 ring-white/20 z-50"
+            >
               <div class="p-4">
                 <div class="flex justify-between items-center mb-4">
-                  <h3 class="text-lg font-medium text-neutral-100">Notifications</h3>
+                  <h3 class="text-lg font-medium text-neutral-100">
+                    Notifications
+                  </h3>
                 </div>
 
                 <div class="divide-y divide-neutral-700">
-                  <div *ngFor="let notification of notifications"
-                      (click)="handleNotificationClick(notification)"
-                      class="py-3 hover:bg-white/5 rounded-lg transition-colors px-2 cursor-pointer"
-                      [ngClass]="{'opacity-50': notification.status === 'Read', 'opacity-100': notification.status === 'Unread'}">
+                  <div
+                    *ngFor="let notification of notifications"
+                    (click)="handleNotificationClick(notification)"
+                    class="py-3 hover:bg-white/5 rounded-lg transition-colors px-2 cursor-pointer"
+                    [ngClass]="{
+                      'opacity-50': notification.status === 'Read',
+                      'opacity-100': notification.status === 'Unread'
+                    }"
+                  >
                     <div class="flex items-start gap-3">
                       <div class="flex-shrink-0">
-                        <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg"
-                              class="h-4 w-4 text-neutral-100"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor">
-                            <path stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <div
+                          class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 text-neutral-100"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
                           </svg>
                         </div>
                       </div>
                       <div>
-                        <p class="text-sm text-neutral-100">{{ notification.message }}</p>
-                        <span class="text-xs text-neutral-400">{{ notification.createdAt | date:'short' }}</span>
+                        <p class="text-sm text-neutral-100">
+                          {{ notification.message }}
+                        </p>
+                        <span class="text-xs text-neutral-400">{{
+                          notification.createdAt | date : "short"
+                        }}</span>
                       </div>
                     </div>
                   </div>
@@ -123,30 +181,58 @@
             </div>
           </li>
 
-
-
           <!-- Menu Dropdown -->
-          <li class="flex h-12 w-12 items-center justify-center rounded-full bg-white relative">
-            <a (click)="toggleDropdown($event)"
-               class="cursor-pointer"
-               title="Menu">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                   fill="none"
-                   viewBox="0 0 24 24"
-                   stroke-width="1.5"
-                   stroke="currentColor"
-                   class="h-7 w-7 text-neutral-800">
-                <path stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          <li
+            class="flex h-12 w-12 items-center justify-center rounded-full bg-white relative"
+          >
+            <a
+              (click)="toggleDropdown($event)"
+              class="cursor-pointer"
+              title="Menu"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-7 w-7 text-neutral-800"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
               </svg>
             </a>
-            <div *ngIf="isDropdownOpen"
-                 class="absolute right-0 top-full mt-2 w-48 rounded-md shadow-lg bg-neutral-800 bg-opacity-60 backdrop-blur-md ring-1 ring-white ring-opacity-20 z-20 transition-opacity duration-150 ease-in-out">
-              <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <a href="#" class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out" role="menuitem">Option 1</a>
-                <a href="#" class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out" role="menuitem">Option 2</a>
-                <a (click)="logout()" class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out cursor-pointer" role="menuitem">Logout</a>
+            <div
+              *ngIf="isDropdownOpen"
+              class="absolute right-0 top-full mt-2 w-48 rounded-md shadow-lg bg-opacity-60 backdrop-blur-md ring-1 ring-white ring-opacity-20 z-20 transition-opacity duration-150 ease-in-out"
+            >
+              <div
+                class="py-1"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="options-menu"
+              >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out"
+                  role="menuitem"
+                  >Option 1</a
+                >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out"
+                  role="menuitem"
+                  >Option 2</a
+                >
+                <a
+                  (click)="logout()"
+                  class="block px-4 py-2 text-base font-medium text-neutral-200 hover:bg-white hover:bg-opacity-10 transition duration-150 ease-in-out cursor-pointer"
+                  role="menuitem"
+                  >Logout</a
+                >
               </div>
             </div>
           </li>
@@ -208,10 +294,10 @@
   </div>
 </section>
 
-<section class="relative bg-neutral-900 p-10">
+<section class="relative p-10">
   <h3
     id="appear"
-    class="tracking-tight mb-10 font-inter text-6xl font-black uppercase text-neutral-100"
+    class="tracking-tight mb-10 font-poppins text-5xl font-black uppercase text-neutral-600"
   >
     Our Selection
   </h3>
@@ -227,7 +313,7 @@
           class="h-full object-cover"
         />
         <div
-          class="absolute bottom-0 flex h-full w-full flex-col justify-end rounded-3xl bg-gradient-to-t from-neutral-900/60 p-10 duration-150 hover:bg-neutral-900/40"
+          class="absolute bottom-0 flex h-full w-full flex-col justify-end rounded-3xl p-10 duration-150 hover:/40"
         >
           <h1
             class="tracking-tight font-inter text-5xl font-black uppercase text-neutral-100"
@@ -251,7 +337,7 @@
           class="h-full w-full object-cover"
         />
         <div
-          class="absolute bottom-0 flex h-full w-full flex-col justify-end rounded-3xl bg-gradient-to-t from-neutral-900/60 p-10 duration-150 hover:bg-neutral-900/40"
+          class="absolute bottom-0 flex h-full w-full flex-col justify-end rounded-3xl bg-gradient-to-t from-neutral-900/60 p-10 duration-150 hover:/40"
         >
           <h1
             class="tracking-tight font-inter text-5xl font-black uppercase text-neutral-100"
@@ -273,7 +359,7 @@
           class="h-full w-full object-cover"
         />
         <div
-          class="absolute bottom-0 flex h-full w-full flex-col justify-end rounded-3xl bg-gradient-to-t from-neutral-900/60 p-10 duration-150 hover:bg-neutral-900/40"
+          class="absolute bottom-0 flex h-full w-full flex-col justify-end rounded-3xl bg-gradient-to-t from-neutral-900/60 p-10 duration-150 hover:/40"
         >
           <h1
             class="tracking-tight font-inter text-5xl font-black uppercase text-neutral-100"
@@ -290,23 +376,23 @@
   </div>
 </section>
 
-<section
-  class="relative w-full bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-700 p-20"
->
+<section class="relative w-full p-20">
   <div class="mx-auto max-w-screen-2xl">
     <!-- Título e Subtítulo -->
     <div class="my-10 animate-fade-in">
-      <span class="block pb-2 text-lg text-neutral-400">Search Property</span>
-      <h2 class="max-w-screen-lg text-5xl font-bold text-white">
+      <span class="block pb-2 text-neutral-400 text-sm font-medium"
+        >Search Property</span
+      >
+      <h2
+        class="max-w-screen-lg text-5xl font-bold text-neutral-700 font-poppins"
+      >
         Find your ideal home with our advanced property search features
       </h2>
     </div>
 
     <!-- Descrição -->
-    <div
-      class="my-10 max-w-screen-md text-center text-neutral-300 animate-fade-in"
-    >
-      <p class="text-xl">
+    <div class="my-10 max-w-screen-md text-neutral-500 animate-fade-in">
+      <p class="text-base font-medium">
         Discover the beauty of Portugal — from Porto to the Algarve, this
         country offers diverse landscapes, rich history, and a vibrant culture.
         Whether you're looking for a peaceful retreat in the countryside or a
@@ -316,10 +402,7 @@
     </div>
 
     <!-- Botões de filtro (Aluguel, Compra, Vendido) -->
-    <div
-      id="radio"
-      class="grid max-w-sm grid-cols-3 gap-2 rounded-full bg-neutral-800 shadow-md"
-    >
+    <div id="radio" class="grid max-w-sm grid-cols-3 gap-2">
       <div>
         <input
           type="radio"
@@ -331,7 +414,7 @@
         />
         <label
           for="1"
-          class="block cursor-pointer select-none rounded-full px-8 py-3 text-center duration-200 peer-checked:bg-neutral-600 peer-checked:font-bold peer-checked:text-white hover:bg-neutral-600 hover:text-neutral-200 shadow-md text-neutral-300"
+          class="block cursor-pointer select-none rounded-full px-8 py-3 text-center duration-200 peer-checked:bg-green-500 peer-checked:font-medium peer-checked:text-white hover:bg-green-600 hover:text-neutral-200 font-medium text-neutral-300"
         >
           Rent
         </label>
@@ -346,7 +429,7 @@
         />
         <label
           for="2"
-          class="block cursor-pointer select-none rounded-full px-8 py-3 text-center duration-200 peer-checked:bg-neutral-600 peer-checked:font-bold peer-checked:text-white hover:bg-neutral-600 hover:text-neutral-200 shadow-md text-neutral-300"
+          class="block cursor-pointer select-none rounded-full px-8 py-3 text-center duration-200 peer-checked:bg-green-500 peer-checked:font-medium peer-checked:text-white hover:bg-green-600 hover:text-neutral-200 font-medium text-neutral-300"
         >
           Buy
         </label>
@@ -361,7 +444,7 @@
         />
         <label
           for="3"
-          class="block cursor-pointer select-none rounded-full px-8 py-3 text-center duration-200 peer-checked:bg-neutral-600 peer-checked:font-bold peer-checked:text-white hover:bg-neutral-600 hover:text-neutral-200 shadow-md text-neutral-300"
+          class="block cursor-pointer select-none rounded-full px-8 py-3 text-center duration-200 peer-checked:bg-green-500 peer-checked:font-medium peer-checked:text-white hover:bg-green-600 hover:text-neutral-200 font-medium text-neutral-300"
         >
           Sold
         </label>
@@ -371,7 +454,7 @@
     <!-- Campo de Busca -->
     <div
       id="search"
-      class="relative mb-20 mt-10 flex max-w-md items-center justify-between gap-4 rounded-full border-4 border-neutral-500 bg-neutral-800 p-3 shadow-lg"
+      class="relative mb-20 mt-10 flex max-w-md items-center justify-between gap-4 rounded-full border-4 border-neutral-300 p-3"
     >
       <input
         type="search"
@@ -381,7 +464,7 @@
       />
       <button
         type="submit"
-        class="flex aspect-square h-12 items-center justify-center rounded-full bg-neutral-600 text-white border border-neutral-500 hover:bg-neutral-500"
+        class="flex aspect-square h-12 items-center justify-center rounded-full bg-green-500 text-white border hover:bg-green-600"
       >
         <svg
           class="h-4 w-4 fill-current"
@@ -400,13 +483,9 @@
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"
     >
       <!-- Bloco de Propriedade -->
-      <div
-        class="col-span-1 hover:scale-105 transform transition duration-300 drop-shadow-lg"
-      >
+      <div class="col-span-1 hover:scale-105 transform transition duration-300">
         <a href="#" class="block">
-          <div
-            class="aspect-square w-full overflow-hidden rounded-3xl bg-neutral-700 shadow-lg"
-          >
+          <div class="aspect-square w-full overflow-hidden rounded-3xl">
             <img
               src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               alt="Property Image"
@@ -416,16 +495,16 @@
           <div class="mt-5">
             <div class="flex items-center justify-between gap-4">
               <h2
-                class="text-2xl font-bold text-neutral-100 hover:text-neutral-200 transition duration-200"
+                class="text-2xl font-bold text-neutral-600 hover:text-neutral-500 transition duration-200 font-poppins"
               >
                 Serene Sunset Villa
               </h2>
               <span
-                class="rounded-full bg-neutral-700 px-4 py-1.5 font-semibold text-neutral-300 shadow-md"
+                class="rounded-full bg-green-500 px-4 py-1.5 font-medium text-white"
                 >1550€</span
               >
             </div>
-            <ul class="mt-5 flex max-w-60 justify-between text-neutral-500">
+            <ul class="mt-5 flex justify-around text-neutral-500">
               <li class="flex items-center space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -495,693 +574,17 @@
           </div>
         </a>
       </div>
-      <!-- End of property block -->
-      <!-- Property listing (repeat this block for each property) -->
-      <div class="col-span-1">
-        <a
-          href="#"
-          class="block hover:scale-105 transform transition duration-300"
-        >
-          <div
-            class="aspect-square w-full overflow-hidden rounded-3xl bg-neutral-700 shadow-lg"
-          >
-            <img
-              src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Property Image"
-              class="h-full w-full object-cover"
-            />
-          </div>
-          <div class="mt-5">
-            <div class="flex items-center justify-between gap-4">
-              <h2 class="text-2xl font-bold text-neutral-100">
-                Serene Sunset Villa
-              </h2>
-              <span
-                class="rounded-full bg-neutral-700 px-4 py-1.5 font-semibold text-neutral-300 shadow-md"
-                >1550€</span
-              >
-            </div>
-            <ul class="mt-5 flex max-w-60 justify-between text-neutral-500">
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bed"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                  <path d="M22 17v-3h-20" />
-                  <path d="M2 8v9" />
-                  <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" />
-                </svg>
-                <span class="text-sm font-medium">4</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bath"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z"
-                  />
-                  <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" />
-                  <path d="M4 21l1 -1.5" />
-                  <path d="M20 21l-1 -1.5" />
-                </svg>
-                <span class="text-sm font-medium">3</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-maximize"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                </svg>
-                <span class="text-sm font-medium">230m²</span>
-              </li>
-            </ul>
-          </div>
-        </a>
-      </div>
-      <!-- End of property block -->
-      <!-- Property listing (repeat this block for each property) -->
-      <div class="col-span-1">
-        <a
-          href="#"
-          class="block hover:scale-105 transform transition duration-300"
-        >
-          <div
-            class="aspect-square w-full overflow-hidden rounded-3xl bg-neutral-700 shadow-lg"
-          >
-            <img
-              src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Property Image"
-              class="h-full w-full object-cover"
-            />
-          </div>
-          <div class="mt-5">
-            <div class="flex items-center justify-between gap-4">
-              <h2 class="text-2xl font-bold text-neutral-100">
-                Serene Sunset Villa
-              </h2>
-              <span
-                class="rounded-full bg-neutral-700 px-4 py-1.5 font-semibold text-neutral-300 shadow-md"
-                >1550€</span
-              >
-            </div>
-            <ul class="mt-5 flex max-w-60 justify-between text-neutral-500">
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bed"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                  <path d="M22 17v-3h-20" />
-                  <path d="M2 8v9" />
-                  <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" />
-                </svg>
-                <span class="text-sm font-medium">4</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bath"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z"
-                  />
-                  <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" />
-                  <path d="M4 21l1 -1.5" />
-                  <path d="M20 21l-1 -1.5" />
-                </svg>
-                <span class="text-sm font-medium">3</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-maximize"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                </svg>
-                <span class="text-sm font-medium">230m²</span>
-              </li>
-            </ul>
-          </div>
-        </a>
-      </div>
-      <!-- End of property block -->
-      <!-- Property listing (repeat this block for each property) -->
-      <div class="col-span-1">
-        <a
-          href="#"
-          class="block hover:scale-105 transform transition duration-300"
-        >
-          <div
-            class="aspect-square w-full overflow-hidden rounded-3xl bg-neutral-700 shadow-lg"
-          >
-            <img
-              src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Property Image"
-              class="h-full w-full object-cover"
-            />
-          </div>
-          <div class="mt-5">
-            <div class="flex items-center justify-between gap-4">
-              <h2 class="text-2xl font-bold text-neutral-100">
-                Serene Sunset Villa
-              </h2>
-              <span
-                class="rounded-full bg-neutral-700 px-4 py-1.5 font-semibold text-neutral-300 shadow-md"
-                >1550€</span
-              >
-            </div>
-            <ul class="mt-5 flex max-w-60 justify-between text-neutral-500">
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bed"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                  <path d="M22 17v-3h-20" />
-                  <path d="M2 8v9" />
-                  <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" />
-                </svg>
-                <span class="text-sm font-medium">4</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bath"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z"
-                  />
-                  <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" />
-                  <path d="M4 21l1 -1.5" />
-                  <path d="M20 21l-1 -1.5" />
-                </svg>
-                <span class="text-sm font-medium">3</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-maximize"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                </svg>
-                <span class="text-sm font-medium">230m²</span>
-              </li>
-            </ul>
-          </div>
-        </a>
-      </div>
-      <!-- End of property block -->
-      <!-- Property listing (repeat this block for each property) -->
-      <div class="col-span-1">
-        <a
-          href="#"
-          class="block hover:scale-105 transform transition duration-300"
-        >
-          <div
-            class="aspect-square w-full overflow-hidden rounded-3xl bg-neutral-700 shadow-lg"
-          >
-            <img
-              src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Property Image"
-              class="h-full w-full object-cover"
-            />
-          </div>
-          <div class="mt-5">
-            <div class="flex items-center justify-between gap-4">
-              <h2 class="text-2xl font-bold text-neutral-100">
-                Serene Sunset Villa
-              </h2>
-              <span
-                class="rounded-full bg-neutral-700 px-4 py-1.5 font-semibold text-neutral-300 shadow-md"
-                >1550€</span
-              >
-            </div>
-            <ul class="mt-5 flex max-w-60 justify-between text-neutral-500">
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bed"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                  <path d="M22 17v-3h-20" />
-                  <path d="M2 8v9" />
-                  <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" />
-                </svg>
-                <span class="text-sm font-medium">4</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bath"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z"
-                  />
-                  <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" />
-                  <path d="M4 21l1 -1.5" />
-                  <path d="M20 21l-1 -1.5" />
-                </svg>
-                <span class="text-sm font-medium">3</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-maximize"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                </svg>
-                <span class="text-sm font-medium">230m²</span>
-              </li>
-            </ul>
-          </div>
-        </a>
-      </div>
-      <!-- End of property block -->
-      <!-- Property listing (repeat this block for each property) -->
-      <div class="col-span-1">
-        <a
-          href="#"
-          class="block hover:scale-105 transform transition duration-300"
-        >
-          <div
-            class="aspect-square w-full overflow-hidden rounded-3xl bg-neutral-700 shadow-lg"
-          >
-            <img
-              src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Property Image"
-              class="h-full w-full object-cover"
-            />
-          </div>
-          <div class="mt-5">
-            <div class="flex items-center justify-between gap-4">
-              <h2 class="text-2xl font-bold text-neutral-100">
-                Serene Sunset Villa
-              </h2>
-              <span
-                class="rounded-full bg-neutral-700 px-4 py-1.5 font-semibold text-neutral-300 shadow-md"
-                >1550€</span
-              >
-            </div>
-            <ul class="mt-5 flex max-w-60 justify-between text-neutral-500">
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bed"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                  <path d="M22 17v-3h-20" />
-                  <path d="M2 8v9" />
-                  <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" />
-                </svg>
-                <span class="text-sm font-medium">4</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bath"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z"
-                  />
-                  <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" />
-                  <path d="M4 21l1 -1.5" />
-                  <path d="M20 21l-1 -1.5" />
-                </svg>
-                <span class="text-sm font-medium">3</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-maximize"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                </svg>
-                <span class="text-sm font-medium">230m²</span>
-              </li>
-            </ul>
-          </div>
-        </a>
-      </div>
-      <!-- End of property block -->
-      <!-- Property listing (repeat this block for each property) -->
-      <div class="col-span-1">
-        <a
-          href="#"
-          class="block hover:scale-105 transform transition duration-300"
-        >
-          <div
-            class="aspect-square w-full overflow-hidden rounded-3xl bg-neutral-700 shadow-lg"
-          >
-            <img
-              src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Property Image"
-              class="h-full w-full object-cover"
-            />
-          </div>
-          <div class="mt-5">
-            <div class="flex items-center justify-between gap-4">
-              <h2 class="text-2xl font-bold text-neutral-100">
-                Serene Sunset Villa
-              </h2>
-              <span
-                class="rounded-full bg-neutral-700 px-4 py-1.5 font-semibold text-neutral-300 shadow-md"
-                >1550€</span
-              >
-            </div>
-            <ul class="mt-5 flex max-w-60 justify-between text-neutral-500">
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bed"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                  <path d="M22 17v-3h-20" />
-                  <path d="M2 8v9" />
-                  <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" />
-                </svg>
-                <span class="text-sm font-medium">4</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bath"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z"
-                  />
-                  <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" />
-                  <path d="M4 21l1 -1.5" />
-                  <path d="M20 21l-1 -1.5" />
-                </svg>
-                <span class="text-sm font-medium">3</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-maximize"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                </svg>
-                <span class="text-sm font-medium">230m²</span>
-              </li>
-            </ul>
-          </div>
-        </a>
-      </div>
-      <!-- End of property block -->
-      <!-- Property listing (repeat this block for each property) -->
-      <div class="col-span-1">
-        <a
-          href="#"
-          class="block hover:scale-105 transform transition duration-300"
-        >
-          <div
-            class="aspect-square w-full overflow-hidden rounded-3xl bg-neutral-700 shadow-lg"
-          >
-            <img
-              src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Property Image"
-              class="h-full w-full object-cover"
-            />
-          </div>
-          <div class="mt-5">
-            <div class="flex items-center justify-between gap-4">
-              <h2 class="text-2xl font-bold text-neutral-100">
-                Serene Sunset Villa
-              </h2>
-              <span
-                class="rounded-full bg-neutral-700 px-4 py-1.5 font-semibold text-neutral-300 shadow-md"
-                >1550€</span
-              >
-            </div>
-            <ul class="mt-5 flex max-w-60 justify-between text-neutral-500">
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bed"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                  <path d="M22 17v-3h-20" />
-                  <path d="M2 8v9" />
-                  <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" />
-                </svg>
-                <span class="text-sm font-medium">4</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-bath"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z"
-                  />
-                  <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" />
-                  <path d="M4 21l1 -1.5" />
-                  <path d="M20 21l-1 -1.5" />
-                </svg>
-                <span class="text-sm font-medium">3</span>
-              </li>
-              <li class="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-maximize"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  stroke-width="2.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                </svg>
-                <span class="text-sm font-medium">230m²</span>
-              </li>
-            </ul>
-          </div>
-        </a>
-      </div>
-      <!-- End of property block -->
     </div>
   </div>
 </section>
 
-<section
-  id=""
-  class="relative flex h-screen w-full flex-col bg-black font-inter"
->
+<section id="" class="relative flex h-screen w-full flex-col font-inter">
   <marquee
     loop="infinite"
     behavior="scroll"
     direction="left"
     scrollamount="25"
-    class="absolute top-1/2 -mt-40 text-[182px] font-bold text-neutral-900/50"
+    class="absolute top-1/2 -mt-40 text-[182px] font-bold text-neutral-200/50"
     >DreamLuso: Your Portuguese dream, our passion. Support at every
     step.</marquee
   >
@@ -1190,10 +593,10 @@
     class="relative mx-auto my-10 flex max-w-screen-2xl flex-1 items-center justify-between gap-20"
   >
     <div class="my-10">
-      <span class="block pb-2 text-lg text-blue-300"
+      <span class="block pb-2 text-lg text-green-300"
         >Customer Support at DreamLuso</span
       >
-      <h2 class="max-w-screen-md text-8xl font-bold text-white">
+      <h2 class="max-w-screen-md text-8xl font-bold text-green-500">
         Realize your dream <br />
         in Portugal
       </h2>
@@ -1202,14 +605,14 @@
     <div class="my-10 flex-1">
       <ul class="flex flex-col space-y-16">
         <li class="flex items-center space-x-8">
-          <div class="flex rounded-full border-4 border-blue-800 p-4">
+          <div class="flex rounded-full border-4 border-green-800 p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1"
               stroke="currentColor"
-              class="h-10 w-10 text-blue-300"
+              class="h-10 w-10 text-green-300"
             >
               <path
                 stroke-linecap="round"
@@ -1219,17 +622,17 @@
             </svg>
           </div>
           <div>
-            <h2 class="text-2xl font-bold text-blue-200">
+            <h2 class="text-2xl font-bold text-green-500">
               Discover your ideal budget
             </h2>
-            <span class="text-blue-300"
+            <span class="text-green-300"
               >We help you estimate your budget range for investing in Portugal.
               Save to your profile to assist in your search.</span
             >
           </div>
           <div>
             <button
-              class="flex rounded-full border-4 border-blue-800 px-8 py-1 hover:text-blue-100"
+              class="flex rounded-full border-4 border-green-800 px-8 py-1 hover:text-green-100"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1237,7 +640,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="h-10 w-10 text-blue-300"
+                class="h-10 w-10 text-green-300"
               >
                 <path
                   stroke-linecap="round"
@@ -1250,14 +653,14 @@
         </li>
 
         <li class="flex items-center space-x-8">
-          <div class="flex rounded-full border-4 border-blue-800 p-4">
+          <div class="flex rounded-full border-4 border-green-800 p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1"
               stroke="currentColor"
-              class="h-10 w-10 text-blue-300"
+              class="h-10 w-10 text-green-300"
             >
               <path
                 stroke-linecap="round"
@@ -1267,17 +670,17 @@
             </svg>
           </div>
           <div>
-            <h2 class="text-2xl font-bold text-blue-200">
+            <h2 class="text-2xl font-bold text-green-500">
               Understand monthly costs
             </h2>
-            <span class="text-blue-300"
+            <span class="text-green-300"
               >Get a detailed view of monthly and closing costs based on your
               financial situation and goals in Portugal.</span
             >
           </div>
           <div>
             <button
-              class="flex rounded-full border-4 border-blue-800 px-8 py-1"
+              class="flex rounded-full border-4 border-green-800 px-8 py-1"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1285,7 +688,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="h-10 w-10 text-blue-300"
+                class="h-10 w-10 text-green-300"
               >
                 <path
                   stroke-linecap="round"
@@ -1298,14 +701,14 @@
         </li>
 
         <li class="flex items-center space-x-8">
-          <div class="flex rounded-full border-4 border-blue-800 p-4">
+          <div class="flex rounded-full border-4 border-green-800 p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1"
               stroke="currentColor"
-              class="h-10 w-10 text-blue-300"
+              class="h-10 w-10 text-green-300"
             >
               <path
                 stroke-linecap="round"
@@ -1315,17 +718,17 @@
             </svg>
           </div>
           <div>
-            <h2 class="text-2xl font-bold text-blue-200">
+            <h2 class="text-2xl font-bold text-green-500">
               Documentation assistance
             </h2>
-            <span class="text-blue-300"
+            <span class="text-green-300"
               >We guide you through the process of obtaining visas and necessary
               documents for living and investing in Portugal.</span
             >
           </div>
           <div>
             <button
-              class="flex rounded-full border-4 border-blue-800 px-8 py-1 hover:text-blue-100"
+              class="flex rounded-full border-4 border-green-800 px-8 py-1 hover:text-green-100"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1333,7 +736,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="h-10 w-10 text-blue-300"
+                class="h-10 w-10 text-green-300"
               >
                 <path
                   stroke-linecap="round"
@@ -1354,12 +757,12 @@
     <div class="justify-between flex flex-grow">
       <div class=""></div>
       <div class="flex items-center space-x-4">
-        <span class="text-xs text-blue-300"
+        <span class="text-xs text-green-300"
           >Speak with a Portuguese real estate specialist at your service.</span
         >
         <button
           href=""
-          class="flex items-center space-x-2 rounded-full bg-blue-300 px-6 py-4 text-black duration-200 hover:bg-blue-800 hover:text-blue-200"
+          class="flex items-center space-x-2 rounded-full bg-green-300 px-6 py-4 text-black duration-200 hover:bg-green-800 hover:text-green-200"
         >
           <span>Get in Touch</span>
           <svg
