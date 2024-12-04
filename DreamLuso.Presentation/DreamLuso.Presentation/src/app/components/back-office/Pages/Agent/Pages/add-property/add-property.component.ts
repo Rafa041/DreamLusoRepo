@@ -90,8 +90,8 @@ export class AddPropertyComponent implements OnInit {
       userId: [this.userId, Validators.required],
       amenities: this.fb.array([], Validators.required),
       images: [[], Validators.required],
-      additionalInfo: ['', Validators.nullValidator],
-      yearBuilt: ['', [Validators.required, this.yearBuiltValidator]]
+      additionalInfo: ['', Validators.nullValidator]
+
     });
   }
 
@@ -99,7 +99,7 @@ export class AddPropertyComponent implements OnInit {
     if (this.propertyForm.valid) {
       const propertyData: Property = this.propertyForm.value;
 
-      propertyData.yearBuilt = new Date(propertyData.yearBuilt).toISOString();
+
       console.log(this.propertyForm)
       this.propertyService.createProperty(propertyData).subscribe({
         next: (response) => {

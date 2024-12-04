@@ -1,102 +1,98 @@
-<section class="relative w-full bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-700 h-screen overflow-hidden">
-  <div class="grid grid-cols-12 h-full relative">
-    <!-- Left side remains unchanged -->
-    <div class="col-span-6 relative h-full bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/2565222/pexels-photo-2565222.jpeg');">
+<section class="relative w-full h-screen font-inter">
+  <div class="grid grid-cols-12 h-full">
+    <!-- Left side with background image -->
+    <div class="col-span-6 relative h-full" style="background-image: url('https://images.pexels.com/photos/2565222/pexels-photo-2565222.jpeg'); background-size: cover; background-position: center;">
       <div class="absolute w-full bottom-0 left-0 p-20 bg-gradient-to-t from-black/80">
-        <h1 class="text-6xl font-bold text-white pt-44">Welcome to<br><span class="text-white">DreamLuso</span></h1>
-        <p class="mt-4 text-xl leading-relaxed text-gray-200">
+        <h1 class="text-6xl font-bold text-white font-poppins">Welcome to<br><span class="text-green-500">DreamLuso</span></h1>
+        <p class="mt-4 text-xl leading-relaxed text-neutral-300">
           Create your account and get access to all the properties.
         </p>
       </div>
     </div>
 
-    <!-- Form section with updated styles -->
-    <div aria-label="Main" class="col-span-6 grid items-center justify-center p-8 h-screen overflow-y-auto">
-      <div class="max-w-xl lg:max-w-3xl">
-        <form (ngSubmit)="onRegister()" enctype="multipart/form-data" class="mt-8 grid grid-cols-6 gap-6 px-20 rounded-3xl p-10 shadow-lg bg-neutral-800 border-4 border-neutral-600">
-
-          <div *ngIf="errorMessage" class="text-danger text-neutral-300 mb-4">{{ errorMessage }}</div>
-          <h2 class="text-3xl font-bold text-white mb-6 col-span-6">Register</h2>
+    <!-- Form section -->
+    <div class="col-span-6 h-screen overflow-y-auto bg-white">
+      <div class="max-w-xl lg:max-w-3xl p-8">
+        <form (ngSubmit)="onRegister()" enctype="multipart/form-data" class="mt-8 grid grid-cols-6 gap-6 p-10 rounded-3xl bg-neutral-50">
+          <div *ngIf="errorMessage" class="col-span-6 text-red-500">{{ errorMessage }}</div>
+          <h2 class="col-span-6 text-3xl font-bold text-neutral-900 font-poppins">Register</h2>
 
           <!-- First Name -->
           <div class="col-span-6">
-            <label for="FirstName" class="block text-sm font-medium text-neutral-300">First Name</label>
+            <label class="block text-sm font-medium text-neutral-600">First Name</label>
             <input
               type="text"
               [(ngModel)]="user.firstName"
               name="firstName"
               required
-              class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"
+              class="mt-1 w-full rounded-full text-sm bg-neutral-200 text-neutral-600 p-3 border-2 border-neutral-300 focus:ring focus:ring-green-500 transition duration-200"
             />
           </div>
 
           <!-- Last Name -->
           <div class="col-span-6">
-            <label for="LastName" class="block text-sm font-medium text-neutral-300">Last Name</label>
+            <label class="block text-sm font-medium text-neutral-600">Last Name</label>
             <input
               type="text"
               [(ngModel)]="user.lastName"
               name="lastName"
               required
-              class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"
+              class="mt-1 w-full rounded-full text-sm bg-neutral-200 text-neutral-600 p-3 border-2 border-neutral-300 focus:ring focus:ring-green-500 transition duration-200"
             />
           </div>
 
           <!-- Birthdate -->
           <div class="col-span-6">
-            <label for="Birthdate" class="block text-sm font-medium text-neutral-300">Birthdate</label>
+            <label class="block text-sm font-medium text-neutral-600">Birthdate</label>
             <input
               type="date"
               [(ngModel)]="user.dateOfBirth"
               name="birthdate"
               required
-              class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"
+              class="mt-1 w-full rounded-full text-sm bg-neutral-200 text-neutral-600 p-3 border-2 border-neutral-300 focus:ring focus:ring-green-500 transition duration-200"
             />
           </div>
 
           <!-- Email -->
           <div class="col-span-6">
-            <label for="Email" class="block text-sm font-medium text-neutral-300">Email</label>
+            <label class="block text-sm font-medium text-neutral-600">Email</label>
             <input
               type="email"
               [(ngModel)]="user.email"
               name="email"
               required
-              class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"
+              class="mt-1 w-full rounded-full text-sm bg-neutral-200 text-neutral-600 p-3 border-2 border-neutral-300 focus:ring focus:ring-green-500 transition duration-200"
             />
           </div>
 
           <!-- Password -->
           <div class="col-span-6">
-            <label for="Password" class="block text-sm font-medium text-neutral-300">Password</label>
+            <label class="block text-sm font-medium text-neutral-600">Password</label>
             <input
               type="password"
               [(ngModel)]="user.password"
               name="password"
               required
-              class="mt-1 w-full rounded-full text-sm bg-neutral-700 text-neutral-200 p-3 border-2 border-neutral-600 focus:ring focus:ring-neutral-500 transition duration-200"
+              class="mt-1 w-full rounded-full text-sm bg-neutral-200 text-neutral-600 p-3 border-2 border-neutral-300 focus:ring focus:ring-green-500 transition duration-200"
             />
           </div>
 
           <!-- Avatar upload -->
           <div class="col-span-6">
-            <label for="cover-photo" class="text-neutral-300 block text-sm font-medium leading-6">Avatar photo</label>
-
+            <label class="block text-sm font-medium text-neutral-600">Avatar photo</label>
             <div
-              class="mt-2 flex justify-center rounded-3xl border-2 border-dashed border-neutral-600 px-6 py-10 bg-neutral-700"
+              class="mt-2 flex justify-center rounded-3xl border-2 border-dashed border-neutral-300 px-6 py-10 bg-neutral-200"
               (dragover)="onDragOver($event)"
               (dragleave)="onDragLeave($event)"
               (drop)="onDrop($event)"
               [class.border-neutral-400]="isDragging"
             >
               <div class="text-center">
-                <!-- Show selected file name if exists -->
-                <div *ngIf="selectedFile" class="mb-4 text-neutral-300">
+                <div *ngIf="selectedFile" class="mb-4 text-neutral-600">
                   Selected file: {{selectedFile.name}}
                 </div>
-
-                <div class="mt-4 flex text-sm leading-6 text-neutral-300">
-                  <label for="file-upload" class="relative cursor-pointer rounded-full bg-neutral-600 px-4 py-2 font-semibold hover:bg-neutral-500 transition duration-200">
+                <div class="mt-4 flex text-sm leading-6 text-neutral-600">
+                  <label class="relative cursor-pointer rounded-full bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600 transition duration-200">
                     <span>Upload a file</span>
                     <input
                       id="file-upload"
@@ -108,21 +104,20 @@
                   </label>
                   <p class="pl-3 pt-2">or drag and drop</p>
                 </div>
-                <p class="text-xs leading-5 text-neutral-400">PNG, JPG, GIF up to 10MB</p>
+                <p class="text-xs leading-5 text-neutral-500">PNG, JPG, GIF up to 10MB</p>
               </div>
             </div>
           </div>
 
           <!-- Marketing Accept -->
           <div class="col-span-6">
-            <label for="MarketingAccept" class="flex gap-4">
+            <label class="flex gap-4">
               <input
                 type="checkbox"
-                id="MarketingAccept"
                 name="marketingAccept"
-                class="h-5 w-5 rounded-full border-neutral-600 bg-neutral-700"
+                class="h-5 w-5 rounded-full border-neutral-300 bg-neutral-200"
               />
-              <span class="text-sm text-neutral-300">
+              <span class="text-sm text-neutral-600">
                 I want to receive emails about events, product updates, and company announcements.
               </span>
             </label>
@@ -130,22 +125,22 @@
 
           <!-- Terms -->
           <div class="col-span-6">
-            <p class="text-sm text-neutral-400">
+            <p class="text-sm text-neutral-500">
               By creating an account, you agree to our
-              <a href="#" class="text-neutral-300 underline hover:text-white">terms and conditions</a> and
-              <a href="#" class="text-neutral-300 underline hover:text-white">privacy policy</a>.
+              <a href="#" class="text-green-500 underline hover:text-green-600">terms and conditions</a> and
+              <a href="#" class="text-green-500 underline hover:text-green-600">privacy policy</a>.
             </p>
           </div>
 
           <!-- Submit button -->
           <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button type="submit" class="inline-block shrink-0 rounded-full bg-neutral-600 px-12 py-3 text-lg font-bold text-white transition hover:bg-neutral-500 hover:shadow-lg focus:outline-none focus:ring">
+            <button type="submit" class="inline-block shrink-0 rounded-full bg-green-500 px-12 py-3 text-lg font-bold text-white transition hover:bg-green-600 hover:shadow-lg focus:outline-none focus:ring">
               Create an account
             </button>
 
-            <p class="mt-4 text-sm text-neutral-400 sm:mt-0">
+            <p class="mt-4 text-sm text-neutral-500 sm:mt-0">
               Already have an account?
-              <a routerLink="/login" class="text-neutral-300 underline hover:text-white">Log in</a>.
+              <a routerLink="/login" class="text-green-500 underline hover:text-green-600">Log in</a>.
             </p>
           </div>
         </form>
@@ -154,7 +149,7 @@
   </div>
 
   <!-- Home button -->
-  <a href="/" class="fixed bottom-8 right-8 bg-neutral-600 hover:bg-neutral-500 text-white rounded-full p-4 shadow-lg transition duration-300 ease-in-out">
+  <a href="/" class="fixed bottom-8 right-8 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition duration-300 ease-in-out">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
     </svg>

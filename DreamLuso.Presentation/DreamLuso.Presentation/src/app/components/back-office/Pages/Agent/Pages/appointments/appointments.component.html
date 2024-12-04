@@ -1,126 +1,84 @@
-<div class="flex min-h-screen bg-zinc-900 font-sans">
+<div class="flex min-h-screen bg-white font-poppins">
   <app-dashboard-sidebar-agent [loggedUserDetails]="loggedUserDetails"></app-dashboard-sidebar-agent>
 
-  <div class="flex-1 ml-[20%] px-4 py-8">
+  <div class="flex-1 ml-[20%] px-8 py-10">
     <!-- Header Section -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold mb-2 text-white">Appointments Manager</h1>
+    <div class="mb-10">
+      <h1 class="text-4xl font-bold mb-4 text-neutral-900">Appointments Manager</h1>
       <div class="flex gap-4">
-        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+        <button class="bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600 transition-all duration-200 shadow-sm hover:shadow-md">
           New Appointment
         </button>
-        <button class="bg-zinc-800 text-zinc-200 px-4 py-2 rounded-lg hover:bg-zinc-700 transition-colors">
+        <button class="bg-neutral-100 text-neutral-700 px-6 py-3 rounded-full hover:bg-neutral-200 transition-all duration-200">
           Calendar View
         </button>
       </div>
     </div>
 
     <!-- Main Grid Layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!-- Calendar Section -->
-      <div class="lg:col-span-2 bg-zinc-800 rounded-xl shadow-lg p-6">
-        <h2 class="text-xl font-semibold mb-4 text-zinc-100">Schedule</h2>
-        <div class="border border-zinc-700 rounded-lg p-4">
+      <div class="lg:col-span-2 bg-white rounded-3xl shadow-sm border-2 border-neutral-100 p-8">
+        <h2 class="text-2xl font-semibold mb-6 text-neutral-900">Schedule</h2>
+        <div class="border-2 border-neutral-100 rounded-2xl p-6 bg-white">
           <app-appointment-calendar></app-appointment-calendar>
         </div>
       </div>
 
       <!-- Upcoming Appointments -->
-      <div class="bg-zinc-800 rounded-xl shadow-lg p-6">
-        <h2 class="text-xl font-semibold mb-4 text-zinc-100">Upcoming Appointments</h2>
-
+      <div class="bg-white rounded-3xl shadow-sm border-2 border-neutral-100 p-8">
+        <h2 class="text-2xl font-semibold mb-6 text-neutral-900">Upcoming Appointments</h2>
         <div class="space-y-4">
           <div *ngFor="let appointment of appointments"
-               class="border border-zinc-700 rounded-lg p-4 hover:bg-zinc-700/50 transition-colors">
+               class="border-2 border-neutral-100 rounded-2xl p-6 hover:bg-neutral-50 transition-all duration-200">
+            <!-- Appointment content -->
             <div class="flex justify-between items-start">
               <div>
-                <h3 class="font-medium text-zinc-100">{{appointment.property.title}}</h3>
-                <p class="text-sm text-zinc-400">{{appointment.property.street}}</p>
-                <p class="text-sm text-zinc-400">
+                <h3 class="font-medium text-neutral-900">{{appointment.property.title}}</h3>
+                <p class="text-sm text-neutral-600">{{appointment.property.street}}</p>
+                <p class="text-sm text-neutral-600">
                   {{appointment.visitDate | date:'shortDate'}} - {{getTimeSlotLabel(appointment.timeSlot)}}
                 </p>
               </div>
+              <!-- Status badges with modern styling -->
               <span [ngClass]="{
-                'bg-yellow-500/20 text-yellow-200': appointment.status === VisitStatus.Pending,
-                'bg-green-500/20 text-green-200': appointment.status === VisitStatus.Confirmed,
-                'bg-red-500/20 text-red-200': appointment.status === VisitStatus.Canceled,
-                'bg-blue-500/20 text-blue-200': appointment.status === VisitStatus.Scheduled,
-                'bg-purple-500/20 text-purple-200': appointment.status === VisitStatus.Completed
-              }" class="px-3 py-1 rounded-full text-xs">
+                'bg-yellow-100 text-yellow-700': appointment.status === VisitStatus.Pending,
+                'bg-green-100 text-green-700': appointment.status === VisitStatus.Confirmed,
+                'bg-red-100 text-red-700': appointment.status === VisitStatus.Canceled,
+                'bg-blue-100 text-blue-700': appointment.status === VisitStatus.Scheduled,
+                'bg-purple-100 text-purple-700': appointment.status === VisitStatus.Completed
+              }" class="px-4 py-1 rounded-full text-xs font-medium">
                 {{appointment.status}}
               </span>
             </div>
 
-            <div class="mt-4 flex gap-2" *ngIf="appointment.status === VisitStatus.Pending">
+            <!-- Action buttons -->
+            <div class="mt-4 flex gap-3" *ngIf="appointment.status === VisitStatus.Pending">
               <button (click)="confirmVisit(appointment.id)"
-                      class="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                      class="flex-1 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md">
                   Confirm
               </button>
               <button (click)="cancelVisit(appointment.id)"
-                  class="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                  class="flex-1 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md">
                   {{ appointment.id ? 'Cancel' : 'ID Missing' }}
               </button>
-          </div>
-          </div>
-
-          <div *ngIf="appointments.length === 0" class="text-zinc-400 text-center py-4">
-            No upcoming appointments
-          </div>
-        </div>
-      </div>
-
-      <!-- Notifications Section -->
-      <div class="lg:col-span-3 bg-zinc-800 rounded-xl shadow-lg p-6">
-        <h2 class="text-xl font-semibold mb-4 text-zinc-100">Notifications</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div *ngFor="let notification of notifications"
-               class="border border-zinc-700 rounded-lg p-4">
-            <div class="flex justify-between items-start">
-              <div>
-                <h3 class="font-medium text-zinc-100">{{notification.message}}</h3>
-                <p class="text-sm text-zinc-400">{{notification.createdAt | date:'short'}}</p>
-              </div>
-              <span class="bg-blue-500/20 text-blue-200 text-xs px-2 py-1 rounded-full">
-                {{notification.status}}
-              </span>
             </div>
-            <button *ngIf="notification.status === 'unread'"
-                    (click)="markAsRead(notification.id)"
-                    class="mt-2 text-blue-400 text-xs hover:text-blue-300 transition-colors">
-              Mark as Read
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Analytics Section -->
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-zinc-800 rounded-xl shadow-lg p-6">
-        <h2 class="text-xl font-semibold mb-4 text-zinc-100">Analytics</h2>
-        <div class="space-y-4">
-          <div class="border-b border-zinc-700 pb-2">
-            <p class="text-sm text-zinc-400">Total Appointments</p>
-            <p class="text-2xl font-bold text-zinc-100">{{getTotalAppointments()}}</p>
-          </div>
-          <div class="border-b border-zinc-700 pb-2">
-            <p class="text-sm text-zinc-400">Pending Appointments</p>
-            <p class="text-2xl font-bold text-zinc-100">{{getPendingAppointments()}}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Cancel Success Alert -->
-<div *ngIf="showCancelSuccessAlert"
-  class="fixed bottom-4 right-4 bg-gradient-to-r from-red-900 to-red-800 border-l-4 border-red-500 text-red-100 p-4 rounded-lg shadow-xl animate-fade-in z-50">
-      <div class="flex items-start space-x-3">
-        <svg class="w-6 h-6 text-red-300 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
+
+  <!-- Success Alert -->
+  <div *ngIf="showCancelSuccessAlert"
+       class="fixed bottom-4 right-4 bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-2xl shadow-lg animate-fade-in z-50">
+    <div class="flex items-start space-x-3">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
       <div>
-        <p class="font-semibold text-lg">Visit Canceled Successfully!</p>
-        <p class="text-red-200 mt-1">The appointment has been canceled.</p>
+        <p class="font-semibold text-lg">Success!</p>
+        <p class="text-green-100 mt-1">The appointment has been updated.</p>
       </div>
     </div>
   </div>

@@ -49,13 +49,15 @@ public static class PropertyEndpoints
         .WithName("UpdateProperty")
         .Produces<UpdatePropertyResponse>(200)
         .Produces<Error>(404)
-        .Produces<Error>(400);
+        .Produces<Error>(400)
+        .DisableAntiforgery();
 
         properties.MapPatch("/{id:guid}/active", Commands.UpdatePropertyIsActive)
        .WithName("UpdatePropertyIsActive")
        .Produces<UpdatePropertyIsActiveResponse>(200)
        .Produces<Error>(404)
-       .Produces<Error>(400);
+       .Produces<Error>(400)
+       .DisableAntiforgery(); 
     }
     private static class Queries
     {

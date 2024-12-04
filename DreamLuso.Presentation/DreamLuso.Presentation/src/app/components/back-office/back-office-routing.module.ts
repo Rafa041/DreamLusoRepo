@@ -12,6 +12,7 @@ import { AppointmentsComponent } from "./Pages/Agent/Pages/appointments/appointm
 import { UsersComponent } from "./Pages/Admin/Pages/users/users.component";
 import { ChatOverlayComponent } from "./Pages/Agent/Pages/chat-overlay/chat-overlay.component";
 import { ChatClientComponent } from "./Pages/Client/Pages/chat-client/chat-client.component";
+import { ChatAgentComponent } from "./Pages/Agent/Pages/chat-agent/chat-agent.component";
 
 
 
@@ -31,7 +32,8 @@ const routes: Routes = [
       { path: 'create-property', component: AddPropertyComponent },
       { path: 'properties', component: RealStateAgentPropertiesComponent },
       { path: 'properties/edit/:id', component: UpdatePropertyComponent },
-      { path: 'appointments', component: AppointmentsComponent }
+      { path: 'appointments', component: AppointmentsComponent },
+      {path: 'chat', component: ChatAgentComponent}
     ]
   },
   {

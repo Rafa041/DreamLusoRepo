@@ -91,7 +91,7 @@ public class UpdatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             property.Bedrooms = request.Bedrooms;
             property.Bathrooms = request.Bathrooms;
             property.Price = request.Price;
-            property.Amenities = request.Amenities;
+            property.Amenities = string.IsNullOrEmpty(request.Amenities) ? "None" : request.Amenities;
             property.Status = request.Status;
             property.YearBuilt = request.YearBuilt;
             property.LastModifiedDate = DateTime.UtcNow;

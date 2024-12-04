@@ -89,7 +89,10 @@ export class DashboardSidebarAgentComponent implements OnInit {
 
   }
   navigateToAppointments() {
-    this.router.navigate(['/back-office/appointmentsAgent']);
-
+    this.router.navigate(['/back-office/agent/appointments']);
   }
+  navigateToChat() {
+    this.router.navigate(['/back-office/agent/chat']);
+  }
+
 }

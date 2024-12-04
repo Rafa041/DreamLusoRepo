@@ -18,8 +18,9 @@ export interface Property {
   amenities: string[];
   status: PropertyStatus;
   images?: PropertyImage[];
-  yearBuilt: string;
+  yearBuilt?: string;
   isActive: boolean;
+  [key: string]: any;
 }
 
 export interface PropertyImage {

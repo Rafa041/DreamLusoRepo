@@ -1,6 +1,7 @@
 ﻿using DreamLuso.Application.Common.Responses;
 using DreamLuso.Application.CQ.Chat.Commands.CreateChat;
 using DreamLuso.Application.CQ.Chat.Commands.UpdateChatStatus;
+using DreamLuso.Application.CQ.Chat.Queries.GetAgentChat;
 using DreamLuso.Application.CQ.Chat.Queries.GetUserChat;
 using DreamLuso.Application.CQ.Chat.Queries.RetrieveAllChat;
 using DreamLuso.Application.CQ.Message.Queries.RetrieveChat;
@@ -40,6 +41,11 @@ public static class ChatEndpoints
             .WithName("UpdateChatStatus")
             .Produces<bool>(200)
             .Produces<Error>(404);
+
+        chats.MapGet("/realstateagent/{agentId:guid}", Queries.GetRealStateAgentChats)
+        .WithName("GetRealStateAgentChats")
+        .Produces<List<RetrieveChatResponse>>(200)
+        .Produces<Error>(404);
     }
 
     private static class Queries
@@ -89,6 +95,7 @@ public static class ChatEndpoints
                 : TypedResults.NotFound(result.Error);
         }
 
+
         public static async Task<Results<Ok<bool>, NotFound<Error>>> UpdateChatStatus(
             [FromServices] ISender sender,
             [FromRoute] Guid id,
@@ -104,6 +111,18 @@ public static class ChatEndpoints
             var result = await sender.Send(updateCommand, cancellationToken);
             return result.IsSuccess
                 ? TypedResults.Ok(true)
+                : TypedResults.NotFound(result.Error);
+        }
+        public static async Task<Results<Ok<IEnumerable<RealStateAgentChatDto>>, NotFound<Error>>> GetRealStateAgentChats(
+       [FromServices] ISender sender,
+       [FromRoute] Guid agentId,
+       CancellationToken cancellationToken)
+        {
+            var query = new GetRealStateAgentChatsQuery { AgentId = agentId };
+            var result = await sender.Send(query, cancellationToken);
+
+            return result.IsSuccess
+                ? TypedResults.Ok(result.Value.Chats)
                 : TypedResults.NotFound(result.Error);
         }
     }

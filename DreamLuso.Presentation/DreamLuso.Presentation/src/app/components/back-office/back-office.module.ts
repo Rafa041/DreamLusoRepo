@@ -21,7 +21,7 @@ import { DashboardSidebarAdminComponent } from './Pages/Admin/Components/dashboa
 import { UsersComponent } from './Pages/Admin/Pages/users/users.component';
 import { ChatOverlayComponent } from './Pages/Agent/Pages/chat-overlay/chat-overlay.component';
 import { ChatClientComponent } from './Pages/Client/Pages/chat-client/chat-client.component';
-//import { ChatAgentComponent } from './Pages/Agent/Pages/chat-agent/chat-agent.component';
+import { ChatAgentComponent } from './Pages/Agent/Pages/chat-agent/chat-agent.component';
 
 
 @NgModule({
@@ -52,7 +52,7 @@ import { ChatClientComponent } from './Pages/Client/Pages/chat-client/chat-clien
     UsersComponent,
     ChatOverlayComponent,
     ChatClientComponent,
-    //ChatAgentComponent,
+    ChatAgentComponent,
   ]
 })
 export class BackOfficeModule { }

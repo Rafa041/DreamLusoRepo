@@ -27,9 +27,8 @@ internal class PropertyConfiguration : IEntityTypeConfiguration<Property>
             .IsRequired();
 
         builder.HasOne(p => p.RealStateAgent)
-            .WithMany(r => r.Properties)
-            .HasForeignKey(p => p.RealStateAgentId)
-             .OnDelete(DeleteBehavior.NoAction);
-           
+              .WithMany(r => r.Properties)
+              .HasForeignKey(p => p.RealStateAgentId)
+              .OnDelete(DeleteBehavior.NoAction);
     }
 }

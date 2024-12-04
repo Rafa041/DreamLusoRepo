@@ -32,7 +32,9 @@ public class CreateMessageCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
             var chat = await unitOfWork.ChatRepository.RetrieveAsync(request.ChatId, cancellationToken);
             if (chat == null)
                 return Error.ChatNotFound;
+
             var agent = await unitOfWork.RealStateAgentRepository.RetrieveAsync(chat.RealStateAgentId);
+
             var message = new Domain.Model.Message
             {
                 Id = Guid.NewGuid(),
@@ -44,12 +46,11 @@ public class CreateMessageCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
                 IsRead = false
             };
 
-            var recipientId = chat.UserId == request.SenderId ? chat.RealStateAgentId : chat.UserId;
-
+            // Create notification with correct sender and recipient IDs
             var notification = new Notification(
                 Guid.NewGuid(),
-                request.SenderId,
-                agent.UserId,
+                request.SenderId, 
+                chat.UserId,
                 $"New message received: {request.Content.Substring(0, Math.Min(50, request.Content.Length))}...",
                 NotificationType.Message,
                 NotificationPriority.Medium
@@ -59,7 +60,7 @@ public class CreateMessageCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
             await unitOfWork.NotificationRepository.AddAsync(notification, cancellationToken);
             await unitOfWork.CommitAsync(cancellationToken);
 
-            var response = new CreateMessageResponse
+            return new CreateMessageResponse
             {
                 Id = message.Id,
                 ChatId = message.ChatId,
@@ -68,8 +69,6 @@ public class CreateMessageCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
                 SentAt = message.SentAt,
                 Type = message.Type
             };
-
-            return response;
         }
         catch (Exception ex)
         {

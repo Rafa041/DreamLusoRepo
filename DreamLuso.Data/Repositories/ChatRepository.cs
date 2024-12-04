@@ -46,7 +46,17 @@ public class ChatRepository : PaginatedRepository<Chat, Guid>, IChatRepository
             .Where(c => c.UserId == userId || c.RealStateAgentId == userId)
             .ToListAsync(cancellationToken);
     }
-
+    public async Task<IEnumerable<Chat>> GetRealStateAgentChatsAsync(Guid realStateAgentId, CancellationToken cancellationToken = default)
+    {
+        return await DbSet
+            .Include(c => c.Property)
+            .Include(c => c.Messages)
+            .Include(c => c.User)
+            .Include(c => c.RealStateAgent)
+                .ThenInclude(r => r.User)
+            .Where(c => c.RealStateAgentId == realStateAgentId)
+            .ToListAsync(cancellationToken);
+    }
     public async Task<Chat> UpdateStatusAsync(Guid id, ChatStatus status, CancellationToken cancellationToken = default)
     {
         var chat = await RetrieveAsync(id, cancellationToken);
