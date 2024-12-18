@@ -20,6 +20,7 @@ export interface Property {
   images?: PropertyImage[];
   yearBuilt?: string;
   isActive: boolean;
+  isFeatured: boolean;
   [key: string]: any;
 }
 

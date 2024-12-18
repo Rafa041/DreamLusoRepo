@@ -1,0 +1,51 @@
+<section class="relative w-full p-20 bg-white">
+  <div class="mx-auto max-w-screen-2xl">
+    <div class="my-10">
+      <h2 class="text-5xl font-bold text-neutral-800 font-poppins">
+        Discover the Heart of <span class="text-green-500">Lisbon</span>
+      </h2>
+      <p class="mt-4 text-lg text-neutral-600">
+        Lisbon, Portugal's vibrant capital, blends historic charm with modern living. From traditional apartments in Alfama to modern penthouses in Parque das Nações, experience the city's unique character and culture.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+      <div
+        *ngFor="let property of lisbonProperties"
+        class="col-span-1 group hover:scale-[1.02] transform transition-all duration-200"
+      >
+      <a [routerLink]="['/propertyId', property.id]" class="block">
+          <div class="aspect-square w-full overflow-hidden rounded-3xl shadow-lg">
+            <img
+            [src]="getImageUrl(property)"
+            [alt]="property.title"
+            class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300"
+            (error)="handleImageError($event)"
+          />
+          </div>
+          <div class="mt-5">
+            <div class="flex items-center justify-between gap-4">
+              <h2 class="text-2xl font-bold text-neutral-700 group-hover:text-green-500 transition duration-200 font-poppins">
+                {{ property.title }}
+              </h2>
+              <span class="rounded-full bg-green-500 px-4 py-1.5 font-medium text-white shadow-md">
+                {{ property.price | currency:'EUR':'symbol':'1.0-0' }}
+              </span>
+            </div>
+            <ul class="mt-5 flex justify-around text-neutral-500">
+              <li class="flex items-center space-x-2">
+                <span class="text-sm font-medium">{{ property.bedrooms }} bedrooms</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <span class="text-sm font-medium">{{ property.bathrooms }} bathrooms</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <span class="text-sm font-medium">{{ property.size }}m²</span>
+              </li>
+            </ul>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

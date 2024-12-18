@@ -96,4 +96,7 @@ export class RealStateAgentPropertiesComponent implements OnInit {
   onDeactivate(propertyId: string): void {
     // Implement deactivation logic
   }
+  onAddNewProperty(): void {
+    this.router.navigate(['/back-office/agent/create-property']);
+  }
 }

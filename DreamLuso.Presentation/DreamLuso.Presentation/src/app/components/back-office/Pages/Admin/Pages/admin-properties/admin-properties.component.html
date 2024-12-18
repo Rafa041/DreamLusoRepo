@@ -1,0 +1,83 @@
+<div class="flex min-h-screen bg-white font-sans">
+  <app-dashboard-sidebar-admin [loggedUserDetails]="loggedUserDetails"></app-dashboard-sidebar-admin>
+
+  <!-- Main Content -->
+  <div class="ml-[20%] w-full p-8">
+    <div class="mb-12">
+      <h1 class="text-3xl font-bold text-neutral-900">All Properties</h1>
+    </div>
+
+    <!-- Properties Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      <div *ngFor="let property of getPaginatedProperties()"
+           class="rounded-xl bg-white shadow-sm p-6 border border-neutral-200">
+        <!-- Property Card Content -->
+        <div class="aspect-video w-full overflow-hidden rounded-xl relative">
+          <img [src]="getImageUrl(property.images?.[0]?.imagePath)"
+               (error)="handleImageError($event)"
+               alt="Property Image"
+               class="h-full w-full object-cover">
+
+          <span class="absolute top-4 right-4 px-4 py-2 rounded-lg text-sm font-semibold text-white"
+                [ngClass]="{
+                  'bg-blue-500': property.status === 'Rent',
+                  'bg-green-500': property.status === 'Sale'
+                }">
+            {{property.status}}
+          </span>
+        </div>
+
+        <!-- Property Details -->
+        <div class="mt-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-semibold text-neutral-900">{{property.title}}</h3>
+            <span class="text-lg font-bold text-neutral-900">{{property.price | currency:'EUR'}}</span>
+          </div>
+
+          <div class="text-neutral-600">
+            <p>{{property.street}}, {{property.city}}</p>
+            <p class="text-sm">{{property.state}}, {{property.postalCode}}</p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4 py-4 border-t border-b border-neutral-200">
+            <div class="text-center">
+              <p class="text-neutral-500 text-sm">Size</p>
+              <p class="text-neutral-900 font-medium">{{property.size}}m²</p>
+            </div>
+            <div class="text-center border-l border-r border-neutral-200">
+              <p class="text-neutral-500 text-sm">Type</p>
+              <p class="text-neutral-900 font-medium">{{property.type}}</p>
+            </div>
+            <div class="text-center">
+              <p class="text-neutral-500 text-sm">Status</p>
+              <p class="text-neutral-900 font-medium">{{property.status}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center gap-2 mt-12">
+      <button class="px-4 py-2 rounded-lg bg-neutral-200 text-neutral-700 hover:bg-neutral-300 disabled:opacity-50"
+              [disabled]="currentPage === 1"
+              (click)="currentPage = currentPage - 1">
+        Previous
+      </button>
+
+      <button class="px-4 py-2 rounded-lg bg-neutral-200 text-neutral-700 hover:bg-neutral-300"
+              *ngFor="let page of [].constructor(totalPages); let i = index"
+              [class.bg-green-600]="currentPage === i + 1"
+              [class.text-white]="currentPage === i + 1"
+              (click)="currentPage = i + 1">
+        {{i + 1}}
+      </button>
+
+      <button class="px-4 py-2 rounded-lg bg-neutral-200 text-neutral-700 hover:bg-neutral-300 disabled:opacity-50"
+              [disabled]="currentPage === totalPages"
+              (click)="currentPage = currentPage + 1">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

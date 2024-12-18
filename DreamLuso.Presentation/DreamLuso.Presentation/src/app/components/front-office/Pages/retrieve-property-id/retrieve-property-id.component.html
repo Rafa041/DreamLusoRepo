@@ -276,29 +276,30 @@
   <div class="fixed bottom-5 right-5 flex flex-col space-y-5">
     <!-- Back Button with Tooltip -->
     <a
-      routerLink="/properties"
-      class="bg-neutral-600 hover:bg-neutral-700 text-white rounded-full p-4 transition duration-300 group"
+    routerLink="/properties"
+    class="bg-green-500 hover:bg-green-600 text-white rounded-full p-4 transition duration-300 group"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M10 19l-7-7m0 0l7-7m-7 7h18"
-        />
-      </svg>
-      <span
-        class="absolute -top-10 bg-black bg-opacity-80 text-neutral-900 text-sm p-2 rounded shadow-lg opacity-0 transition-opacity group-hover:opacity-100"
-      >
-        Back to Listings
-      </span>
-    </a>
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M10 19l-7-7m0 0l7-7m-7 7h18"
+      />
+    </svg>
+    <span
+      class="absolute -top-10 bg-black bg-opacity-80 text-white text-sm p-2 rounded shadow-lg opacity-0 transition-opacity group-hover:opacity-100"
+    >
+      Back to Listings
+    </span>
+  </a>
+
     <button
       class="bg-green-500 hover:bg-green-600 text-white rounded-full p-4 transition duration-300"
     >

@@ -13,6 +13,7 @@ import { UsersComponent } from "./Pages/Admin/Pages/users/users.component";
 import { ChatOverlayComponent } from "./Pages/Agent/Pages/chat-overlay/chat-overlay.component";
 import { ChatClientComponent } from "./Pages/Client/Pages/chat-client/chat-client.component";
 import { ChatAgentComponent } from "./Pages/Agent/Pages/chat-agent/chat-agent.component";
+import { AdminPropertiesComponent } from "./Pages/Admin/Pages/admin-properties/admin-properties.component";
 
 
 
@@ -22,7 +23,8 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardAdminComponent },
       { path: 'users', component: UsersComponent },
-      { path: 'create-agent', component: CreateAgentComponent }
+      { path: 'create-agent', component: CreateAgentComponent },
+      { path: 'adminProperties', component: AdminPropertiesComponent }
     ]
   },
   {

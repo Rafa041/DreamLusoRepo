@@ -1,11 +1,9 @@
-<aside class="fixed z-10 top-0 pb-3 px-6 w-64 flex flex-col justify-between h-screen border-r border-zinc-800 bg-[#0A0A0A] transition duration-300 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
-
-  <!-- Sidebar -->
- <div>
+<aside class="fixed z-10 top-0 pb-3 px-6 w-64 flex flex-col justify-between h-screen border-r border-neutral-200 bg-neutral-50 transition duration-300 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
+  <div>
     <!-- Logo and Brand -->
     <div class="-mx-6 px-6 py-4">
       <a href="#" title="home">
-        <h1 class="text-zinc-100 text-2xl font-bold">DreamLuso</h1>
+        <h1 class="text-neutral-900 text-2xl font-bold">Dream<span class="text-green-500">Luso</span></h1>
       </a>
     </div>
 
@@ -13,31 +11,32 @@
     <div class="mt-8 text-center">
       <img [src]="getImageUrl(loggedUserDetails?.imageUrl)"
           alt="User Avatar"
-          class="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28 border-2 border-zinc-700"
+          class="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28 border-2 border-neutral-200"
           (error)="handleImageError($event)">
-      <h5 class="hidden mt-4 text-xl font-semibold text-zinc-200 lg:block">
+      <h5 class="hidden mt-4 text-xl font-semibold text-neutral-900 lg:block">
         {{ loggedUserDetails?.firstName }} {{ loggedUserDetails?.lastName }}
       </h5>
-      <span class="hidden text-zinc-400 lg:block">{{ loggedUserDetails?.access }}</span>
+      <span class="hidden text-neutral-600 lg:block">{{ loggedUserDetails?.access }}</span>
     </div>
 
     <!-- Navigation Menu -->
-    <ul class="space-y-2">
+    <ul class="space-y-2 mt-8">
       <li *ngFor="let item of menuItems">
         <a [routerLink]="item.route"
-           routerLinkActive="bg-zinc-800 text-white"
-           class="flex items-center p-3 text-zinc-400 rounded-lg hover:bg-zinc-800 hover:text-white transition-colors">
+           routerLinkActive="bg-green-500 text-white"
+           class="px-4 py-3 flex items-center space-x-4 rounded-full text-neutral-600 group hover:bg-green-500 hover:text-white transition-colors">
           <i [class]="item.icon + ' w-5 h-5'"></i>
-          <span class="ml-3">{{item.title}}</span>
+          <span class="group-hover:text-white">{{item.title}}</span>
         </a>
       </li>
     </ul>
 
     <!-- Admin Actions -->
-    <div class="absolute bottom-0 left-0 right-0 p-4">
-      <button (click)="logout()" class="w-full flex items-center justify-center p-2 text-sm text-red-500 rounded-lg hover:bg-red-500/10">
-        <i class="bi bi-box-arrow-right w-4 h-4 mr-2"></i>
-        Logout
+    <div class="px-6 -mx-6 pt-4 flex justify-between items-center border-t border-neutral-200">
+      <button (click)="logout()"
+              class="px-4 py-3 flex items-center space-x-4 rounded-full text-neutral-600 group hover:bg-green-500 hover:text-white w-full">
+        <i class="bi bi-box-arrow-right w-5 h-5"></i>
+        <span class="group-hover:text-white">Logout</span>
       </button>
     </div>
   </div>

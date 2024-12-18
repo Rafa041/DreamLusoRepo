@@ -29,7 +29,7 @@ export class DashboardSidebarAdminComponent implements OnInit {
     {
       title: 'Properties',
       icon: 'bi bi-house',
-      route: '/admin/properties'
+      route: '/back-office/admin/adminProperties'
     },
     {
       title: 'Agents',

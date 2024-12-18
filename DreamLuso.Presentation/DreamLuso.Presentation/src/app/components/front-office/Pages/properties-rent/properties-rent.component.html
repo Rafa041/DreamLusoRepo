@@ -1,0 +1,177 @@
+<section class="relative w-full p-20 bg-white">
+  <div class="mx-auto max-w-screen-2xl">
+    <div class="my-10">
+      <h2 class="text-5xl font-bold text-neutral-800 font-poppins">
+        Properties Available for <span class="text-green-500">Rent</span>
+      </h2>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="mb-8">
+      <!-- Search Bar -->
+      <div class="relative mb-8 mt-10 flex max-w-md items-center justify-between gap-4 rounded-full border-2 border-neutral-300 p-3">
+        <input
+          type="search"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch($event)"
+          placeholder="Enter City or ZIP Code"
+          class="ml-4 flex w-full font-medium text-neutral-300 outline-none bg-transparent"
+        />
+        <button class="flex aspect-square h-12 items-center justify-center rounded-full bg-green-500 text-white hover:bg-green-600">
+          <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56.966 56.966">
+            <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17s-17-7.626-17-17S14.61,6,23.984,6z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-4 mb-8 p-6 bg-neutral-50 rounded-full">
+        <select
+          [(ngModel)]="filters.type"
+          (change)="applyFilters()"
+          class="bg-neutral-200 text-neutral-500 rounded-full px-4 py-2"
+        >
+          <option value="">Property Type</option>
+          <option *ngFor="let type of PropertyType | keyvalue" [value]="type.value">
+            {{ type.value }}
+          </option>
+        </select>
+
+        <div class="flex items-center gap-2">
+          <input
+            type="number"
+            [(ngModel)]="filters.minPrice"
+            (change)="applyFilters()"
+            placeholder="Min Price"
+            class="bg-neutral-200 text-neutral-500 rounded-full px-4 py-2"
+          />
+          <span class="text-neutral-900">-</span>
+          <input
+            type="number"
+            [(ngModel)]="filters.maxPrice"
+            (change)="applyFilters()"
+            placeholder="Max Price"
+            class="bg-neutral-200 text-neutral-500 rounded-full px-4 py-2"
+          />
+        </div>
+
+        <input
+          type="number"
+          [(ngModel)]="filters.bedrooms"
+          (change)="applyFilters()"
+          placeholder="Min Bedrooms"
+          class="bg-neutral-200 text-neutral-500 rounded-full px-4 py-2"
+        />
+
+        <input
+          type="text"
+          [(ngModel)]="filters.city"
+          (input)="applyFilters()"
+          placeholder="City"
+          class="bg-neutral-200 text-neutral-500 rounded-full px-4 py-2"
+        />
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex justify-center">
+      <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-green-500"></div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="text-red-500 text-center my-4">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Properties Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+      <div *ngFor="let property of filteredProperties" class="col-span-1 group hover:scale-[1.02] transform transition-all duration-200">
+        <a [routerLink]="['/propertyId', property.id]" class="block">
+          <div class="aspect-square w-full overflow-hidden rounded-3xl shadow-lg">
+            <img
+              [src]="getImageUrl(property)"
+              [alt]="property.title"
+              (error)="handleImageError($event)"
+              class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300"
+            />
+          </div>
+          <div class="mt-5">
+            <div class="flex items-center justify-between gap-4">
+              <h2 class="text-2xl font-bold text-neutral-700 group-hover:text-green-500 transition duration-200 font-poppins">
+                {{ property.title }}
+              </h2>
+              <span class="rounded-full bg-green-500 px-4 py-1.5 font-medium text-white shadow-md">
+                {{ formatPrice(property.price) }}/month
+              </span>
+            </div>
+            <ul class="mt-5 flex justify-around text-neutral-500">
+              <li class="flex items-center space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-bed"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path d="M22 17v-3h-20" />
+                  <path d="M2 8v9" />
+                  <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" />
+                </svg>
+                <span class="text-sm font-medium">{{ property.bedrooms }} beds</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-bath"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z" />
+                  <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" />
+                  <path d="M4 21l1 -1.5" />
+                  <path d="M20 21l-1 -1.5" />
+                </svg>
+                <span class="text-sm font-medium">{{ property.bathrooms }} baths</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-maximize"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+                </svg>
+                <span class="text-sm font-medium">{{ property.size }}m²</span>
+              </li>
+            </ul>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

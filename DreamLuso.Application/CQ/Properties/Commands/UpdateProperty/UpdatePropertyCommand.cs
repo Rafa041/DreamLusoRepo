@@ -69,19 +69,22 @@ public class UpdatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             if (realStateAgent == null)
                 return Error.RealStateAgentNotFound;
 
-            // Update address
-            var address = new Address
-            {
-                Id = property.AddressId,
-                Street = request.Street,
-                City = request.City,
-                State = request.State,
-                PostalCode = request.PostalCode,
-                Country = request.Country,
-                AdditionalInfo = request.AdditionalInfo
-            };
+            // First retrieve the existing address
+            var existingAddress = await unitOfWork.AddressRepository.RetrieveAsync(property.AddressId, cancellationToken);
+            if (existingAddress == null)
+                return Error.AddressNotFound;
 
-            await unitOfWork.AddressRepository.UpdateAsync(address, cancellationToken);
+            // Update the existing address properties
+            existingAddress.Street = request.Street;
+            existingAddress.City = request.City;
+            existingAddress.State = request.State;
+            existingAddress.PostalCode = request.PostalCode;
+            existingAddress.Country = request.Country;
+            existingAddress.AdditionalInfo = request.AdditionalInfo;
+
+            // Update the address
+            await unitOfWork.AddressRepository.UpdateAsync(existingAddress);
+            await unitOfWork.CommitAsync();
 
             // Update property details
             property.Title = request.Title;
