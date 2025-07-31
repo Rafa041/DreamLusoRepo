@@ -20,9 +20,9 @@ internal class ChatConfiguration : IEntityTypeConfiguration<Chat>
                .HasForeignKey(x => x.UserId)
                .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(x => x.RealStateAgent)
+        builder.HasOne(x => x.RealEstateAgent)
                .WithMany()
-               .HasForeignKey(x => x.RealStateAgentId)
+               .HasForeignKey(x => x.RealEstateAgentId)
                .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(x => x.Messages)

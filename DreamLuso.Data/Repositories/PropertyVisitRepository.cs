@@ -32,7 +32,7 @@ public class PropertyVisitRepository : PaginatedRepository<PropertyVisit, Guid>,
         return await _dbSet
             .Include(pv => pv.Property)
             .Include(pv => pv.User)
-            .Include(pv => pv.RealStateAgentUser)
+            .Include(pv => pv.RealEstateAgentUser)
             .Where(pv => pv.UserId == userId)
             .ToListAsync(cancellationToken);
     }
@@ -42,16 +42,16 @@ public class PropertyVisitRepository : PaginatedRepository<PropertyVisit, Guid>,
         return await _dbSet
             .Include(pv => pv.Property)
             .Include(pv => pv.User)
-            .Include(pv => pv.RealStateAgentUser)
+            .Include(pv => pv.RealEstateAgentUser)
             .FirstOrDefaultAsync(pv => pv.UserId == userId, cancellationToken);
     }
-    public async Task<IEnumerable<PropertyVisit>> RetrieveByRealAgentIdSingleAsync(Guid realstateAgentId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<PropertyVisit>> RetrieveByRealEstateAgentIdSingleAsync(Guid realEstateAgentId, CancellationToken cancellationToken)
     {
         return await _dbSet
             .Include(pv => pv.Property)
             .Include(pv => pv.User)
-            .Include(pv => pv.RealStateAgentUser)
-            .Where(pv => pv.RealStateAgentId == realstateAgentId)
+            .Include(pv => pv.RealEstateAgentUser)
+            .Where(pv => pv.RealEstateAgentId == realEstateAgentId)
             .ToListAsync(cancellationToken);
     }
     public async Task<IEnumerable<PropertyVisit>> RetrieveAllAsync(CancellationToken cancellationToken)
@@ -59,7 +59,7 @@ public class PropertyVisitRepository : PaginatedRepository<PropertyVisit, Guid>,
         return await _context.PropertyVisits
             .Include(v => v.Property)
             .Include(v => v.User)
-            .Include(v => v.RealStateAgentUser)
+            .Include(v => v.RealEstateAgentUser)
             .ToListAsync(cancellationToken);
     }
 
@@ -79,9 +79,9 @@ public class PropertyVisitRepository : PaginatedRepository<PropertyVisit, Guid>,
             .Include(v => v.Property)
             .Include(v => v.User)
                 .ThenInclude(u => u.Name)
-            .Include(v => v.RealStateAgentUser)
+            .Include(v => v.RealEstateAgentUser)
                 .ThenInclude(u => u.User)
-            .Where(v => v.UserId == userId || v.RealStateAgentId == userId)
+            .Where(v => v.UserId == userId || v.RealEstateAgentId == userId)
             .ToListAsync(cancellationToken);
     }
 
@@ -93,9 +93,9 @@ public class PropertyVisitRepository : PaginatedRepository<PropertyVisit, Guid>,
                 .ThenInclude(u => u.Name)
             .Include(v => v.User)
                 .ThenInclude(u => u.Account)
-            .Include(v => v.RealStateAgentUser)
+            .Include(v => v.RealEstateAgentUser)
                 .ThenInclude(r => r.User)
-            .Include(v => v.RealStateAgentUser)
+            .Include(v => v.RealEstateAgentUser)
                 .ThenInclude(r => r.User)
             .FirstOrDefaultAsync(v => v.ConfirmationToken == token);
     }
@@ -106,7 +106,7 @@ public class PropertyVisitRepository : PaginatedRepository<PropertyVisit, Guid>,
 
         if (visit != null)
         {
-            visit.Confirm(); // Chama o método `Confirm` no modelo `PropertyVisit`
+            visit.Confirm();
             await _context.SaveChangesAsync(cancellationToken);
         }
     }
@@ -117,7 +117,7 @@ public class PropertyVisitRepository : PaginatedRepository<PropertyVisit, Guid>,
 
         if (visit != null)
         {
-            visit.Cancel(); // Chama o método `Cancel` no modelo `PropertyVisit`
+            visit.Cancel();
             await _context.SaveChangesAsync(cancellationToken);
         }
     }

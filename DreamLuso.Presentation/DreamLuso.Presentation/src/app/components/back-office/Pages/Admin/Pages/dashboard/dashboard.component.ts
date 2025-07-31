@@ -56,7 +56,7 @@ export class DashboardAdminComponent implements OnInit {
     }).subscribe({
       next: (data) => {
         this.totalUsers = data.users.length;
-        this.totalAgents = data.users.filter(user => user.access === Access.RealStateAgent).length;
+        this.totalAgents = data.users.filter(user => user.access === Access.RealEstateAgent).length;
         this.totalProperties = data.properties.filter(prop => prop.isActive).length;
 
         // Get pending properties (isActive = false)

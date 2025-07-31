@@ -57,7 +57,7 @@ export class UsersComponent implements OnInit {
     switch (access) {
       case 'Real State Agent':
         return 'Agent';
-      case 'RealStateAgent':
+              case 'RealEstateAgent':
         return 'Agent';
       default:
         return access;

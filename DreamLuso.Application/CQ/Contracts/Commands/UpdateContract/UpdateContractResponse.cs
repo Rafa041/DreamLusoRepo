@@ -5,7 +5,7 @@ public class UpdateContractResponse
     public Guid ContractId { get; set; }
     public Guid PropertyId { get; set; }
     public Guid ClientId { get; set; }
-    public Guid RealStateAgentId { get; set; }
+    public Guid RealEstateAgentId { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
     public double Value { get; set; }

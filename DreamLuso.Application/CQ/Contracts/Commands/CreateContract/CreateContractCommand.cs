@@ -7,7 +7,7 @@ public class CreateContractCommand : IRequest<Result<CreateContractResponse, Suc
 {
     public required Guid PropertyId { get; init; }
     public required Guid ClientId { get; init; }
-    public required Guid RealStateAgentId { get; init; }
+    public required Guid RealEstateAgentId { get; init; }
     public required DateTime StartTime { get; init; }
     public required DateTime EndTime { get; init; }
     public required double Value { get; init; }

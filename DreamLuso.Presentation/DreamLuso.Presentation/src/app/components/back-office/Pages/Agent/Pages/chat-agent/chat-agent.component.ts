@@ -9,8 +9,8 @@ import { Property } from '../../../../../../models/property';
 import { UserModel } from '../../../../../../models/UserModel';
 import { PropertyService } from '../../../../../../services/PropertyService/property.service';
 import { UserService } from '../../../../../../services/UserService/user.service';
-import { RealStateAgentService } from '../../../../../../services/RealStateAgent/real-state-agent.service';
-import { RealStateAgentModel } from '../../../../../../models/RealStateAgentModel';
+import { RealEstateAgentService } from '../../../../../../services/RealEstateAgent/real-estate-agent.service';
+import { RealEstateAgentModel } from '../../../../../../models/RealEstateAgentModel';
 import { environment } from '../../../../../../../../environment';
 
 @Component({
@@ -40,7 +40,7 @@ export class ChatAgentComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private propertyService: PropertyService,
     private userService: UserService,
-    private realStateAgentService: RealStateAgentService
+    private realEstateAgentService: RealEstateAgentService
   ) {}
 
   ngOnInit(): void {
@@ -59,8 +59,8 @@ export class ChatAgentComponent implements OnInit, OnDestroy {
       this.userService.retrieve(loggedUser.id).subscribe({
         next: (userDetails: UserModel) => {
           this.loggedUserDetails = userDetails;
-          this.realStateAgentService.retrieveByUserId(loggedUser.id).subscribe({
-            next: (agentDetails: RealStateAgentModel) => {
+              this.realEstateAgentService.retrieveByUserId(loggedUser.id).subscribe({
+      next: (agentDetails: RealEstateAgentModel) => {
               this.agentId = agentDetails.id;
               this.loadActiveChats();
               this.setupChatPolling();

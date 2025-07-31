@@ -261,7 +261,7 @@ export class HomeComponent  {
       case 'Admin':
         this.router.navigate(['/back-office/admin/dashboard']);
         break;
-      case 'RealStateAgent':
+              case 'RealEstateAgent':
         this.router.navigate(['/back-office/agent/dashboard']);
         break;
       case 'None':

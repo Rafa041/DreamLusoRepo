@@ -40,7 +40,7 @@ public class CancelVisitCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler
 
             // 3. Enviar notificação para o usuário relevante
             var userId = propertyVisit.UserId; // O usuário que agendou a visita
-            var realEstateAgentId = propertyVisit.RealStateAgentId; // O corretor da visita
+            var realEstateAgentId = propertyVisit.RealEstateAgentId; // O corretor da visita
 
             // Determinar qual usuário deve ser notificado (o agente ou o usuário)
             var notificationRecipientId = propertyVisit.VisitStatus == VisitStatus.Canceled

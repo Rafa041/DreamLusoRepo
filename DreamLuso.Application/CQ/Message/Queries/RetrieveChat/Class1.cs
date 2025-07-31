@@ -20,7 +20,7 @@ public class RetrieveChatResponse
     public Guid Id { get; init; }
     public Guid PropertyId { get; init; }
     public Guid UserId { get; init; }
-    public Guid RealStateAgentId { get; init; }
+    public Guid RealEstateAgentId { get; init; }
     public ChatStatus Status { get; init; }
     public List<MessageDto> Messages { get; init; }
 }
@@ -44,7 +44,7 @@ public class RetrieveChatQueryHandler : IRequestHandler<RetrieveChatQuery, Resul
             Id = chat.Id,
             PropertyId = chat.PropertyId,
             UserId = chat.UserId,
-            RealStateAgentId = chat.RealStateAgentId,
+            RealEstateAgentId = chat.RealEstateAgentId,
             Status = chat.Status,
             Messages = chat.Messages.Select(m => new MessageDto
             {

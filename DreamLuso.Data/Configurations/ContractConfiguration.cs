@@ -25,9 +25,9 @@ internal class ContractConfiguration : IEntityTypeConfiguration<Contract>
                .OnDelete(DeleteBehavior.Restrict);
 
 
-        builder.HasOne(c => c.RealStateAgent)
+        builder.HasOne(c => c.RealEstateAgent)
                .WithMany()
-               .HasForeignKey(c => c.RealStateAgentId)
+               .HasForeignKey(c => c.RealEstateAgentId)
                .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(c => c.Value).HasColumnType("decimal(18,2)");

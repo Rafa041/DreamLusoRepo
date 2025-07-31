@@ -9,7 +9,7 @@ export interface Property {
   country: string;
   additionalInfo?: string;
   userId: string;
-  realStateAgentId: string
+  realEstateAgentId: string
   type: PropertyType;
   size: number;
   bedrooms: number;

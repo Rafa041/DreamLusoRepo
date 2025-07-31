@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 import { Chat, ChatMessage, ChatStatus, MessageType } from '../../../../../../models/Chat';
 import { AuthService } from '../../../../../../services/AuthService/auth.service';
 import { environment } from '../../../../../../../../environment';
-import { RealStateAgentService } from '../../../../../../services/RealStateAgent/real-state-agent.service';
-import { RealStateAgentModel } from '../../../../../../models/RealStateAgentModel';
+import { RealEstateAgentService } from '../../../../../../services/RealEstateAgent/real-estate-agent.service';
+import { RealEstateAgentModel } from '../../../../../../models/RealEstateAgentModel';
 interface ChatWithAgent extends Chat {
-  agentDetails?: RealStateAgentModel;
+  agentDetails?: RealEstateAgentModel;
 }
 @Component({
   selector: 'app-chat-client',
@@ -23,7 +23,7 @@ export class ChatClientComponent {
   newMessage: string = '';
   currentUser!: UserModel | null;
   loggedUserDetails: UserModel | null = null;
-  activeChats: ChatWithAgent[] = []; //Teste
+  activeChats: ChatWithAgent[] = [];
   selectedChat: ChatWithAgent | null = null;
   userId: string = '';
   private apiUrl = environment.apiUrl;
@@ -34,7 +34,7 @@ export class ChatClientComponent {
     private chatService: ChatService,
     private router: Router,
     private authService: AuthService,
-    private realStateAgentService: RealStateAgentService
+    private realEstateAgentService: RealEstateAgentService
   ) {
     const loggedUserString = sessionStorage.getItem('loggedUser');
     if (loggedUserString) {
@@ -67,7 +67,7 @@ export class ChatClientComponent {
             next: (chats) => {
                 this.activeChats = chats as ChatWithAgent[];  // Cast to ChatWithAgent[]
                 this.activeChats.forEach(chat => {
-                    this.realStateAgentService.retrieve(chat.realStateAgentId).subscribe({
+                    this.realEstateAgentService.retrieve(chat.realEstateAgentId).subscribe({
                         next: (agentDetails) => {
                             chat.agentDetails = agentDetails;
                         }

@@ -33,7 +33,7 @@ public class CreateMessageCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
             if (chat == null)
                 return Error.ChatNotFound;
 
-            var agent = await unitOfWork.RealStateAgentRepository.RetrieveAsync(chat.RealStateAgentId);
+            var agent = await unitOfWork.RealEstateAgentRepository.RetrieveAsync(chat.RealEstateAgentId);
 
             var message = new Domain.Model.Message
             {

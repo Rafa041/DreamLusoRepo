@@ -10,7 +10,7 @@ import { CreateAgentComponent } from './Pages/Admin/Pages/create-agent/create-ag
 import { DashboardAgentComponent } from "./Pages/Agent/Pages/dashboard/dashboard.component";
 import { DashboardClientComponent } from "./Pages/Client/Pages/dashboard/dashboard.component";
 import { DashboardSidebarAgentComponent } from './Pages/Agent/Components/dashboard-sidebar-agent/dashboard-sidebar-agent.component';
-import { RealStateAgentPropertiesComponent } from './Pages/Agent/Pages/real-state-agent-properties/real-state-agent-properties.component';
+import { RealEstateAgentPropertiesComponent } from './Pages/Agent/Pages/real-estate-agent-properties/real-estate-agent-properties.component';
 import { Router, RouterModule } from "@angular/router";
 import { UpdatePropertyComponent } from './Pages/Agent/Pages/update-property/update-property.component';
 import { AppointmentsComponent } from './Pages/Agent/Pages/appointments/appointments.component';
@@ -43,7 +43,7 @@ import { AdminPropertiesComponent } from './Pages/Admin/Pages/admin-properties/a
     DashboardAgentComponent,
     DashboardClientComponent,
     DashboardSidebarAgentComponent,
-    RealStateAgentPropertiesComponent,
+    RealEstateAgentPropertiesComponent,
     UpdatePropertyComponent,
     AppointmentsComponent,
     AppointmentCalendarComponent,

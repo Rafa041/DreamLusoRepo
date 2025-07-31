@@ -22,7 +22,7 @@ public static class UserEndpoints
             .WithName("RegisterUser")
             .Produces<CreateUserResponse>(200)
             .Produces<Error>(400)
-             .DisableAntiforgery();//Em teste 
+             .DisableAntiforgery(); 
 
         // ========== Retrieve All Users Endpoint ==========
         users.MapGet("/retrieveall", Queries.RetrieveAllUsers)

@@ -15,7 +15,7 @@ public class UpdateContractCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
 
         existingContract.PropertyId = request.PropertyId;
         existingContract.ClientId = request.ClientId;
-        existingContract.RealStateAgentId = request.RealStateAgentId;
+        existingContract.RealEstateAgentId = request.RealEstateAgentId;
         existingContract.StartDate = request.StartTime;
         existingContract.EndDate = request.EndTime;
         existingContract.Value = request.Value;
@@ -33,7 +33,7 @@ public class UpdateContractCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             ContractId = existingContract.Id,
             PropertyId = existingContract.PropertyId,
             ClientId = existingContract.ClientId,
-            RealStateAgentId = existingContract.RealStateAgentId,
+                            RealEstateAgentId = existingContract.RealEstateAgentId,
             StartTime = existingContract.StartDate,
             EndTime = existingContract.EndDate,
             Value = existingContract.Value,

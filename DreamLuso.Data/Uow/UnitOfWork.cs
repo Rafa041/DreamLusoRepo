@@ -12,7 +12,7 @@ namespace DreamLuso.Data.Uow;
 
 internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepository,
     ITokenService tokenService, IDataProtectionService dataProtectionService, IAccountRepository accountRepository,
-    IAddressRepository addressRepository, IPropertyRepository propertyRepository, IRealStateAgentRepository realStateAgentRepository,
+    IAddressRepository addressRepository, IPropertyRepository propertyRepository, IRealEstateAgentRepository realEstateAgentRepository,
     ICategoryRepository categoryRepository,IClientRepository clientRepository, ICommentRepository commentRepository,
     IContractRepository contractRepository, IFileStorageService fileStorageService, IInvoiceRepository invoiceRepository,
     IPropertyVisitRepository propertyVisitRepository, INotificationRepository notificationRepository, IChatRepository chatRepository, IMessageRepository messageRepository
@@ -25,7 +25,7 @@ internal class UnitOfWork(ApplicationDbContext context, IUserRepository userRepo
     public IAccountRepository AccountRepository => accountRepository;
     public IPropertyRepository PropertyRepository => propertyRepository;
     public IAddressRepository AddressRepository => addressRepository;
-    public IRealStateAgentRepository RealStateAgentRepository => realStateAgentRepository;
+    public IRealEstateAgentRepository RealEstateAgentRepository => realEstateAgentRepository;
     public ICategoryRepository CategoryRepository => categoryRepository;
     public IClientRepository ClientRepository => clientRepository;
     public ICommentRepository CommentRepository => commentRepository;

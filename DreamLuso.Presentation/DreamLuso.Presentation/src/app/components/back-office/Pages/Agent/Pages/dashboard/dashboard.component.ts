@@ -69,7 +69,7 @@ export class DashboardAgentComponent {
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen; // Alterna o estado do dropdown
   }
-    // Método para fechar o dropdown ao clicar fora dele
+
   closeDropdown(event: MouseEvent) {
      const target = event.target as HTMLElement;
     if (!target.closest('.relative')) {

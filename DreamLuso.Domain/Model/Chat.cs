@@ -10,8 +10,8 @@ public class Chat : AuditableEntity, IEntity<Guid>
     public Property Property { get; set; }
     public Guid UserId { get; set; }
     public User User { get; set; }
-    public Guid RealStateAgentId { get; set; }
-    public RealStateAgent RealStateAgent { get; set; }
+    public Guid RealEstateAgentId { get; set; }
+    public RealEstateAgent RealEstateAgent { get; set; }
     public List<Message> Messages { get; set; } = new();
     public ChatStatus Status { get; set; }
     public DateTime LastMessageAt { get; set; }
@@ -25,7 +25,7 @@ public class Chat : AuditableEntity, IEntity<Guid>
         var notification = new Notification(
             Guid.NewGuid(),
             message.SenderId,
-            message.SenderId == UserId ? RealStateAgentId : UserId,
+            message.SenderId == UserId ? RealEstateAgentId : UserId,
             $"New message about {Property.Title}",
             NotificationType.Message,
             NotificationPriority.Medium

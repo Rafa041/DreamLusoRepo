@@ -10,8 +10,8 @@ public class Contract : AuditableEntity, IEntity<Guid>
     public Property Property { get; set; }
     public Guid ClientId { get; set; } // Valid is not RealStateAgent
     public Client Client { get; set; }
-    public Guid RealStateAgentId { get; set; }
-    public RealStateAgent RealStateAgent { get; set; }
+    public Guid RealEstateAgentId { get; set; }
+    public RealEstateAgent RealEstateAgent { get; set; }
     public ContractType ContractType { get; set; }
     public ContractStatus Status { get; set; }
     public DateTime StartDate { get; set; }
@@ -45,8 +45,8 @@ public class Contract : AuditableEntity, IEntity<Guid>
         Property property,
         Guid clientId,
         Client client,
-        Guid realStateAgentId,
-        RealStateAgent realStateAgent,
+        Guid realEstateAgentId,
+        RealEstateAgent realEstateAgent,
         DateTime startDate,
         DateTime endDate,
         double value,
@@ -68,8 +68,8 @@ public class Contract : AuditableEntity, IEntity<Guid>
         Property = property;
         ClientId = clientId;
         Client = client;
-        RealStateAgentId = realStateAgentId;
-        RealStateAgent = realStateAgent;
+        RealEstateAgentId = realEstateAgentId;
+        RealEstateAgent = realEstateAgent;
         StartDate = startDate;
         EndDate = endDate;
         Value = value;

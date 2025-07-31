@@ -9,8 +9,8 @@ public class Property : AuditableEntity, IEntity<Guid>
     public string Description { get; set; }
     public Guid AddressId { get; set; }
     public Address Address { get; set; }
-    public Guid RealStateAgentId { get; set; }
-    public RealStateAgent RealStateAgent { get; set; }
+    public Guid RealEstateAgentId { get; set; }
+    public RealEstateAgent RealEstateAgent { get; set; }
     public PropertyType Type { get; set; }
     public double Size { get; set; }
     public int Bedrooms { get; set; }

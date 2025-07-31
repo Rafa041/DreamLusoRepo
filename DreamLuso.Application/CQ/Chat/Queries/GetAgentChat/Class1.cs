@@ -10,53 +10,53 @@ using System.Threading.Tasks;
 
 namespace DreamLuso.Application.CQ.Chat.Queries.GetAgentChat;
 
-public class GetRealStateAgentChatsQuery : IRequest<Result<GetRealStateAgentChatsResponse, Success, Error>>
+public class GetRealEstateAgentChatsQuery : IRequest<Result<GetRealEstateAgentChatsResponse, Success, Error>>
 {
-    public required Guid AgentId { get; init; }
+    public required Guid RealEstateAgentId { get; init; }
 }
 
-public class GetRealStateAgentChatsResponse
+    public class GetRealEstateAgentChatsResponse
 {
-    public IEnumerable<RealStateAgentChatDto> Chats { get; set; }
+    public IEnumerable<RealEstateAgentChatDto> Chats { get; set; }
 }
 
-public class RealStateAgentChatDto
+    public class RealEstateAgentChatDto
 {
     public Guid Id { get; init; }
     public Guid PropertyId { get; init; }
     public string PropertyTitle { get; init; }
     public Guid UserId { get; init; }
     public string UserName { get; init; }
-    public Guid RealStateAgentId { get; init; }
-    public string RealStateAgentName { get; init; }
+    public Guid RealEstateAgentId { get; init; }
+            public string RealEstateAgentName { get; init; }
     public ChatStatus Status { get; init; }
     public DateTime LastMessageAt { get; init; }
     public int UnreadMessagesCount { get; init; }
     public string LastMessageContent { get; init; }
 }
 
-public class GetRealStateAgentChatsQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetRealStateAgentChatsQuery, Result<GetRealStateAgentChatsResponse, Success, Error>>
+public class GetRealEstateAgentChatsQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetRealEstateAgentChatsQuery, Result<GetRealEstateAgentChatsResponse, Success, Error>>
 {
 
-    public async Task<Result<GetRealStateAgentChatsResponse, Success, Error>> Handle(GetRealStateAgentChatsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetRealEstateAgentChatsResponse, Success, Error>> Handle(GetRealEstateAgentChatsQuery request, CancellationToken cancellationToken)
     {
-        var chats = await unitOfWork.ChatRepository.GetRealStateAgentChatsAsync(request.AgentId, cancellationToken);
+        var chats = await unitOfWork.ChatRepository.GetRealEstateAgentChatsAsync(request.RealEstateAgentId, cancellationToken);
 
-        var chatDtos = chats.Select(c => new RealStateAgentChatDto
+        var chatDtos = chats.Select(c => new RealEstateAgentChatDto
         {
             Id = c.Id,
             PropertyId = c.PropertyId,
             PropertyTitle = c.Property.Title,
             UserId = c.UserId,
             UserName = $"{c.User.Name.FirstName} {c.User.Name.LastName}",
-            RealStateAgentId = c.RealStateAgentId,
-            RealStateAgentName = $"{c.RealStateAgent.User.Name.FirstName} {c.RealStateAgent.User.Name.LastName}",
+            RealEstateAgentId = c.RealEstateAgentId,
+            RealEstateAgentName = $"{c.RealEstateAgent.User.Name.FirstName} {c.RealEstateAgent.User.Name.LastName}",
             Status = c.Status,
             LastMessageAt = c.LastMessageAt,
             UnreadMessagesCount = c.Messages.Count(m => !m.IsRead),
             LastMessageContent = c.Messages.OrderByDescending(m => m.SentAt).FirstOrDefault()?.Content ?? string.Empty
         }).ToList();
 
-        return new GetRealStateAgentChatsResponse { Chats = chatDtos };
+        return new GetRealEstateAgentChatsResponse { Chats = chatDtos };
     }
 }

@@ -19,7 +19,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Property> Properties { get; set; }
     public DbSet<PropertyImages> PropertyImages { get; set; }
     public DbSet<PropertyVisit> PropertyVisits { get; set; }
-    public DbSet<RealStateAgent> RealStateAgent { get; set; }
+    public DbSet<RealEstateAgent> RealEstateAgent { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Chat> Chats { get; set; }
     public DbSet<Message> Messages { get; set; }
@@ -51,7 +51,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new PropertyConfiguration());
         modelBuilder.ApplyConfiguration(new PropertyImagesConfiguration());
         modelBuilder.ApplyConfiguration(new PropertyImagesConfiguration());
-        modelBuilder.ApplyConfiguration(new RealStateAgentConfiguration());
+        modelBuilder.ApplyConfiguration(new RealEstateAgentConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
 
         modelBuilder.HasDefaultSchema("DreamLuso");

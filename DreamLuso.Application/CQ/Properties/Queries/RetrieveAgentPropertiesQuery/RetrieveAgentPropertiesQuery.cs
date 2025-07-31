@@ -24,7 +24,7 @@ public class RetrieveAgentPropertiesQueryHandler(IUnitOfWork unitOfWork, IHttpCo
     public async Task<Result<RetrieveAllPropertiesResponse, Success, Error>> Handle(RetrieveAgentPropertiesQuery request, CancellationToken cancellationToken)
     {
         var baseUrl = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}";
-        var realStatAgent = await unitOfWork.RealStateAgentRepository.RetrieveByUserIdAsync(request.AgentId, cancellationToken);
+        var realStatAgent = await unitOfWork.RealEstateAgentRepository.RetrieveByUserIdAsync(request.AgentId, cancellationToken);
         if (realStatAgent == null)
             return Error.RealStateAgentNotFound;
 
@@ -44,7 +44,7 @@ public class RetrieveAgentPropertiesQueryHandler(IUnitOfWork unitOfWork, IHttpCo
             PostalCode = property.Address.PostalCode,
             Country = property.Address.Country,
             AdditionalInfo = property.Address.AdditionalInfo,
-            RealStateAgentId = property.RealStateAgentId,
+            RealEstateAgentId = property.RealEstateAgentId,
             Type = property.Type.ToString(),
             Size = property.Size,
             Bedrooms = property.Bedrooms,

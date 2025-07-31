@@ -18,7 +18,7 @@ internal class UnitOfWorkBehaviour<TRequest, TReponse>(IUnitOfWork unitOfWork) :
         try
         {
             var result = await next();
-            //unitOfWork.DebugChanges();
+
 
             await unitOfWork.CommitTransactioAsync(cancellationToken);
             return result;

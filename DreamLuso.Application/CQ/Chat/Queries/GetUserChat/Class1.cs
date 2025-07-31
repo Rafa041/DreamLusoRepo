@@ -27,8 +27,8 @@ public class UserChatDto
     public string PropertyTitle { get; init; }
     public Guid UserId { get; init; }
     public string UserName { get; init; }
-    public Guid RealStateAgentId { get; init; }
-    public string RealStateAgentName { get; init; }
+    public Guid RealEstateAgentId { get; init; }
+    public string RealEstateAgentName { get; init; }
     public ChatStatus Status { get; init; }
     public DateTime LastMessageAt { get; init; }
     public int UnreadMessagesCount { get; init; }
@@ -50,8 +50,8 @@ public class GetUserChatsQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<
             PropertyTitle = c.Property.Title,
             UserId = c.UserId,
             UserName = $"{c.User.Name.FirstName} {c.User.Name.LastName}",
-            RealStateAgentId = c.RealStateAgentId,
-            RealStateAgentName = $"{c.RealStateAgent.User.Name.FirstName} {c.RealStateAgent.User.Name.LastName}",
+            RealEstateAgentId = c.RealEstateAgentId,
+            RealEstateAgentName = $"{c.RealEstateAgent.User.Name.FirstName} {c.RealEstateAgent.User.Name.LastName}",
             Status = c.Status,
             LastMessageAt = c.LastMessageAt,
             UnreadMessagesCount = c.Messages.Count(m => !m.IsRead),

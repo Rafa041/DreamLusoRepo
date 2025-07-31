@@ -12,9 +12,9 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
         try
         {
 
-            var realStateAgent = await unitOfWork.RealStateAgentRepository.RetrieveByUserIdAsync(request.UserId, cancellationToken);
-            if (realStateAgent == null)
-                return Error.RealStateAgentNotFound;
+                    var realEstateAgent = await unitOfWork.RealEstateAgentRepository.RetrieveByUserIdAsync(request.UserId, cancellationToken);
+        if (realEstateAgent == null)
+            return Error.RealStateAgentNotFound;
 
             var address = new Address
             {
@@ -38,7 +38,7 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
                 Title = request.Title,
                 Description = request.Description,
                 AddressId = address.Id,  // ID do endereço
-                RealStateAgentId = realStateAgent.Id,  // ID do agente imobiliário existente
+                RealEstateAgentId = realEstateAgent.Id,  // ID do agente imobiliário existente
                 Type = request.Type,
                 Size = request.Size,
                 Bedrooms = request.Bedrooms,
@@ -76,7 +76,7 @@ public class CreatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
                 Description = newProperty.Description,
                 Price = newProperty.Price,
                 Status = newProperty.Status,
-                UserId = realStateAgent.Id
+                UserId = realEstateAgent.Id
             };
             return response;
         }

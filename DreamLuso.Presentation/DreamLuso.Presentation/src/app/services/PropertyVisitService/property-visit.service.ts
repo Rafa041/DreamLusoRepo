@@ -21,7 +21,7 @@ export class PropertyVisitService {
 
     formData.append('PropertyId', visitRequest.propertyId);
     formData.append('UserId', visitRequest.userId);
-    formData.append('RealStateAgentId', visitRequest.realStateAgentId);
+            formData.append('RealEstateAgentId', visitRequest.realEstateAgentId);
     formData.append('VisitDate', visitRequest.visitDate.toString());
     formData.append('TimeSlot', visitRequest.timeSlot.toString());
 
@@ -29,7 +29,7 @@ export class PropertyVisitService {
     console.log('Form Data Values:', {
       PropertyId: visitRequest.propertyId,
       UserId: visitRequest.userId,
-      RealStateAgentId: visitRequest.realStateAgentId,
+      RealEstateAgentId: visitRequest.realEstateAgentId,
       VisitDate: visitRequest.visitDate,
       TimeSlot: visitRequest.timeSlot
     });

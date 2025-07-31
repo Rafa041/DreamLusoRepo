@@ -65,8 +65,8 @@ public class UpdatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             if (property == null)
                 return Error.PropertyNotFound;
 
-            var realStateAgent = await unitOfWork.RealStateAgentRepository.RetrieveByUserIdAsync(request.UserId, cancellationToken);
-            if (realStateAgent == null)
+            var realEstateAgent = await unitOfWork.RealEstateAgentRepository.RetrieveByUserIdAsync(request.UserId, cancellationToken);
+            if (realEstateAgent == null)
                 return Error.RealStateAgentNotFound;
 
             // First retrieve the existing address
@@ -120,7 +120,7 @@ public class UpdatePropertyCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
                 Description = property.Description,
                 Price = property.Price,
                 Status = property.Status,
-                UserId = realStateAgent.Id
+                UserId = realEstateAgent.Id
             };
 
             return response;

@@ -6,7 +6,7 @@ import { DashboardAdminComponent } from "./Pages/Admin/Pages/dashboard/dashboard
 import { CreateAgentComponent } from "./Pages/Admin/Pages/create-agent/create-agent.component";
 import { DashboardAgentComponent } from "./Pages/Agent/Pages/dashboard/dashboard.component";
 import { DashboardClientComponent } from "./Pages/Client/Pages/dashboard/dashboard.component";
-import { RealStateAgentPropertiesComponent } from "./Pages/Agent/Pages/real-state-agent-properties/real-state-agent-properties.component";
+import { RealEstateAgentPropertiesComponent } from "./Pages/Agent/Pages/real-estate-agent-properties/real-estate-agent-properties.component";
 import { UpdatePropertyComponent } from "./Pages/Agent/Pages/update-property/update-property.component";
 import { AppointmentsComponent } from "./Pages/Agent/Pages/appointments/appointments.component";
 import { UsersComponent } from "./Pages/Admin/Pages/users/users.component";
@@ -32,7 +32,7 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardAgentComponent },
       { path: 'create-property', component: AddPropertyComponent },
-      { path: 'properties', component: RealStateAgentPropertiesComponent },
+      { path: 'properties', component: RealEstateAgentPropertiesComponent },
       { path: 'properties/edit/:id', component: UpdatePropertyComponent },
       { path: 'appointments', component: AppointmentsComponent },
       {path: 'chat', component: ChatAgentComponent}

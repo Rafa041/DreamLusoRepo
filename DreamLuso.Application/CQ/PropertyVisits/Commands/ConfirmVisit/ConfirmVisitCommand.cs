@@ -47,7 +47,7 @@ public class ConfirmVisitCommandHandler : IRequestHandler<ConfirmVisitCommand, R
             var notificationRecipientId = propertyVisit.UserId; // Usuário que agendou a visita
             var notification = new Notification(
                 Guid.NewGuid(),
-                propertyVisit.RealStateAgentId, // O corretor que confirmou a visita
+                propertyVisit.RealEstateAgentId, // O corretor que confirmou a visita
                 notificationRecipientId,
                 $"Your visit for property {propertyVisit.PropertyId} on {propertyVisit.VisitDate} at {propertyVisit.TimeSlot} has been confirmed.",
                 NotificationType.Visit,

@@ -12,5 +12,5 @@ public interface IPropertyVisitRepository : IRepository<PropertyVisit, Guid>
     Task<bool> IsTimeSlotAvailable(Guid propertyId, DateOnly visitDate, TimeSlot timeSlot, CancellationToken cancellationToken);
     Task ConfirmVisitAsync(Guid visitId, CancellationToken cancellationToken);
     Task CancelVisitAsync(Guid visitId, CancellationToken cancellationToken);
-    Task<IEnumerable<PropertyVisit>> RetrieveByRealAgentIdSingleAsync(Guid realstateAgentId, CancellationToken cancellationToken);
+    Task<IEnumerable<PropertyVisit>> RetrieveByRealEstateAgentIdSingleAsync(Guid realEstateAgentId, CancellationToken cancellationToken);
 }

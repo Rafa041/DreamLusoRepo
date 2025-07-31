@@ -5,14 +5,14 @@ import { PropertyService } from '../../../../services/PropertyService/property.s
 import { UserService } from '../../../../services/UserService/user.service';
 import { UserModel } from '../../../../models/UserModel';
 import { environment } from '../../../../../../environment';
-import { RealStateAgentService } from '../../../../services/RealStateAgent/real-state-agent.service';
+import { RealEstateAgentService } from '../../../../services/RealEstateAgent/real-estate-agent.service';
 import { AuthService } from '../../../../services/AuthService/auth.service';
 import { Access } from '../../../../models/Access';
 import { ChatService } from '../../../../services/ChatService/chat.service';
 interface CreateChatDto {
   propertyId: string;
   userId: string;
-  realStateAgentId: string;
+  realEstateAgentId: string;
 }
 
 @Component({
@@ -30,7 +30,7 @@ export class RetrievePropertyIdComponent implements OnInit {
   private apiUrl = environment.apiUrl;
   isLoggedIn = false;
   Access = Access;
-  isRealStateAgent = false;
+  isRealEstateAgent = false;
   currentUser: UserModel | null = null;
 
   // Image Modal Properties
@@ -48,7 +48,7 @@ export class RetrievePropertyIdComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private propertyService: PropertyService,
-    private realStateAgentService: RealStateAgentService,
+    private realEstateAgentService: RealEstateAgentService,
     private authService: AuthService,
     private router: Router,
     private chatService: ChatService,
@@ -120,13 +120,13 @@ export class RetrievePropertyIdComponent implements OnInit {
   }
 
   get showChatButton(): boolean {
-    return this.isLoggedIn && this.currentUser?.access !== Access.RealStateAgent;
+          return this.isLoggedIn && this.currentUser?.access !== Access.RealEstateAgent;
   }
 
   checkUserRole(): void {
     if (this.isLoggedIn) {
       const user = this.authService.getCurrentUser();
-      this.isRealStateAgent = user?.access === Access.RealStateAgent;
+      this.isRealEstateAgent = user?.access === Access.RealEstateAgent;
     }
   }
 
@@ -148,13 +148,13 @@ export class RetrievePropertyIdComponent implements OnInit {
     if (property.amenities && typeof property.amenities === 'string') {
       this.amenitiesList = (property.amenities as string).split(',').map(item => item.trim());
     }
-    if (property.realStateAgentId) {
-      this.loadPropertyOwner(property.realStateAgentId);
+          if (property.realEstateAgentId) {
+        this.loadPropertyOwner(property.realEstateAgentId);
     }
   }
 
-  loadPropertyOwner(realStateAgentId: string): void {
-    this.realStateAgentService.retrieve(realStateAgentId).subscribe({
+  loadPropertyOwner(realEstateAgentId: string): void {
+    this.realEstateAgentService.retrieve(realEstateAgentId).subscribe({
       next: (user) => this.propertyOwner = user,
       error: (error) => console.log('Error:', error)
     });
@@ -202,7 +202,7 @@ getImageUrl(imageUrl: string | undefined): string {
         const chatData: CreateChatDto = {
           propertyId: this.property.id,
           userId: loggedUser.id,
-          realStateAgentId: this.propertyOwner.id
+          realEstateAgentId: this.propertyOwner.id
         };
 
         console.log('Initiating chat with data:', chatData);

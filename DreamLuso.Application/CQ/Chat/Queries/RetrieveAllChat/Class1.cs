@@ -24,7 +24,7 @@ public class ChatDto
     public Guid Id { get; init; }
     public Guid PropertyId { get; init; }
     public Guid UserId { get; init; }
-    public Guid RealStateAgentId { get; init; }
+    public Guid RealEstateAgentId { get; init; }
     public ChatStatus Status { get; init; }
     public DateTime LastMessageAt { get; init; }
     public int UnreadMessagesCount { get; init; }
@@ -48,7 +48,7 @@ public class RetrieveAllChatsQueryHandler : IRequestHandler<RetrieveAllChatsQuer
             Id = c.Id,
             PropertyId = c.PropertyId,
             UserId = c.UserId,
-            RealStateAgentId = c.RealStateAgentId,
+            RealEstateAgentId = c.RealEstateAgentId,
             Status = c.Status,
             LastMessageAt = c.LastMessageAt,
             UnreadMessagesCount = c.Messages.Count(m => !m.IsRead)

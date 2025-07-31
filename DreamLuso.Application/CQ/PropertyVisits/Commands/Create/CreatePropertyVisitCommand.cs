@@ -9,7 +9,7 @@ public class CreatePropertyVisitCommand : IRequest<Result<CreatePropertyVisitRes
 {
     public Guid PropertyId { get; init; }
     public Guid UserId { get; init; }
-    public Guid RealStateAgentId { get; init; }
+    public Guid RealEstateAgentId { get; init; }
     public DateOnly VisitDate { get; init; }
     public TimeSlot TimeSlot { get; init; }
 }
@@ -18,7 +18,7 @@ public class CreatePropertyVisitResponse
     public Guid VisitId { get; set; }
     public Guid PropertyId { get; set; }
     public Guid UserId { get; set; }
-    public Guid RealStateAgentId { get; set; }
+    public Guid RealEstateAgentId { get; set; }
     public DateOnly VisitDate { get; set; }
     public TimeSlot TimeSlot { get; set; }
     public DateTime CreatedAt { get; set; }
@@ -33,7 +33,7 @@ public class CreatePropertyVisitCommandHandler(IUnitOfWork unitOfWork) : IReques
             if (request == null)
                 return Error.PropertyVisitNotFound;
 
-            var realStateAgent = await unitOfWork.RealStateAgentRepository.RetrieveAsync(request.RealStateAgentId, cancellationToken);
+            var realStateAgent = await unitOfWork.RealEstateAgentRepository.RetrieveAsync(request.RealEstateAgentId, cancellationToken);
             if (realStateAgent == null)
                 return Error.RealStateAgentNotFound;
 
@@ -51,7 +51,7 @@ public class CreatePropertyVisitCommandHandler(IUnitOfWork unitOfWork) : IReques
                 Id = Guid.NewGuid(),
                 PropertyId = request.PropertyId,
                 UserId = request.UserId,
-                RealStateAgentId = request.RealStateAgentId,
+                RealEstateAgentId = request.RealEstateAgentId,
                 VisitStatus = VisitStatus.Pending,
                 VisitDate = request.VisitDate,
                 TimeSlot = request.TimeSlot,
@@ -77,7 +77,7 @@ public class CreatePropertyVisitCommandHandler(IUnitOfWork unitOfWork) : IReques
                 VisitId = propertyVisit.Id,
                 PropertyId = propertyVisit.PropertyId,
                 UserId = propertyVisit.UserId,
-                RealStateAgentId = propertyVisit.RealStateAgentId,
+                RealEstateAgentId = propertyVisit.RealEstateAgentId,
                 VisitDate = propertyVisit.VisitDate,
                 TimeSlot = propertyVisit.TimeSlot,
                 CreatedAt = propertyVisit.CreatedAt

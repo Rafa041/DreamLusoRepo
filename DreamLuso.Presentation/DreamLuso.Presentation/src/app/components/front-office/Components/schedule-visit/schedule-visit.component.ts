@@ -111,11 +111,11 @@ export class ScheduleVisitComponent implements OnInit {
     }
 
     const propertyId = this.property.id;
-    const realStateAgentId = this.property.realStateAgentId;
+    const realEstateAgentId = this.property.realEstateAgentId;
     const selectedDate = this.visitForm.get('date')?.value;
     const selectedTimeSlot = Number(this.visitForm.get('timeSlot')?.value);
 
-    if (!realStateAgentId || !selectedDate || this.visitForm.invalid) {
+    if (!realEstateAgentId || !selectedDate || this.visitForm.invalid) {
         this.notificationService.showError('Please fill in all required fields.');
         return;
     }
@@ -137,7 +137,7 @@ export class ScheduleVisitComponent implements OnInit {
                 const visitRequest: CreatePropertyVisit = {
                     propertyId: propertyId.toString(),
                     userId: this.authService.getCurrentUserId().toString(),
-                    realStateAgentId: realStateAgentId.toString(),
+                    realEstateAgentId: realEstateAgentId.toString(),
                     visitDate: selectedDate,
                     timeSlot: selectedTimeSlot
                 };

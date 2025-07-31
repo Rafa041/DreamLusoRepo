@@ -18,7 +18,7 @@ public class CreateContractCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
         {
             PropertyId = request.PropertyId,
             ClientId = request.ClientId,
-            RealStateAgentId = request.RealStateAgentId,
+            RealEstateAgentId = request.RealEstateAgentId,
             StartDate = request.StartTime,
             EndDate = request.EndTime,
             Value = request.Value,
@@ -37,7 +37,7 @@ public class CreateContractCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
             ContractId = contract.Id,
             PropertyId = contract.PropertyId,
             ClientId = contract.ClientId,
-            RealStateAgentId = contract.RealStateAgentId,
+                            RealEstateAgentId = contract.RealEstateAgentId,
             StartTime = contract.StartDate,
             EndTime = contract.EndDate,
             Value = contract.Value,

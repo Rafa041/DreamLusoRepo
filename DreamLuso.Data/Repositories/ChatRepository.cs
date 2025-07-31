@@ -20,7 +20,7 @@ public class ChatRepository : PaginatedRepository<Chat, Guid>, IChatRepository
         return await DbSet
             .Include(c => c.Property)
             .Include(c => c.User)
-            .Include(c => c.RealStateAgent)
+            .Include(c => c.RealEstateAgent)
             .Include(c => c.Messages)
             .ToListAsync(cancellationToken);
     }
@@ -30,7 +30,7 @@ public class ChatRepository : PaginatedRepository<Chat, Guid>, IChatRepository
         return await DbSet
             .Include(c => c.Property)
             .Include(c => c.User)
-            .Include(c => c.RealStateAgent)
+            .Include(c => c.RealEstateAgent)
             .Include(c => c.Messages)
             .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
     }
@@ -41,20 +41,20 @@ public class ChatRepository : PaginatedRepository<Chat, Guid>, IChatRepository
             .Include(c => c.Property)
             .Include(c => c.Messages)
             .Include(c => c.User)
-            .Include(c => c.RealStateAgent)
+            .Include(c => c.RealEstateAgent)
                 .ThenInclude(r => r.User)  
-            .Where(c => c.UserId == userId || c.RealStateAgentId == userId)
+            .Where(c => c.UserId == userId || c.RealEstateAgentId == userId)
             .ToListAsync(cancellationToken);
     }
-    public async Task<IEnumerable<Chat>> GetRealStateAgentChatsAsync(Guid realStateAgentId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Chat>> GetRealEstateAgentChatsAsync(Guid realEstateAgentId, CancellationToken cancellationToken = default)
     {
         return await DbSet
             .Include(c => c.Property)
             .Include(c => c.Messages)
             .Include(c => c.User)
-            .Include(c => c.RealStateAgent)
+            .Include(c => c.RealEstateAgent)
                 .ThenInclude(r => r.User)
-            .Where(c => c.RealStateAgentId == realStateAgentId)
+            .Where(c => c.RealEstateAgentId == realEstateAgentId)
             .ToListAsync(cancellationToken);
     }
     public async Task<Chat> UpdateStatusAsync(Guid id, ChatStatus status, CancellationToken cancellationToken = default)

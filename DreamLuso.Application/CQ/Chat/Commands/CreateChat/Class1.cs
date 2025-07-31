@@ -14,7 +14,7 @@ namespace DreamLuso.Application.CQ.Chat.Commands.CreateChat;
     {
         public required Guid PropertyId { get; init; }
         public required Guid UserId { get; init; }
-        public required Guid RealStateAgentId { get; init; }
+        public required Guid RealEstateAgentId { get; init; }
     }
 
     public class CreateChatResponse
@@ -22,7 +22,7 @@ namespace DreamLuso.Application.CQ.Chat.Commands.CreateChat;
         public Guid Id { get; init; }
         public Guid PropertyId { get; init; }
         public Guid UserId { get; init; }
-        public Guid RealStateAgentId { get; init; }
+        public Guid RealEstateAgentId { get; init; }
         public ChatStatus Status { get; init; }
     }
 
@@ -36,7 +36,7 @@ namespace DreamLuso.Application.CQ.Chat.Commands.CreateChat;
             {
                 PropertyId = request.PropertyId,
                 UserId = request.UserId,
-                RealStateAgentId = request.RealStateAgentId,
+                RealEstateAgentId = request.RealEstateAgentId,
                 Status = ChatStatus.Active,
                 LastMessageAt = DateTime.UtcNow
             };
@@ -49,7 +49,7 @@ namespace DreamLuso.Application.CQ.Chat.Commands.CreateChat;
                 Id = chat.Id,
                 PropertyId = chat.PropertyId,
                 UserId = chat.UserId,
-                RealStateAgentId = chat.RealStateAgentId,
+                RealEstateAgentId = chat.RealEstateAgentId,
                 Status = chat.Status
             };
 

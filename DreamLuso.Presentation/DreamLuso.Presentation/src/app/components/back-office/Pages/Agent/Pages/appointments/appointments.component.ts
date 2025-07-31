@@ -13,8 +13,8 @@ import { PropertyService } from '../../../../../../services/PropertyService/prop
 import { Property, PropertyStatus, PropertyType } from '../../../../../../models/property';
 import { Observable } from 'rxjs';
 import { forkJoin } from 'rxjs';
-import { RealStateAgentService } from '../../../../../../services/RealStateAgent/real-state-agent.service';
-import { RealStateAgentModel } from '../../../../../../models/RealStateAgentModel';
+import { RealEstateAgentService } from '../../../../../../services/RealEstateAgent/real-estate-agent.service';
+import { RealEstateAgentModel } from '../../../../../../models/RealEstateAgentModel';
 
 @Component({
   selector: 'app-appointments',
@@ -27,7 +27,7 @@ export class AppointmentsComponent implements OnInit {
   userId: string = '';
   notifications: ApiNotification[] = [];
   appointments: PropertyVisitResponse[] = [];
-  realStateAgent: RealStateAgentModel | null = null;
+  realEstateAgent: RealEstateAgentModel | null = null;
   VisitStatus = VisitStatus;
   TimeSlot = TimeSlot;
   showCancelSuccessAlert: boolean = false;
@@ -40,7 +40,7 @@ export class AppointmentsComponent implements OnInit {
     private notificationService: NotificationService,
     private propertyVisitService: PropertyVisitService,
     private propertyService: PropertyService,
-    private realstateAgentService: RealStateAgentService,
+    private realEstateAgentService: RealEstateAgentService,
   ) {}
 
 
@@ -54,10 +54,10 @@ export class AppointmentsComponent implements OnInit {
             next: (userDetails: UserModel) => {
                 this.loggedUserDetails = userDetails;
 
-                this.realstateAgentService.retrieveByUserId(this.userId).subscribe({
+                this.realEstateAgentService.retrieveByUserId(this.userId).subscribe({
                     next: (agentDetails) => {
-                        this.realStateAgent = agentDetails;
-                        console.log('Real State Agent details:', this.realStateAgent);
+                        this.realEstateAgent = agentDetails;
+                
                         this.loadAppointments();
                     },
                     error: (error) => {
@@ -130,14 +130,14 @@ getTimeSlotLabel(slot: number): string {
   }
 
   loadAppointments() {
-    if (!this.realStateAgent) {
-      console.log('No real state agent found');
+    if (!this.realEstateAgent) {
+      console.log('No real estate agent found');
       return;
     }
 
-    this.propertyVisitService.getAgentVisits(this.realStateAgent.id).subscribe({
+    this.propertyVisitService.getAgentVisits(this.realEstateAgent.id).subscribe({
       next: (appointments) => {
-        console.log('Status values from API:', appointments.map(a => a.status));// Debug log
+
 
         if (appointments && appointments.length > 0) {
           const propertyRequests = appointments.map(appointment =>
@@ -152,10 +152,10 @@ getTimeSlotLabel(slot: number): string {
                   property: properties[index],
                   status: appointment.status || VisitStatus.Pending // Default to Pending if status is undefined
                 };
-                console.log('Mapped appointment:', mappedAppointment); // Debug log
+
                 return mappedAppointment;
               });
-              console.log('Final appointments array:', this.appointments); // Debug log
+
             },
             error: (error) => {
               console.error('Error fetching property details:', error);
@@ -185,7 +185,7 @@ getTimeSlotLabel(slot: number): string {
   }
 
   cancelVisit(visitId: string) {
-    console.log('Attempting to cancel visit with ID:', visitId); // Debug log
+
 
     if (!visitId) {
         console.error('Visit ID is null or undefined');

@@ -9,7 +9,7 @@ import { SharedModule } from './shared.module';
 import { UserService } from './services/UserService/user.service';
 import { AuthService } from './services/AuthService/auth.service';
 import { PropertyService } from './services/PropertyService/property.service';
-import { RealStateAgentService } from './services/RealStateAgent/real-state-agent.service';
+import { RealEstateAgentService } from './services/RealEstateAgent/real-estate-agent.service';
 import { ErrorComponent } from './components/common/error/error.component';
 import { PropertyVisitService } from './services/PropertyVisitService/property-visit.service';
 import { NotificationService } from './services/NotificationService/notification.service';
@@ -33,7 +33,7 @@ import { NotificationService } from './services/NotificationService/notification
     UserService,
     AuthService,
     PropertyService,
-    RealStateAgentService,
+    RealEstateAgentService,
     PropertyVisitService,
     NotificationService,
   ],

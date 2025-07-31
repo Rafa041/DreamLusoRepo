@@ -42,8 +42,8 @@ public static class ChatEndpoints
             .Produces<bool>(200)
             .Produces<Error>(404);
 
-        chats.MapGet("/realstateagent/{agentId:guid}", Queries.GetRealStateAgentChats)
-        .WithName("GetRealStateAgentChats")
+        chats.MapGet("/realestateagent/{agentId:guid}", Queries.GetRealEstateAgentChats)
+        .WithName("GetRealEstateAgentChats")
         .Produces<List<RetrieveChatResponse>>(200)
         .Produces<Error>(404);
     }
@@ -113,12 +113,12 @@ public static class ChatEndpoints
                 ? TypedResults.Ok(true)
                 : TypedResults.NotFound(result.Error);
         }
-        public static async Task<Results<Ok<IEnumerable<RealStateAgentChatDto>>, NotFound<Error>>> GetRealStateAgentChats(
+        public static async Task<Results<Ok<IEnumerable<RealEstateAgentChatDto>>, NotFound<Error>>> GetRealEstateAgentChats(
        [FromServices] ISender sender,
        [FromRoute] Guid agentId,
        CancellationToken cancellationToken)
         {
-            var query = new GetRealStateAgentChatsQuery { AgentId = agentId };
+            var query = new GetRealEstateAgentChatsQuery { RealEstateAgentId = agentId };
             var result = await sender.Send(query, cancellationToken);
 
             return result.IsSuccess

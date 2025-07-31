@@ -73,7 +73,7 @@ public class PropertyRepository : PaginatedRepository<Property, Guid>, IProperty
         return await _context.Properties
             .Include(p => p.Address)
             .Include(p => p.Images)
-            .Where(p => p.RealStateAgentId == agentId)
+            .Where(p => p.RealEstateAgentId == agentId)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }

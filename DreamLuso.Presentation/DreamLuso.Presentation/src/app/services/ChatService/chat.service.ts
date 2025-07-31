@@ -34,7 +34,7 @@ export class ChatService {
   }
   getAgentChats(agentId: string): Observable<Chat[]> {
     console.log('Service calling with agentId:', agentId); // Log in service
-    return this.http.get<Chat[]>(`${this.apiUrl}/realstateagent/${agentId}`);
+    return this.http.get<Chat[]>(`${this.apiUrl}/realestateagent/${agentId}`);
   }
 
   updateChatStatus(chatId: string, status: ChatStatus): Observable<boolean> {

@@ -24,8 +24,8 @@ export interface Chat {
   propertyTitle: string;
   userId: string;
   userName: string;
-  realStateAgentId: string;
-  realStateAgentName: string;
+  realEstateAgentId: string;
+  realEstateAgentName: string;
   status: ChatStatus;
   lastMessageAt: Date;
   unreadMessagesCount: number;
@@ -40,5 +40,5 @@ export enum ChatStatus {
 export interface CreateChatDto {
   propertyId: string;
   userId: string;
-  realStateAgentId: string;
+  realEstateAgentId: string;
 }

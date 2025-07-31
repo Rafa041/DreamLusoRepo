@@ -29,7 +29,7 @@ public class RetrievePropertyQueryHandler(IUnitOfWork unitOfWork, IHttpContextAc
             PostalCode = property.Address.PostalCode,
             Country = property.Address.Country,
             AdditionalInfo = property.Address.AdditionalInfo,
-            RealStateAgentId = property.RealStateAgentId,
+            RealEstateAgentId = property.RealEstateAgentId,
             Type = property.Type.ToString(),
             Size = property.Size,
             Bedrooms = property.Bedrooms,

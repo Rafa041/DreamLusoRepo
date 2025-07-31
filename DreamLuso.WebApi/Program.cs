@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 builder.Services.AddExceptionHandlers();
-// Adiciona sua configuração JWT
+// Adiciona sua configuraï¿½ï¿½o JWT
 builder.Services.AddJwtTokenAuthentication(builder.Configuration);
 
 builder.Services.AddIoCServices(builder.Configuration);
@@ -36,7 +36,7 @@ builder.Services.AddAuthentication(options =>
    
 });
 
-//em test
+
 builder.Services.Configure<IISServerOptions>(options =>
 {
     options.MaxRequestBodySize = int.MaxValue;

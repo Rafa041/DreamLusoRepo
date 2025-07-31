@@ -15,7 +15,7 @@ public class GetVisitsByUserIdQueryHandler(IUnitOfWork unitOfWork) : IRequestHan
     {
         try
         {
-            var visits = await unitOfWork.PropertyVisitRepository.RetrieveByRealAgentIdSingleAsync(request.UserId, cancellationToken);
+            var visits = await unitOfWork.PropertyVisitRepository.RetrieveByRealEstateAgentIdSingleAsync(request.UserId, cancellationToken);
 
             var visitResponses = visits.Select(v => new PropertyVisitResponse
             {

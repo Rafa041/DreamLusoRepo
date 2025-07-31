@@ -6,7 +6,7 @@ public static class RegisterAllEndpoints
     {
         routes.RegisterAddressEndpoints();
         routes.RegisterAuthEndpoints();
-        routes.RegisterRealStateAgentEndpoints();
+        routes.RegisterRealEstateAgentEndpoints();
         routes.RegisterUserEndpoints();
         routes.RegisterPropertyEndpoints();
         routes.RegisterNotificationEndpoints();

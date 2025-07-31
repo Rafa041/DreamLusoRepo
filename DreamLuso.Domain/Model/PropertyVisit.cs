@@ -10,8 +10,8 @@ public class PropertyVisit : AuditableEntity, IEntity<Guid>
     public Property Property { get; set; }
     public Guid UserId { get; set; }
     public User User { get; set; }
-    public Guid RealStateAgentId { get; set; }
-    public RealStateAgent RealStateAgentUser { get; set; }
+    public Guid RealEstateAgentId { get; set; }
+    public RealEstateAgent RealEstateAgentUser { get; set; }
     public DateOnly VisitDate { get; set; }
     public TimeSlot TimeSlot { get; set; }
     public VisitStatus VisitStatus { get; set; }
@@ -30,7 +30,7 @@ public class PropertyVisit : AuditableEntity, IEntity<Guid>
         Guid propertyId,
         User user,
         Guid userId,
-        RealStateAgent realStateUser,
+        RealEstateAgent realEstateUser,
         Guid realtorUserId,
         DateOnly visitDate,
         TimeSlot timeSlot,
@@ -41,8 +41,8 @@ public class PropertyVisit : AuditableEntity, IEntity<Guid>
         PropertyId = propertyId;
         User = user;
         UserId = userId;
-        RealStateAgentUser = realStateUser;
-        RealStateAgentId = realtorUserId;
+        RealEstateAgentUser = realEstateUser;
+        RealEstateAgentId = realtorUserId;
         VisitDate = visitDate;
         TimeSlot = timeSlot;
         VisitStatus = visitStatus;

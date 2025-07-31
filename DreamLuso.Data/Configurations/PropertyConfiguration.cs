@@ -26,9 +26,9 @@ internal class PropertyConfiguration : IEntityTypeConfiguration<Property>
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
-        builder.HasOne(p => p.RealStateAgent)
+        builder.HasOne(p => p.RealEstateAgent)
               .WithMany(r => r.Properties)
-              .HasForeignKey(p => p.RealStateAgentId)
+              .HasForeignKey(p => p.RealEstateAgentId)
               .OnDelete(DeleteBehavior.NoAction);
     }
 }

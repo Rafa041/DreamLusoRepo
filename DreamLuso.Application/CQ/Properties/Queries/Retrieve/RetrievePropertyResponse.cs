@@ -14,7 +14,7 @@ public class RetrievePropertyResponse
     public string AdditionalInfo { get; set; } // Informações adicionais como número de apartamento
 
     // Real State Agent
-    public Guid RealStateAgentId { get; set; }
+    public Guid RealEstateAgentId { get; set; }
     public Guid userId { get; set; }
 
     // Property

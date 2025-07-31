@@ -10,7 +10,7 @@ public interface IUnitOfWork
     public IAccountRepository AccountRepository { get; }
     public IPropertyRepository PropertyRepository{get;}
     public IAddressRepository AddressRepository { get; }
-    public IRealStateAgentRepository RealStateAgentRepository { get; }
+    public IRealEstateAgentRepository RealEstateAgentRepository { get; }
     public ICategoryRepository CategoryRepository { get; }
     public IClientRepository ClientRepository { get; }
     public ICommentRepository CommentRepository { get; }

@@ -15,7 +15,7 @@ public class UpdateContractCommandValidator : AbstractValidator<UpdateContractCo
         RuleFor(x => x.ClientId)
             .NotEmpty().WithMessage("ClientId is required.");
 
-        RuleFor(x => x.RealStateAgentId)
+                    RuleFor(x => x.RealEstateAgentId)
             .NotEmpty().WithMessage("RealStateAgentId is required.");
 
         RuleFor(x => x.StartTime)

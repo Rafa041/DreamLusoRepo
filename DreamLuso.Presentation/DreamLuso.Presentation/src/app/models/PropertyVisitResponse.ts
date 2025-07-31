@@ -5,7 +5,7 @@ export interface PropertyVisitResponse {
   id: string;
   propertyId: string;
   userId: string;
-  realStateAgentId: string;
+  realEstateAgentId: string;
   visitDate: string;
   timeSlot: number;
   createdAt: string;

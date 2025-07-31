@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateRealStateAgent, Languages } from '../../../../../../models/CreateRealStateAgent';
+import { CreateRealEstateAgent, Languages } from '../../../../../../models/CreateRealEstateAgent';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RealStateAgentService } from '../../../../../../services/RealStateAgent/real-state-agent.service';
+import { RealEstateAgentService } from '../../../../../../services/RealEstateAgent/real-estate-agent.service';
 import { Router } from '@angular/router';
 import { UserModel } from '../../../../../../models/UserModel';
 import { environment } from '../../../../../../../../environment';
@@ -38,7 +38,7 @@ export class CreateAgentComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private realStateAgentService: RealStateAgentService,
+    private realEstateAgentService: RealEstateAgentService,
     private userService: UserService,
     private router: Router
   ) {
@@ -183,7 +183,7 @@ export class CreateAgentComponent implements OnInit {
           .map(key => this.agentForm.get(key)?.value)
           .filter(cert => cert && typeof cert === 'string' && cert.trim().length > 0);
 
-        const agentData: CreateRealStateAgent = {
+        const agentData: CreateRealEstateAgent = {
           userId: this.selectedUser.id,
           officeEmail: this.agentForm.get('officeEmail')?.value || '',
           totalSales: Number(this.agentForm.get('totalSales')?.value),
@@ -192,7 +192,7 @@ export class CreateAgentComponent implements OnInit {
           languagesSpoken: this.agentForm.get('languagesSpoken')?.value || []
         };
 
-        this.realStateAgentService.createAgent(agentData).subscribe({
+        this.realEstateAgentService.createAgent(agentData).subscribe({
           next: (response) => {
             this.showCreateSuccessAlert = true;
             setTimeout(() => {
